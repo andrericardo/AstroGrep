@@ -69,40 +69,50 @@ namespace FolderSearchOption
       /// [Curtis_Beard]	   07/11/2006	CHG: use drive/directory instead of folder
       /// [Curtis_Beard]	   11/13/2006	CHG: use try/catch to prevent no access to registry
       /// [Curtis_Beard]	   10/09/2012	CHG: 3575507, moved to separate process to handle UAC requests
+      /// [Curtis_Beard]	   10/09/2012	CHG: 100, add ability to right click background of folder to start search
       /// </history>
       public static void SetAsSearchOption(bool setOption, string path, string explorerText)
       {
          try
          {
             Microsoft.Win32.RegistryKey _key = Microsoft.Win32.Registry.ClassesRoot.OpenSubKey(@"Directory\shell", true);
+            Microsoft.Win32.RegistryKey _bgKey = Microsoft.Win32.Registry.ClassesRoot.OpenSubKey(@"Directory\Background\shell", true);
             Microsoft.Win32.RegistryKey _driveKey = Microsoft.Win32.Registry.ClassesRoot.OpenSubKey(@"Drive\shell", true);
             Microsoft.Win32.RegistryKey _astroGrepKey;
+            Microsoft.Win32.RegistryKey _astroGrepBGKey;
             Microsoft.Win32.RegistryKey _astroGrepDriveKey;
 
-            if (_key != null && _driveKey != null)
+            if (_key != null && _bgKey != null && _driveKey != null)
             {
                if (setOption)
                {
                   // create keys
                   _astroGrepKey = _key.CreateSubKey("astrogrep");
+                  _astroGrepBGKey = _bgKey.CreateSubKey("astrogrep");
                   _astroGrepDriveKey = _driveKey.CreateSubKey("astrogrep");
 
-                  if (_astroGrepKey != null && _astroGrepDriveKey != null)
+                  if (_astroGrepKey != null && _astroGrepBGKey != null && _astroGrepDriveKey != null)
                   {
                      _astroGrepKey.SetValue("", String.Format(explorerText, "&AstroGrep"));
+                     _astroGrepBGKey.SetValue("", String.Format(explorerText, "&AstroGrep"));
                      _astroGrepDriveKey.SetValue("", String.Format(explorerText, "&AstroGrep"));
 
                      // shows icon in Windows 7+
                      _astroGrepKey.SetValue("Icon", string.Format("\"{0}\",0", path));
+                     _astroGrepBGKey.SetValue("Icon", string.Format("\"{0}\",0", path));
                      _astroGrepDriveKey.SetValue("Icon", string.Format("\"{0}\",0", path));
 
                      Microsoft.Win32.RegistryKey _commandKey = _astroGrepKey.CreateSubKey("command");
+                     Microsoft.Win32.RegistryKey _commandBGKey = _astroGrepBGKey.CreateSubKey("command");
                      Microsoft.Win32.RegistryKey _commandDriveKey = _astroGrepDriveKey.CreateSubKey("command");
-                     if (_commandKey != null && _commandDriveKey != null)
+                     if (_commandKey != null && _commandBGKey != null && _commandDriveKey != null)
                      {
                         string keyValue = string.Format("\"{0}\" \"%L\"", path);
                         _commandKey.SetValue("", keyValue);
                         _commandDriveKey.SetValue("", keyValue);
+
+                        // background needs %V
+                        _commandBGKey.SetValue("", string.Format("\"{0}\" \"%V\"", path));
                      }
                   }
                }
@@ -112,6 +122,7 @@ namespace FolderSearchOption
                   try
                   {
                      _key.DeleteSubKeyTree("astrogrep");
+                     _bgKey.DeleteSubKeyTree("astrogrep");
                      _driveKey.DeleteSubKeyTree("astrogrep");
                   }
                   catch { }

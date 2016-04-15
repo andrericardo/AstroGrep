@@ -15,6 +15,7 @@
       <control name="chkCaseSensitive" value="&amp;Case sensitiv" tooltip="Match store og små bogstave præcist" />
       <control name="chkRegularExpressions" value="Regular &amp;Expressions" tooltip="Anvend regular expression matching" />
       <control name="chkAllResultsAfterSearch" value="&amp;Vis alle resultater efter søgning" tooltip="Viser alle resultaterne sammen i preview efter en søgning." />
+      <control name="chkSearchInResults" value="Søg i resultater" tooltip="Udfør søg inden aktuelt viste resultater filliste" />
       <control name="lblSearchOptions" value="Søgeparametre" />
       <control name="picBrowse" tooltip="Gennemse..." />
       <control name="lnkExclusions" value="udelukkelser" />
@@ -35,9 +36,7 @@
          <menuitem index="10" value="-" />
          <menuitem index="11" value="Fjern fra liste" />
       </control>
-      <control name="btnSearch" value="&amp;Søg">
-         <menuitem index="0" value="Søg i resultater"/>
-      </control>
+      <control name="btnSearch" value="&amp;Søg" />
       
       <menu index="0" value="&amp;Filer">
          <menuitem index="0" value="&amp;nyt vindue" />
@@ -246,6 +245,7 @@
       <text name="VerifyErrorInvalidRegEx" value="Det regulære udtryk, du har angivet, er ugyldig ({0}). Bekræft venligst din udtryk."/>
       <text name="VerifyErrorGeneric" value="Ude af stand til at anvende angivne parametre.  Verificer venligst at de er gyldige." />
       <text name="VerifyErrorFileHitCount" value="Den mindste fil count skal være større end eller lig med {0}."/>
+      <text name="VerifyErrorNoResultsToSearchIn" value="Der er ingen resultater at søge i, skal du fravælge 'Søg i resultater' for at udføre en ny søgning."/>
       
       <text name="SearchGenericError" value="Der opstod en fejl under søgningen." />
       <text name="SearchFileError" value="Der opstod en fejl under søgningen i fil: {0}." />

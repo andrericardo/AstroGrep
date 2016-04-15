@@ -13,8 +13,8 @@
 
 !define MUI_COMPONENTSPAGE_SMALLDESC
 !define MUI_LANGDLL_ALLLANGUAGES
-!define INS_VERSION 4.4.4.0
-!define APP_VERSION "4.4.4"
+!define INS_VERSION 4.4.5.0
+!define APP_VERSION "4.4.5"
 
 ;--------------------------------
 ;Variables
@@ -287,13 +287,16 @@ SectionEnd
 Section /o $(TITLE_SecFolderSearch) SecFolderSearch
 
 	WriteRegStr HKCR "Directory\shell\astrogrep" "" "Search using &AstroGrep..."
+	WriteRegStr HKCR "Directory\Background\shell\astrogrep" "" "Search using &AstroGrep..."
 	WriteRegStr HKCR "Drive\shell\astrogrep" "" "Search using &AstroGrep..."
 	
 	; shows icon in Windows 7+
 	WriteRegStr HKCR "Directory\shell\astrogrep" "Icon" '"$INSTDIR\AstroGrep.exe",0'
+	WriteRegStr HKCR "Directory\Background\shell\astrogrep" "Icon" '"$INSTDIR\AstroGrep.exe",0'
 	WriteRegStr HKCR "Drive\shell\astrogrep" "Icon" '"$INSTDIR\AstroGrep.exe",0'
 	
 	WriteRegStr HKCR "Directory\shell\astrogrep\command" "" '"$INSTDIR\AstroGrep.exe" "%L"'
+	WriteRegStr HKCR "Directory\Background\shell\astrogrep\command" "" '"$INSTDIR\AstroGrep.exe" "%V"'
 	WriteRegStr HKCR "Drive\shell\astrogrep\command" "" '"$INSTDIR\AstroGrep.exe" "%L"'
 
 	DetailPrint "Create shortcut: Right-Click folder search"
@@ -427,6 +430,7 @@ SectionEnd
 Function un.RemoveFolderSearch
 	
 	DeleteRegKey HKCR "Directory\shell\astrogrep"
+	DeleteRegKey HKCR "Directory\Background\shell\astrogrep"
 	DeleteRegKey HKCR "Drive\shell\astrogrep"
 	
 	DetailPrint "$(RemoveText)$(TITLE_SecFolderSearch)"

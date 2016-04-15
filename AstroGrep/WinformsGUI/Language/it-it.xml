@@ -15,6 +15,7 @@
       <control name="chkCaseSensitive" value="&amp;Maiuscole/minuscole" tooltip="Attiva la distinzione tra maiuscole e minuscole durante la ricerca" />
       <control name="chkRegularExpressions" value="Espressione &amp;regolare" tooltip="Esegue una ricerca per &apos;espressioni regolari&apos;" />
       <control name="chkAllResultsAfterSearch" value="&amp;Mostra tutti i risultati dopo la ricerca" tooltip="Mostra tutti i risultati insieme nell'anteprima dopo una ricerca." />
+      <control name="chkSearchInResults" value="Cerca nei risultati" tooltip="Esegui ricerca all'interno dell'elenco dei file risultati attualmente visualizzato" />
       <control name="lblSearchOptions" value="Opzioni di ricerca" />
       <control name="picBrowse" tooltip="Sfoglia..." />
       <control name="lnkExclusions" value="Esclusioni" />
@@ -35,9 +36,7 @@
          <menuitem index="10" value="-" />
          <menuitem index="11" value="Cancella dalla lista" />
       </control>
-      <control name="btnSearch" value="&amp;Cerca">
-         <menuitem index="0" value="Cerca nei risultati" />
-      </control>
+      <control name="btnSearch" value="&amp;Cerca" />
       
       <menu index="0" value="&amp;File">
          <menuitem index="0" value="&amp;Nuova finestra" />
@@ -59,10 +58,10 @@
          <menuitem index="2" value="Messaggi di e&amp;rrore" />
          <menuitem index="3" value="&amp;Tutti i messaggi" />
          <menuitem index="4" value="-" />
-         <menuitem index="5" value="la &amp;zumata">
-            <menuitem index="0" value="ingrandire (Ctrl+Mouse Wheel Up)"/>
-            <menuitem index="1" value="diminuire (Ctrl+Mouse Wheel Down)"/>
-            <menuitem index="2" value="ripristinare zoom predefinito"/>
+         <menuitem index="5" value="&amp;Ingrandimento">
+            <menuitem index="0" value="Ingrandire (Ctrl+Rotellina Mouse Su)"/>
+            <menuitem index="1" value="Diminuire (Ctrl+Rotellina Mouse Giù)"/>
+            <menuitem index="2" value="Ingrandimento predefinito"/>
          </menuitem>
          <menuitem index="6" value="Numeri di riga" />
          <menuitem index="7" value="A capo automatico" />
@@ -104,7 +103,7 @@
       <control name="lnkHomePage" value="{0} Pagina principale" />
       <control name="LicenseLinkLabel" value="GNU License"/>
       <control name="CopyrightLabel" value="Copyright (C) 2002-{0} AstroComma Inc."/>
-      <control name="lblDescription" value="Ulteriori Copyright (C) 2002 Theodore L. Ward. AstroGrep viene fornito con ASSOLUTAMENTE NESSUNA GARANZIA. Questo è software libero, e siete invitati a ridistribuirlo a determinate condizioni."/>
+      <control name="lblDescription" value="Ulteriori Copyright (C) 2002 Theodore L. Ward. AstroGrep viene fornito SENZA ALCUNA GARANZIA. Questo è software libero, e siete invitati a ridistribuirlo secondo tali condizioni."/>
       <control name="lblDisclaimer" value="Creato da Theodore Ward e convertito in .Net da Curtis Beard"/>
    </screen>
    
@@ -118,9 +117,9 @@
       <control name="lblFileType" value="Tipo file" />
       <control name="btnCancel" value="&amp;Annulla" />
       <control name="btnOK" value="&amp;OK" />
-      <control name="lblMultiTypes" value="Tipi separate con | carattere."/>
-      <control name="lblTabSize" value="scheda Dimensioni" />
-      <control name="chkUseQuotesAroundFileName" value="&amp;Usa virgolette intorno di file."/>
+      <control name="lblMultiTypes" value="Tipi separati dal carattere |."/>
+      <control name="lblTabSize" value="Tabulazione" />
+      <control name="chkUseQuotesAroundFileName" value="&amp;Usa virgolette intorno al file."/>
    </screen>
    
    <screen name="frmOptions" value="Opzioni">
@@ -144,18 +143,18 @@
       <control name="tabTextEditors" value="Editor di testo" />
       <control name="LanguageGroup" value="Lingua"/>
       <control name="tabPlugins" value="Plugin"/>
-      <control name="chkDesktopShortcut" value="Collegamenti sul &amp;desktop"/>
-      <control name="chkStartMenuShortcut" value="Collegamenti del &amp;menu di avvio"/>
+      <control name="chkDesktopShortcut" value="Collegamento sul &amp;desktop"/>
+      <control name="chkStartMenuShortcut" value="Collegamento nel &amp;menu di avvio"/>
       <control name="ShortcutGroup" value="Collegamenti"/>
       <control name="PluginDetailsGroup" value="Informazioni sui plugin"/>
       <control name="lblPluginDetailName" value="Nome:"/>
       <control name="lblPluginDetailVersion" value="Versione:"/>
       <control name="lblPluginDetailAuthor" value="Autore:"/>
-      <control name="btnFindFont" value="&amp;Trova font..."/>
-      <control name="chkShowExclusionErrorMessage" value="Mostra un messaggio &amp;quando un elementi di ricerca rese essere esclusi o si verifica un errore."/>
+      <control name="btnFindFont" value="&amp;Trova carattere..."/>
+      <control name="chkShowExclusionErrorMessage" value="Mostra un messaggio &amp;quando gli elementi di ricerca vengono esclusi o si verifica un errore."/>
       <control name="chkSaveSearchOptions" value="Salva le opzioni di ricerca in uscita."/>
       <control name="grpFileList" value="Elenco dei file" />
-      <control name="btnFileFindFont" value="Trova font..."/>
+      <control name="btnFileFindFont" value="Trova carattere..."/>
       <control name="chkDetectFileEncoding" value="Rileva la codifica del file."/>
       <control name="chkSaveMessagesPosition" value="Salvare i messaggi &amp;posizione della finestra."/>      
 
@@ -163,8 +162,8 @@
       <control name="btnFileEncodingAdd" value="&amp;Aggiungi..."/>
       <control name="btnFileEncodingEdit" value="&amp;Modifica..."/>
       <control name="btnFileEncodingDelete" value="&amp;Cancella"/>
-      <control name="lblPerformance" value="performance"/>
-      <control name="chkUseEncodingCache" value="Attiva cache per codifiche rilevati."/>
+      <control name="lblPerformance" value="Prestazione"/>
+      <control name="chkUseEncodingCache" value="Attiva cache per le codifiche rilevate."/>
       <control name="btnCacheClear" value="Cancella cache"/>
    </screen>
    
@@ -186,11 +185,11 @@
    </screen>
 
    <screen name="frmAddEditExclusions" value="Esclusioni">
-      <control name="lblCategory" value="categoria" />
-      <control name="lblType" value="tipo" />
-      <control name="lblOptions" value="opzioni" />
-      <control name="lblValue" value="valore" />
-      <control name="chkIgnoreCase" value="maiuscole e minuscole" />
+      <control name="lblCategory" value="Categoria" />
+      <control name="lblType" value="Tipo" />
+      <control name="lblOptions" value="Opzioni" />
+      <control name="lblValue" value="Valore" />
+      <control name="chkIgnoreCase" value="Maiuscole e minuscole" />
       <control name="btnCancel" value="&amp;Annulla" />
       <control name="btnOK" value="&amp;OK" />
    </screen>
@@ -201,13 +200,13 @@
 
    <screen name="frmLogDisplay" value="Messaggi">
       <control name="sbtnStatus" value="Stato"/>
-      <control name="sbtnExclusions" value="Esclusioni"/>
+      <control name="sbtnExclusions" value="Esclusione"/>
       <control name="sbtnError" value="Errore"/>
    </screen>
 
    <screen name="frmCheckForUpdateTemp" value="Controlla aggiornamenti">
       <control name="cmdOK" value="&amp;OK" />
-      <control name="lblVersionCheck" value="Il controllo degli aggiornamenti..." />
+      <control name="lblVersionCheck" value="Sto controllando eventuali aggiornamenti..." />
    </screen>
 
    <screen name="frmAddEditFileEncoding" value="Codifica File">
@@ -231,9 +230,9 @@
       <text name="PrintTypeCurrent" value="Risultato attuale"/>
       <text name="PrintTypeFile" value="Elenco file"/>
       <text name="PrintTypeAll" value="Tutto"/>
-      <text name="PrintErrorPageSettings" value="Errore durante il tentativo di caricamento delle Impostazioni della pagina. Assicurarsi di poter accedere alla stampante. La stampante deve essere collegata e accessibile perché l&apos;operazione di stampa abbia luogo."/>
-      <text name="PrintErrorPreview" value="Errore durante il tentativo di caricamento del documento di anteprima di stampa. Assicurarsi di poter accedere alla stampante. La stampante deve essere collegata e accessibile perché l&apos;operazione di stampa abbia luogo."/>
-      <text name="PrintErrorPrint" value="Errore durante il tentativo di caricamento del documento di stampa. Assicurarsi di poter accedere alla stampante. La stampante deve essere collegata e accessibile perché l&apos;operazione di stampa abbia luogo."/>
+      <text name="PrintErrorPageSettings" value="Errore durante il tentativo di caricamento delle Impostazioni Pagina. Assicurarsi di poter accedere alla stampante. La stampante deve essere collegata e accessibile perché l&apos;operazione di stampa abbia luogo."/>
+      <text name="PrintErrorPreview" value="Errore durante il tentativo di caricamento del documento di Anteprima di Stampa. Assicurarsi di poter accedere alla stampante. La stampante deve essere collegata e accessibile perché l&apos;operazione di stampa abbia luogo."/>
+      <text name="PrintErrorPrint" value="Errore durante il tentativo di caricamento del documento da stampare. Assicurarsi di poter accedere alla stampante. La stampante deve essere collegata e accessibile perché l&apos;operazione di stampa abbia luogo."/>
       <text name="PrintErrorDocument" value="Errore durante la creazione del documento da stampare. ({0})"/>
       <text name="PrintNoResults" value="Nessun risultato disponibile per la stampa."/>
       
@@ -247,32 +246,33 @@
       <text name="VerifyErrorInvalidRegEx" value="L'espressione regolare è fornito non è valido ({0}). Si prega di verificare la vostra espressione."/>
       <text name="VerifyErrorGeneric" value="Impossibile convalidare i parametri specificati.  Verificare che siano validi."/>
       <text name="VerifyErrorFileHitCount" value="Il conteggio minimo file deve essere maggiore o uguale a {0}."/>
+      <text name="VerifyErrorNoResultsToSearchIn" value="Non ci sono risultati per la ricerca, per favore deselezionare 'Cerca tra i risultati' per eseguire una nuova ricerca."/>
       
       <text name="SearchGenericError" value="Errore durante la ricerca."/>
       <text name="SearchFileError" value="Errore durante la ricerca del file: {0}."/>
       <text name="SearchCancelled" value="Ricerca annullata"/>
       <text name="SearchFinished" value="Ricerca terminata"/>
-      <text name="SearchStarted" value="Ricerca ha cominciato"/>
+      <text name="SearchStarted" value="Ricerca in corso"/>
       <text name="SearchSearching" value="Ricerca {0}"/>
-      <text name="SearchSearchingByPlugin" value="Plugin {0} è stato utilizzato per cercare il file." />
+      <text name="SearchSearchingByPlugin" value="È stato utilizzato il plugin {0} per cercare il file." />
       <text name="SearchExplorerItem" value="Ricerca con {0}..."/>
 
       <text name="ResultsPreviewSpacerText" value="(21)"/>
       <text name="ResultsPreviewText" value="&#x9;Esempio di visualizzazione della riga e della corrispondenza trovata"/>
       <text name="ResultsPreviewTextMatch" value="corrispondenza trovata"/>
-      <text name="ResultsPreviewLargeBinaryFile" value="Questo è un file di grandi dimensioni o binario, sei sicuro che si desidera visualizzare l'intero file?"/>
+      <text name="ResultsPreviewLargeBinaryFile" value="Questo è un file di grandi dimensioni o binario, sei sicuro di voler visualizzare l'intero file?"/>
       
       <text name="ColorOtherText" value="&amp;Personalizza..."/>
       <!-- todo: color names -->
       
       <text name="TextEditorsErrorNoCmdLineForFile" value="Non è stato specificato alcun argomento della riga di comando per il nome file. &#xD;&#xA; Specificare l'argomento del file in Strumenti->Opzioni."/>
       <text name="TextEditorsErrorGeneric" value="Errore durante la modifica del file {0}.&#xD;&#xA; È stato rilevato il seguente problema: {1}"/>
-      <text name="TextEditorsBrowseTitle" value="Selezionare l'eseguibile dell'editor di testo"/>
+      <text name="TextEditorsBrowseTitle" value="Selezionare l'eseguibile per l'editor di testo"/>
       <text name="TextEditorsAllTypesDefined" value="L'editor di testo per 'tutti i tipi di file' è già stato specificato."/>
       <text name="TextEditorsColumnFileType" value="Tipo file"/>
       <text name="TextEditorsColumnLocation" value="Editor di testo"/>
       <text name="TextEditorsColumnCmdLine" value="Riga di comando"/>
-      <text name="TextEditorsColumnTabSize" value="scheda Dimensioni"/>
+      <text name="TextEditorsColumnTabSize" value="Tabulazione"/>
       <text name="TextEditorsErrorNoEditor" value="Si prega di definire un editor di testo."/>
       <text name="TextEditorsErrorFileTypeExists" value="Il tipo di file esiste già. Si prega di riprovare."/>
       
@@ -286,10 +286,10 @@
       <text name="ResultsStatusTotalCount" value="Totale: {0}"/>
       <text name="ResultsStatusFileCount" value="File: {0}"/>
       <text name="ResultsStatusFilterCount" value="Esclusioni: {0}"/>
-      <text name="ResultsStatusErrorCount" value="Errore: {0}"/>
+      <text name="ResultsStatusErrorCount" value="Errori: {0}"/>
 
-      <text name="ResultsContextMenu.OpenFileCurrentLine" value="Apri il file in linea corrente"/>
-      <text name="ResultsContextMenu.Copy" value="Copiare"/>
+      <text name="ResultsContextMenu.OpenFileCurrentLine" value="Apri il file alla linea corrente"/>
+      <text name="ResultsContextMenu.Copy" value="Copia"/>
       <text name="ResultsContextMenu.SelectAll" value="Seleziona tutto"/>
       
       <text name="PluginsColumnEnabled" value="Attivato"/>
@@ -297,67 +297,67 @@
       <text name="PluginsColumnExtensions" value="Estensioni"/>
 
       <text name="Update.Current" value="{0} è aggiornato ({1})"/>
-      <text name="Update.NewVersion" value="Versione {1} {0} è disponibile."/>
-      <text name="Update.Latest" value="Scarica {0} aggiornamento {1}"/>
-      <text name="Update.Error" value="Aggiornamento non riuscito"/>
+      <text name="Update.NewVersion" value="È disponibile la versione {1} di {0}."/>
+      <text name="Update.Latest" value="Scarica l'aggiornamento {1} di {0}"/>
+      <text name="Update.Error" value="Controllo aggiornamento non riuscito"/>
 
-      <text name="Exclusions.Enabled" value="attivato"/>
-      <text name="Exclusions.Category" value="categoria"/>
-      <text name="Exclusions.Type" value="tipo"/>
-      <text name="Exclusions.Value" value="valore"/>
-      <text name="Exclusions.Option" value="opzioni"/>
+      <text name="Exclusions.Enabled" value="Attivato"/>
+      <text name="Exclusions.Category" value="Categoria"/>
+      <text name="Exclusions.Type" value="Tipo"/>
+      <text name="Exclusions.Value" value="Valore"/>
+      <text name="Exclusions.Option" value="Opzioni"/>
 
       <text name="Exclusions.File" value="File"/>
-      <text name="Exclusions.Directory" value="Elenco"/>
+      <text name="Exclusions.Directory" value="Cartella"/>
 
       <text name="Exclusions.Name" value="Nome"/>
-      <text name="Exclusions.Path" value="Sentiero"/>
-      <text name="Exclusions.Hidden" value="è nascosto"/>
-      <text name="Exclusions.System" value="è sistema"/>
-      <text name="Exclusions.DateModified" value="data di modifica"/>
-      <text name="Exclusions.DateCreated" value="data di creazione"/>
-      <text name="Exclusions.Extension" value="estensione"/>
-      <text name="Exclusions.Size" value="dimensione"/>
-      <text name="Exclusions.Binary" value="è binario"/>
-      <text name="Exclusions.MinimumHitCount" value="Conte minimo"/>
-      <text name="Exclusions.ReadOnly" value="è di sola lettura"/>
+      <text name="Exclusions.Path" value="Percorso"/>
+      <text name="Exclusions.Hidden" value="Nascosto"/>
+      <text name="Exclusions.System" value="Sistema"/>
+      <text name="Exclusions.DateModified" value="Data di modifica"/>
+      <text name="Exclusions.DateCreated" value="Data di creazione"/>
+      <text name="Exclusions.Extension" value="Estensione"/>
+      <text name="Exclusions.Size" value="Dimensione"/>
+      <text name="Exclusions.Binary" value="Binario"/>
+      <text name="Exclusions.MinimumHitCount" value="Conteggio minimo"/>
+      <text name="Exclusions.ReadOnly" value="Sola lettura"/>
 
       <text name="Exclusions.None" value=""/>
-      <text name="Exclusions.Equals" value="es igual a"/>
-      <text name="Exclusions.Contains" value="contiene"/>
-      <text name="Exclusions.StartsWith" value="comienza con"/>
-      <text name="Exclusions.EndsWith" value="extremos con"/>
-      <text name="Exclusions.NotEquals" value="non uguali"/>
-      <text name="Exclusions.GreaterThan" value="maggiore di"/>
-      <text name="Exclusions.GreaterThanEquals" value="maggiore di uguale"/>
-      <text name="Exclusions.LessThan" value="meno di"/>
-      <text name="Exclusions.LessThanEquals" value="meno uguali"/>
-      <text name="Exclusions.IgnoreCase" value=" (maiuscole e minuscole)"/>
+      <text name="Exclusions.Equals" value="Uguale a"/>
+      <text name="Exclusions.Contains" value="Contiene"/>
+      <text name="Exclusions.StartsWith" value="Inizia con"/>
+      <text name="Exclusions.EndsWith" value="Finisce con"/>
+      <text name="Exclusions.NotEquals" value="Non uguale a"/>
+      <text name="Exclusions.GreaterThan" value="Maggiore di"/>
+      <text name="Exclusions.GreaterThanEquals" value="Maggiore o uguale di"/>
+      <text name="Exclusions.LessThan" value="Minore di"/>
+      <text name="Exclusions.LessThanEquals" value="Minore o uguale di"/>
+      <text name="Exclusions.IgnoreCase" value=" (ignora maiuscole e minuscole)"/>
 
       <text name="Exclusions.Error.NoCategory" value="Seleziona una categoria."/>
-      <text name="Exclusions.Error.NoType" value="Por favor, seleccione un tipo."/>
-      <text name="Exclusions.Error.NoValue" value="Por favor, introduzca un valor."/>
+      <text name="Exclusions.Error.NoType" value="Prego, seleziona un tipo."/>
+      <text name="Exclusions.Error.NoValue" value="Prego, seleziona un valore."/>
       <!--<text name="Exclusions.Error.InvalidExtensionFormat" value="Archivo no válido formato de extensión. El formato es .xxx"/>-->
-      <text name="Exclusions.Error.InvalidOptions" value="Por favor, seleccione un valor de las opciones válidas."/>
-      <text name="Exclusions.Error.TypeCategoryLimit" value="Siamo spiacenti, non si può avere più di 1 {0} digitare sotto il {1} categoria."/>
+      <text name="Exclusions.Error.InvalidOptions" value="Prego, seleziona un valore valido per le opzioni."/>
+      <text name="Exclusions.Error.TypeCategoryLimit" value="Siamo spiacenti, non si può avere più di 1 di tipo {0} sotto la categoria {1}."/>
 
-      <text name="ExclusionErrorMessageText" value="La ricerca ha prodotto elementi che sono stati esclusi sia o ha causato un errore. &#xA;È possibile visualizzare questi elementi con un doppio clic sulla voce relativa barra di stato in basso a destra. &#xA;&#xA;È possibile disattivare questo messaggio nelle opzioni."/>
+      <text name="ExclusionErrorMessageText" value="La ricerca ha prodotto elementi che sono stati esclusi o hanno causato un errore. &#xA;È possibile visualizzare questi elementi con un doppio clic sulla voce relativa nella barra di stato in basso a destra. &#xA;&#xA;È possibile disattivare questo messaggio nelle opzioni."/>
 
-      <text name="LogDisplay.Column.Date" value="data"/>
-      <text name="LogDisplay.Column.Type" value="tipo"/>
-      <text name="LogDisplay.Column.Value" value="valore"/>
-      <text name="LogDisplay.Column.Details" value="dettagli"/>
+      <text name="LogDisplay.Column.Date" value="Data"/>
+      <text name="LogDisplay.Column.Type" value="Tipo"/>
+      <text name="LogDisplay.Column.Value" value="Valore"/>
+      <text name="LogDisplay.Column.Details" value="Dettagli"/>
       <text name="LogDisplay.Status" value="Stato"/>
-      <text name="LogDisplay.Exclusion" value="Esclusioni"/>
+      <text name="LogDisplay.Exclusion" value="Esclusione"/>
       <text name="LogDisplay.Error" value="Errore"/>
 
-      <text name="FileEncoding.Enabled" value="attivato"/>
+      <text name="FileEncoding.Enabled" value="Attivato"/>
       <text name="FileEncoding.FilePath" value="Percorso file"/>
       <text name="FileEncoding.Encoding" value="Codifica"/>
-      <text name="FileEncoding.Performance.Speed" value="velocità"/>
-      <text name="FileEncoding.Performance.Default" value="difetto"/>
-      <text name="FileEncoding.Performance.Accuracy" value="accuratezza"/>
-      <text name="FileEncoding.CacheCleared" value="Cache eliminato con successo."/>
+      <text name="FileEncoding.Performance.Speed" value="Velocità"/>
+      <text name="FileEncoding.Performance.Default" value="Predefinita"/>
+      <text name="FileEncoding.Performance.Accuracy" value="Accuratezza"/>
+      <text name="FileEncoding.CacheCleared" value="Cache eliminata con successo."/>
    </generic>
    
 </language>

@@ -1048,8 +1048,9 @@ namespace libAstroGrep
       /// </summary>
       /// <history>
       /// [Curtis_Beard]		03/05/2015	FIX: 64/35, add = as valid start/end text
+      /// [Curtis_Beard]		10/26/2015	FIX: 86, add tab character
       /// </history>
-      static readonly List<string> validTexts = new List<string> { " ", "<", ">", "$", "+", "*", "[", "]", "{", "}", "(", ")", ".", "?", "!", ",", ":", ";", "-", "\\", "/", "'", "\"", Environment.NewLine, "\r\n", "\r", "\n", "=" };
+      static readonly List<string> validTexts = new List<string> { " ", "<", ">", "$", "+", "*", "[", "]", "{", "}", "(", ")", ".", "?", "!", ",", ":", ";", "-", "\\", "/", "'", "\"", Environment.NewLine, "\r\n", "\r", "\n", "=", "\t" };
 
       /// <summary>
       /// Validate a start/end text.

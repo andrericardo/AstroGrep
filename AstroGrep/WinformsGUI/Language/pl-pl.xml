@@ -15,6 +15,7 @@
       <control name="chkCaseSensitive" value="Wielkość &amp;liter" tooltip="Znajduj litery odpowiednio dużej lub małej wielkości" />
       <control name="chkRegularExpressions" value="Wyrażenia &amp;regularne" tooltip="Używaj &quot;wyrażeń regularnych&quot; do sprawdzania" />
       <control name="chkAllResultsAfterSearch" value="Pokaż wszystkie wyniki &amp;wyszukiwania" tooltip="Wyświetla wszystkie wyniki wyszukiwania w jednym wspólnym poglądzie." />
+      <control name="chkSearchInResults" value="Szukaj w wynikach" tooltip="Wykonaj wyszukiwanie w obrębie aktualnie wyświetlanej listy plików Wyniki" />
       <control name="lblSearchOptions" value="Opcje wyszukiwania" />
       <control name="picBrowse" tooltip="Przeglądaj..." />
       <control name="lnkExclusions" value="Wyjątki" />
@@ -35,9 +36,7 @@
          <menuitem index="10" value="-" />
          <menuitem index="11" value="Usuń z listy" />
       </control>
-      <control name="btnSearch" value="&amp;Szukaj">
-         <menuitem index="0" value="Szukaj w wynikach"/>
-      </control>
+      <control name="btnSearch" value="&amp;Szukaj" />
 
       <menu index="0" value="&amp;Plik">
          <menuitem index="0" value="Nowe &amp;okno" />
@@ -245,6 +244,7 @@
       <text name="VerifyErrorInvalidRegEx" value="Podane wyrażenie regularne ({0}) jest niepoprawne.  Proszę je poprawić."/>
       <text name="VerifyErrorGeneric" value="Nie można zweryfikować podanych parametrów.  Proszę sprawdzić, czy są poprawne."/>
       <text name="VerifyErrorFileHitCount" value="Minimalna ilość plików musi być większa lub równa {0}."/>
+      <text name="VerifyErrorNoResultsToSearchIn" value="Nie ma wyników do przeszukania, należy odznaczyć 'Szukaj w wynikach', aby wykonać nowe wyszukiwanie."/>
       
       <text name="SearchGenericError" value="Podczas wyszukiwania wystąpił błąd."/>
       <text name="SearchFileError" value="Podczas przeszukiwania pliku wystąpił błąd: {0}."/>

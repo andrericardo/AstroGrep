@@ -15,6 +15,7 @@
       <control name="chkCaseSensitive" value="Cas&amp;o sensible" tooltip="La mayúscula y minúscula del fósforo pone letras exactamente" />
       <control name="chkRegularExpressions" value="&amp;Expresiones regulares" tooltip="Utilizar emparejar regular de la expresión" />
       <control name="chkAllResultsAfterSearch" value="&amp;Mostrar todos los resultados" tooltip="Muestra todos los resultados juntos en la vista previa después de una búsqueda." />
+      <control name="chkSearchInResults" value="Buscar en los resultados" tooltip="Efectuar la búsqueda dentro de la lista de archivos que se muestra actualmente resultados" />
       <control name="lblSearchOptions" value="Opciones de la búsqueda" />
       <control name="picBrowse" tooltip="Hojear..." />
       <control name="lnkExclusions" value="Exclusiones" />
@@ -35,9 +36,7 @@
          <menuitem index="10" value="-" />
          <menuitem index="11" value="Eliminar de la lista" />
       </control>
-      <control name="btnSearch" value="&amp;Búsqueda">
-         <menuitem index="0" value="Buscar en los resultados" />
-      </control>
+      <control name="btnSearch" value="&amp;Búsqueda" />
       
       <menu index="0" value="&amp;Archivo">
          <menuitem index="0" value="&amp;Nueva ventana" />
@@ -246,6 +245,7 @@
       <text name="VerifyErrorInvalidRegEx" value="La expresión regular que ha proporcionado no es válido ({0}). Verifique por favor su expresión."/>
       <text name="VerifyErrorGeneric" value="Unable to validate specified parameters.  Please verify they are valid."/>
       <text name="VerifyErrorFileHitCount" value="El número mínimo de archivo debe ser mayor que o igual a {0}."/>
+      <text name="VerifyErrorNoResultsToSearchIn" value="No hay resultados para la búsqueda, por favor anule la selección de 'Buscar en resultados' para realizar una nueva búsqueda."/>
       
       <text name="SearchGenericError" value="Un error ocurrió buscando."/>
       <text name="SearchFileError" value="Un error ocurrió buscando el archivo: {0}."/>

@@ -15,6 +15,7 @@
       <control name="chkCaseSensitive" value="&amp;Groß-/Kleinschreibung beachten" tooltip="Achtet genau auf groß- und kleingeschriebene Buchstaben" />
       <control name="chkRegularExpressions" value="Reguläre &amp;Ausdrücke" tooltip="Benutzt &quot;Reguläre Ausdrücke&quot; zur Suche" />
       <control name="chkAllResultsAfterSearch" value="&amp;Alle Ergebnisse anzeigen Suche nach" tooltip="Einen Überblick über die Ergebnisse zusammen in der Vorschau nach einer Suche." />
+      <control name="chkSearchInResults" value="Suche in den Ergebnissen" tooltip="Suche starten innerhalb aktuell angezeigten Ergebnisse Dateiliste" />
       <control name="lblSearchOptions" value="Such-Einstellungen" />
       <control name="picBrowse" tooltip="Durchsuchen..." />
       <control name="lnkExclusions" value="Ausschlüsse" />
@@ -35,9 +36,7 @@
          <menuitem index="10" value="-" />
          <menuitem index="11" value="Aus Liste entfernen" />
       </control>
-      <control name="btnSearch" value="&amp;Suchen">
-         <menuitem index="0" value="Suche in den Ergebnissen" />
-      </control>
+      <control name="btnSearch" value="&amp;Suchen" />
       
       <menu index="0" value="&amp;Datei">
          <menuitem index="0" value="neues &amp;Fenster" />
@@ -246,6 +245,7 @@
       <text name="VerifyErrorInvalidRegEx" value="Der reguläre Ausdruck Sie ist ungültig ({0}). Bitte überprüfen Sie Ihren Ausdruck."/>
       <text name="VerifyErrorGeneric" value="Die angegebenen Parameter können nicht bestätigt werden. Bitte überprüfen Sie deren Korrektheit."/>
       <text name="VerifyErrorFileHitCount" value="Die minimale Dateianzahl muss größer als oder gleich {0} sein."/>
+      <text name="VerifyErrorNoResultsToSearchIn" value="Es wurden keine Ergebnisse sind in zu suchen, deaktivieren Sie bitte 'Suche in den Ergebnissen', um eine neue Suche zu starten."/>
 
       <text name="SearchGenericError" value="Ein Fehler trat während des Suchens auf."/>
       <text name="SearchFileError" value="Ein Fehler trat während des Suchens in der Date {0} auf."/>

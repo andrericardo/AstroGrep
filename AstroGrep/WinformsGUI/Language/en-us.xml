@@ -13,8 +13,9 @@
       <control name="chkRecurse" value="Search Su&amp;bfolders" tooltip="Search in subfolders" />
       <control name="chkWholeWordOnly" value="&amp;Whole Word" tooltip="Only match entire words (not parts of words)" />
       <control name="chkCaseSensitive" value="&amp;Case Sensitive" tooltip="Match upper and lower case letters exactly" />
-      <control name="chkRegularExpressions" value="Regular &amp;Expressions" tooltip="Use &quot;regular expression&quot; matching" />
-      <control name="chkAllResultsAfterSearch" value="&amp;Show all results after search" tooltip="Shows all the results together in the preview after a search." />
+      <control name="chkRegularExpressions" value="Regular E&amp;xpressions" tooltip="Use &quot;regular expression&quot; matching" />
+      <control name="chkAllResultsAfterSearch" value="Show &amp;all results after search" tooltip="Shows all the results together in the preview after a search." />
+      <control name="chkSearchInResults" value="Search &amp;in results" tooltip="Perform search within currently displayed results file list" />
       <control name="lblSearchOptions" value="Search Options" />
       <control name="picBrowse" tooltip="Browse..." />
       <control name="lnkExclusions" value="Exclusions" />
@@ -35,9 +36,7 @@
          <menuitem index="10" value="-" />
          <menuitem index="11" value="Remove from list" />
       </control>
-      <control name="btnSearch" value="&amp;Search">
-         <menuitem index="0" value="Search in results"/>
-      </control>
+      <control name="btnSearch" value="&amp;Search" />
 
       <menu index="0" value="&amp;File">
          <menuitem index="0" value="&amp;New Window" />
@@ -245,7 +244,8 @@
       <text name="VerifyErrorInvalidRegEx" value="The regular expression you supplied is invalid ({0}).  Please verify your expression."/>
       <text name="VerifyErrorGeneric" value="Unable to validate specified parameters.  Please verify they are valid."/>
       <text name="VerifyErrorFileHitCount" value="The minimum file count must be greater than or equal to {0}."/>
-      
+      <text name="VerifyErrorNoResultsToSearchIn" value="There are no results to search in, please deselect 'Search in results' to perform a new search."/>
+
       <text name="SearchGenericError" value="An error occurred searching."/>
       <text name="SearchFileError" value="An error occurred searching file: {0}."/>
       <text name="SearchCancelled" value="Search Cancelled"/>

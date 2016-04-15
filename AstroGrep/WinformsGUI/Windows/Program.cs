@@ -49,6 +49,7 @@ namespace AstroGrep.Windows
       /// [Curtis_Beard]     09/26/2012	CHG: 3572487, detect command line arg for displaying help and show dialog with options
       /// [Curtis_Beard]	  04/08/2015	CHG: add logging
       /// [Curtis_Beard]	  06/02/2015	CHG: add portable to starting log message if enabled
+      /// [Curtis_Beard]	  09/11/2015	CHG: add operating system to log file
       /// </history>
       [STAThread]
       static void Main()
@@ -66,6 +67,8 @@ namespace AstroGrep.Windows
                ProductInformation.ApplicationName, 
                ProductInformation.ApplicationVersion.ToString(3),
                ProductInformation.IsPortable ? " (Portable)" : string.Empty);
+
+            LogClient.Instance.Logger.Info("Operating System: {0}", Environment.OSVersion.VersionString);
 
             Legacy.ConvertLanguageValue();
             Language.Load(AstroGrep.Core.GeneralSettings.Language);

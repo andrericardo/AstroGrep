@@ -429,29 +429,14 @@ namespace AstroGrep.Windows.Forms
       /// [Theodore_Ward]       ??/??/????  Initial
       /// [Curtis_Beard]	    01/11/2005	.Net Conversion
       /// [Curtis_Beard]	    10/30/2012	ADD: 28, search within results
+      /// [Curtis_Beard]	    10/27/2015	FIX: 78, adjust search in results
       /// </history>
       private void btnSearch_Click(object sender, System.EventArgs e)
       {
          if (!VerifyInterface())
             return;
 
-         StartSearch(false);
-      }
-
-      /// <summary>
-      /// Search in Results Event
-      /// </summary>
-      /// <param name="sender">system parameter</param>
-      /// <param name="e">system parameter</param>
-      /// <history>
-      /// [Curtis_Beard]	    10/30/2012	ADD: 28, search within results
-      /// </history>
-      private void mnuSearchInResults_Click(object sender, EventArgs e)
-      {
-         if (!VerifyInterface())
-            return;
-
-         StartSearch(true);
+         StartSearch(chkSearchInResults.Checked);
       }
 
       /// <summary>
@@ -493,6 +478,7 @@ namespace AstroGrep.Windows.Forms
       /// [Curtis_Beard]	   02/24/2012	CHG: 3488322, use hand cursor for results view to signal click
       /// [Curtis_Beard]	   09/28/2012	CHG: only attempt file show when 1 item is selected (prevents flickering and loading on all deselect)
       /// [Curtis_Beard]	   02/24/2015	CHG: remove isSearching check so that you can view selected file during a search
+      /// [Curtis_Beard]	   10/27/2015	FIX: 78, clear content area when nothing selected
       /// </history>
       private void lstFileNames_SelectedIndexChanged(object sender, System.EventArgs e)
       {
@@ -516,6 +502,7 @@ namespace AstroGrep.Windows.Forms
          if (lstFileNames.SelectedItems.Count == 0)
          {
             SetStatusBarEncoding(string.Empty);
+            txtHits.Clear();
          }
       }
 
@@ -869,7 +856,7 @@ namespace AstroGrep.Windows.Forms
             if (API.GetCurrentDPIFontScalingSize(graphics) == API.DPIFontScalingSizes.Medium)
             {
                LogClient.Instance.Logger.Info("Adjusting display for font scaling mode medium.");
-               btnCancel.Height += 3;// fixes issue where cancel button isn't same height as search
+               //btnCancel.Height += 3;// fixes issue where cancel button isn't same height as search
                
                // fixes issue with cutoff text in search panel area, making it bigger
                splitLeftRight.MinSize = Constants.DEFAULT_SEARCH_PANEL_WIDTH_MEDIUM_FONT;
@@ -1081,6 +1068,7 @@ namespace AstroGrep.Windows.Forms
       /// [Curtis_Beard]	   08/01/2012	FIX: 3553252, use | character for path delimitation character
       /// [Curtis_Beard]	   09/27/2012	FIX: 1881938, validate regular expression
       /// [Curtis_Beard]	   02/12/2014	ADD: check for empty minimum file count, use tryparse instead of try/catch for context lines
+      /// [Curtis_Beard]	   10/27/2015	FIX: 78, adjust search in results
       /// </history>
       private bool VerifyInterface()
       {
@@ -1117,6 +1105,13 @@ namespace AstroGrep.Windows.Forms
                      ProductInformation.ApplicationName, MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                   return false;
                }
+            }
+
+            if (chkSearchInResults.Checked && lstFileNames.Items.Count == 0)
+            {
+               MessageBox.Show(Language.GetGenericText("VerifyErrorNoResultsToSearchIn"),
+                  ProductInformation.ApplicationName, MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+               return false;
             }
 
             //if (cboSearchForText.Text.Trim().Equals(string.Empty))
@@ -1434,6 +1429,7 @@ namespace AstroGrep.Windows.Forms
       /// [Curtis_Beard]	   07/25/2006	ADD: enable/disable context lines label
       /// [Curtis_Beard]	   10/30/2012	ADD: 28, search within results
       /// [Curtis_Beard]	   05/14/2015	CHG: use ToolStripMenuItem instead of MenuItem
+      /// [Curtis_Beard]	    10/27/2015	FIX: 78, adjust search in results
       /// </history>
       private void SetSearchState(bool enable)
       {
@@ -1450,7 +1446,6 @@ namespace AstroGrep.Windows.Forms
          ToolsMenu.Enabled = enable;
          HelpMenu.Enabled = enable;
 
-         btnSearch.ContextMenu.MenuItems[0].Enabled = (enable && lstFileNames.Items.Count > 0);
          btnSearch.Enabled = enable;
          btnCancel.Enabled = !enable;
          picBrowse.Enabled = enable;
@@ -3489,6 +3484,7 @@ namespace AstroGrep.Windows.Forms
       /// <history>
       /// [Curtis_Beard]		09/26/2012	Created
       /// [Curtis_Beard]		10/22/2012	CHG: use yellow background color to alert user
+      /// [Curtis_Beard]		04/07/2016	CHG: use control for system color when no errors
       /// </history>
       private void SetStatusBarFilterCount(int count)
       {
@@ -3500,7 +3496,7 @@ namespace AstroGrep.Windows.Forms
          }
 
          sbFilterCountPanel.Text = string.Format(Language.GetGenericText("ResultsStatusFilterCount"), count);
-         sbFilterCountPanel.BackColor = count > 0 ? Color.Yellow : SystemColors.Window;
+         sbFilterCountPanel.BackColor = count > 0 ? Color.Yellow : SystemColors.Control;
       }
 
       /// <summary>
@@ -3510,6 +3506,7 @@ namespace AstroGrep.Windows.Forms
       /// <history>
       /// [Curtis_Beard]		07/02/2007	Created
       /// [Curtis_Beard]		10/22/2012	CHG: use red background color to alert user
+      /// [Curtis_Beard]		04/07/2016	CHG: use control for system color when no errors
       /// </history>
       private void SetStatusBarErrorCount(int count)
       {
@@ -3521,7 +3518,7 @@ namespace AstroGrep.Windows.Forms
          }
 
          sbErrorCountPanel.Text = string.Format(Language.GetGenericText("ResultsStatusErrorCount"), count);
-         sbErrorCountPanel.BackColor = count > 0 ? Color.Red : SystemColors.Window;
+         sbErrorCountPanel.BackColor = count > 0 ? Color.Red : SystemColors.Control;
       }
 
       /// <summary>
@@ -3576,6 +3573,7 @@ namespace AstroGrep.Windows.Forms
       /// [Curtis_Beard]		12/17/2014	ADD: support for Win7+ taskbar progress
       /// [Curtis_Beard]		02/24/2015	CHG: remove isSearching check so that you can view selected file during a search
       /// [Curtis_Beard]		05/26/2015  CHG: add stop search messsage to log with time
+      /// [Curtis_Beard]		04/12/2016  FIX: 78, use selected items for search in results if available
       /// </history>
       private void StartSearch(bool searchWithInResults)
       {
@@ -3583,14 +3581,23 @@ namespace AstroGrep.Windows.Forms
          {
             string path = cboFilePath.Text.Trim();
 
-            string[] filePaths = null;
+            List<string> filePaths = new List<string>();
             if (searchWithInResults)
             {
-               // get currently listed file paths from ListView
-               filePaths = new string[lstFileNames.Items.Count];
-               for (int i = 0; i < lstFileNames.Items.Count; i++)
+               // get currently listed file paths from ListView either by selection or all
+               if (lstFileNames.SelectedItems != null && lstFileNames.SelectedItems.Count > 0)
                {
-                  filePaths[i] = Path.Combine(lstFileNames.Items[i].SubItems[Constants.COLUMN_INDEX_DIRECTORY].Text, lstFileNames.Items[i].SubItems[Constants.COLUMN_INDEX_FILE].Text);
+                  for (int i = 0; i < lstFileNames.SelectedItems.Count; i++)
+                  {
+                     filePaths.Add(Path.Combine(lstFileNames.SelectedItems[i].SubItems[Constants.COLUMN_INDEX_DIRECTORY].Text, lstFileNames.SelectedItems[i].SubItems[Constants.COLUMN_INDEX_FILE].Text));
+                  }
+               }
+               else
+               {
+                  for (int i = 0; i < lstFileNames.Items.Count; i++)
+                  {
+                     filePaths.Add(Path.Combine(lstFileNames.Items[i].SubItems[Constants.COLUMN_INDEX_DIRECTORY].Text, lstFileNames.Items[i].SubItems[Constants.COLUMN_INDEX_FILE].Text));
+                  }
                }
             }
 
@@ -3619,7 +3626,7 @@ namespace AstroGrep.Windows.Forms
 
             // setup structs to pass to grep
             var fileFilterSpec = GetFilterSpecFromUI();
-            var searchSpec = GetSearchSpecFromUI(path, fileFilterSpec.FileFilter, filePaths);
+            var searchSpec = GetSearchSpecFromUI(path, fileFilterSpec.FileFilter, filePaths.ToArray());
 
             // create new grep instance
             __Grep = new Grep(searchSpec, fileFilterSpec);
@@ -3966,8 +3973,8 @@ namespace AstroGrep.Windows.Forms
       /// Setup the context menu for the results area.
       /// </summary>
       /// <history>
-      /// [Curtis_Beard]        10/10/2012  Initial: 3575509, show copy/select all context menu
-      /// [Curtis_Beard]        04/08/2015  CHG: changes for CustomTextEditor
+      /// [Curtis_Beard]      10/10/2012  Initial: 3575509, show copy/select all context menu
+      /// [Curtis_Beard]      04/08/2015  CHG: changes for CustomTextEditor
       /// </history>
       private void AddContextMenuForResults()
       {
@@ -4103,8 +4110,8 @@ namespace AstroGrep.Windows.Forms
       /// </history>
       private void menu_ContextMenuOpening(object sender, System.Windows.Controls.ContextMenuEventArgs e)
       {
+         // enable open at menu item
          var opener = GetEditorAtLocation(txtHits.GetPositionFromRightClickPoint());
-
          ((sender as TextEditorEx).ContextMenu.Items[0] as System.Windows.Controls.MenuItem).IsEnabled = opener.HasValue();
       }
 

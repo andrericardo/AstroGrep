@@ -17,7 +17,7 @@ namespace AstroGrep.Windows.Forms
       private System.Windows.Forms.ComboBox cboFileName;
       private System.Windows.Forms.ComboBox cboFilePath;
       private System.Windows.Forms.Button btnCancel;
-      private AstroGrep.Windows.Controls.SplitButton btnSearch;
+      private System.Windows.Forms.Button btnSearch;
       private System.Windows.Forms.Panel pnlSearchOptions;
       private System.Windows.Forms.Panel pnlMainSearch;
       private System.Windows.Forms.Label lblSearchText;
@@ -43,6 +43,7 @@ namespace AstroGrep.Windows.Forms
       private System.Windows.Forms.CheckBox chkRecurse;
       private System.Windows.Forms.CheckBox chkFileNamesOnly;
       private System.Windows.Forms.CheckBox chkRegularExpressions;
+      private System.Windows.Forms.CheckBox chkSearchInResults;
       private System.Windows.Forms.CheckBox chkWholeWordOnly;
       private System.Windows.Forms.NumericUpDown txtContextLines;
       private System.Windows.Forms.Label lblContextLines;
@@ -60,11 +61,9 @@ namespace AstroGrep.Windows.Forms
       private System.Windows.Forms.MenuItem FileCopyMenuItem;
       private System.Windows.Forms.MenuItem FileDeleteMenuItem;
       private System.Windows.Forms.MenuItem menuItem6;
-      private System.Windows.Forms.MenuItem MenuBtnSearch;
       private System.Windows.Forms.ImageList ListViewImageList;
       private AstroGrep.Windows.Controls.PictureButton picBrowse;      
       private System.Windows.Forms.ContextMenu fileLstMnu;      
-      private System.Windows.Forms.ContextMenu ctxMenuBtnSearch;
       private System.Windows.Forms.CheckBox chkAllResultsAfterSearch;      
 
       private MenuStrip MainMenu;
@@ -131,6 +130,7 @@ namespace AstroGrep.Windows.Forms
          this.txtContextLines = new System.Windows.Forms.NumericUpDown();
          this.chkWholeWordOnly = new System.Windows.Forms.CheckBox();
          this.chkRegularExpressions = new System.Windows.Forms.CheckBox();
+         this.chkSearchInResults = new CheckBox();
          this.chkNegation = new System.Windows.Forms.CheckBox();
          this.chkFileNamesOnly = new System.Windows.Forms.CheckBox();
          this.chkRecurse = new System.Windows.Forms.CheckBox();
@@ -139,7 +139,7 @@ namespace AstroGrep.Windows.Forms
          this.lnkExclusions = new System.Windows.Forms.LinkLabel();
          this.pnlMainSearch = new System.Windows.Forms.Panel();
          this.picBrowse = new AstroGrep.Windows.Controls.PictureButton();
-         this.btnSearch = new Windows.Controls.SplitButton();
+         this.btnSearch = new Button();
          this.btnCancel = new System.Windows.Forms.Button();
          this.cboFilePath = new System.Windows.Forms.ComboBox();
          this.cboFileName = new System.Windows.Forms.ComboBox();
@@ -178,8 +178,6 @@ namespace AstroGrep.Windows.Forms
          this.FileCopyMenuItem = new System.Windows.Forms.MenuItem();
          this.FileDeleteMenuItem = new System.Windows.Forms.MenuItem();
          this.menuItem6 = new System.Windows.Forms.MenuItem();
-         this.ctxMenuBtnSearch = new System.Windows.Forms.ContextMenu();
-         this.MenuBtnSearch = new MenuItem();
          this.chkAllResultsAfterSearch = new CheckBox();
 
          this.MainMenu = new MenuStrip();
@@ -246,10 +244,6 @@ namespace AstroGrep.Windows.Forms
          ((System.ComponentModel.ISupportInitialize)(this.picBrowse)).BeginInit();
          this.pnlRightSide.SuspendLayout();
          this.SuspendLayout();
-
-         this.MenuBtnSearch.Text = "Search in results";
-         this.MenuBtnSearch.Click += mnuSearchInResults_Click;
-         this.ctxMenuBtnSearch.MenuItems.Add(this.MenuBtnSearch);
 
          this.MainMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.FileMenu,
@@ -458,7 +452,7 @@ namespace AstroGrep.Windows.Forms
          this.pnlSearchOptions.Controls.Add(this.lblSearchOptions);
          this.pnlSearchOptions.Location = new System.Drawing.Point(16, 209);
          this.pnlSearchOptions.Name = "pnlSearchOptions";
-         this.pnlSearchOptions.Size = new System.Drawing.Size(200, 270);
+         this.pnlSearchOptions.Size = new System.Drawing.Size(200, 290);
          this.pnlSearchOptions.Padding = new Padding(0, 15, 0, 0);
          this.pnlSearchOptions.TabIndex = 1;
          // 
@@ -472,13 +466,14 @@ namespace AstroGrep.Windows.Forms
          this.PanelOptionsContainer.Controls.Add(this.txtContextLines);
          this.PanelOptionsContainer.Controls.Add(this.chkWholeWordOnly);
          this.PanelOptionsContainer.Controls.Add(this.chkRegularExpressions);
+         this.PanelOptionsContainer.Controls.Add(this.chkSearchInResults);
          this.PanelOptionsContainer.Controls.Add(this.chkNegation);
          this.PanelOptionsContainer.Controls.Add(this.chkFileNamesOnly);
          this.PanelOptionsContainer.Controls.Add(this.chkRecurse);
          this.PanelOptionsContainer.Controls.Add(this.chkCaseSensitive);
          this.PanelOptionsContainer.Location = new System.Drawing.Point(0, 40);
          this.PanelOptionsContainer.Name = "PanelOptionsContainer";
-         this.PanelOptionsContainer.Size = new System.Drawing.Size(200, 240);
+         this.PanelOptionsContainer.Size = new System.Drawing.Size(200, 251);
          this.PanelOptionsContainer.TabIndex = 1;
          // 
          // lblContextLines
@@ -486,7 +481,7 @@ namespace AstroGrep.Windows.Forms
          this.lblContextLines.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
                      | System.Windows.Forms.AnchorStyles.Right)));
          this.lblContextLines.FlatStyle = System.Windows.Forms.FlatStyle.System;
-         this.lblContextLines.Location = new System.Drawing.Point(56, 177);
+         this.lblContextLines.Location = new System.Drawing.Point(56, 205);
          this.lblContextLines.Name = "lblContextLines";
          this.lblContextLines.Size = new System.Drawing.Size(127, 20);
          this.lblContextLines.TabIndex = 8;
@@ -499,7 +494,7 @@ namespace AstroGrep.Windows.Forms
          this.chkAllResultsAfterSearch.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
                      | System.Windows.Forms.AnchorStyles.Right)));
          this.chkAllResultsAfterSearch.FlatStyle = System.Windows.Forms.FlatStyle.System;
-         this.chkAllResultsAfterSearch.Location = new System.Drawing.Point(7, 152);
+         this.chkAllResultsAfterSearch.Location = new System.Drawing.Point(7, 176);
          this.chkAllResultsAfterSearch.Name = "chkAllResultsAfterSearch";
          this.chkAllResultsAfterSearch.Size = new System.Drawing.Size(178, 16);
          this.chkAllResultsAfterSearch.AutoSize = true;
@@ -509,7 +504,7 @@ namespace AstroGrep.Windows.Forms
          // 
          // txtContextLines
          // 
-         this.txtContextLines.Location = new System.Drawing.Point(7, 177);
+         this.txtContextLines.Location = new System.Drawing.Point(7, 205);
          this.txtContextLines.Name = "txtContextLines";
          this.txtContextLines.Size = new System.Drawing.Size(41, 20);
          this.txtContextLines.TabIndex = 13;
@@ -520,7 +515,7 @@ namespace AstroGrep.Windows.Forms
          this.chkWholeWordOnly.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
                      | System.Windows.Forms.AnchorStyles.Right)));
          this.chkWholeWordOnly.FlatStyle = System.Windows.Forms.FlatStyle.System;
-         this.chkWholeWordOnly.Location = new System.Drawing.Point(7, 56);
+         this.chkWholeWordOnly.Location = new System.Drawing.Point(7, 80);
          this.chkWholeWordOnly.Name = "chkWholeWordOnly";
          this.chkWholeWordOnly.Size = new System.Drawing.Size(178, 16);
          this.chkWholeWordOnly.AutoSize = true;
@@ -533,7 +528,7 @@ namespace AstroGrep.Windows.Forms
          this.chkRegularExpressions.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
                      | System.Windows.Forms.AnchorStyles.Right)));
          this.chkRegularExpressions.FlatStyle = System.Windows.Forms.FlatStyle.System;
-         this.chkRegularExpressions.Location = new System.Drawing.Point(7, 8);
+         this.chkRegularExpressions.Location = new System.Drawing.Point(7, 32);
          this.chkRegularExpressions.Name = "chkRegularExpressions";
          this.chkRegularExpressions.Size = new System.Drawing.Size(178, 16);
          this.chkRegularExpressions.AutoSize = true;
@@ -541,12 +536,25 @@ namespace AstroGrep.Windows.Forms
          this.chkRegularExpressions.Text = "Regular &Expressions";
          this.toolTip1.SetToolTip(this.chkRegularExpressions, "Use \"regular expression\" matching");
          // 
+         // chkSearchInResults
+         // 
+         this.chkSearchInResults.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                     | System.Windows.Forms.AnchorStyles.Right)));
+         this.chkSearchInResults.FlatStyle = System.Windows.Forms.FlatStyle.System;
+         this.chkSearchInResults.Location = new System.Drawing.Point(7, 8);
+         this.chkSearchInResults.Name = "chkSearchInResults";
+         this.chkSearchInResults.Size = new System.Drawing.Size(178, 16);
+         this.chkSearchInResults.AutoSize = true;
+         this.chkSearchInResults.TabIndex = 6;
+         this.chkSearchInResults.Text = "Search in results";
+         this.toolTip1.SetToolTip(this.chkSearchInResults, "Search in results");
+         // 
          // chkNegation
          // 
          this.chkNegation.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
                      | System.Windows.Forms.AnchorStyles.Right)));
          this.chkNegation.FlatStyle = System.Windows.Forms.FlatStyle.System;
-         this.chkNegation.Location = new System.Drawing.Point(7, 128);
+         this.chkNegation.Location = new System.Drawing.Point(7, 152);
          this.chkNegation.Name = "chkNegation";
          this.chkNegation.Size = new System.Drawing.Size(178, 16);
          this.chkNegation.AutoSize = true;
@@ -560,7 +568,7 @@ namespace AstroGrep.Windows.Forms
          this.chkFileNamesOnly.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
                      | System.Windows.Forms.AnchorStyles.Right)));
          this.chkFileNamesOnly.FlatStyle = System.Windows.Forms.FlatStyle.System;
-         this.chkFileNamesOnly.Location = new System.Drawing.Point(7, 104);
+         this.chkFileNamesOnly.Location = new System.Drawing.Point(7, 128);
          this.chkFileNamesOnly.Name = "chkFileNamesOnly";
          this.chkFileNamesOnly.Size = new System.Drawing.Size(178, 16);
          this.chkFileNamesOnly.AutoSize = true;
@@ -575,7 +583,7 @@ namespace AstroGrep.Windows.Forms
          this.chkRecurse.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
                      | System.Windows.Forms.AnchorStyles.Right)));
          this.chkRecurse.FlatStyle = System.Windows.Forms.FlatStyle.System;
-         this.chkRecurse.Location = new System.Drawing.Point(7, 80);
+         this.chkRecurse.Location = new System.Drawing.Point(7, 104);
          this.chkRecurse.Name = "chkRecurse";
          this.chkRecurse.Size = new System.Drawing.Size(178, 16);
          this.chkRecurse.AutoSize = true;
@@ -588,7 +596,7 @@ namespace AstroGrep.Windows.Forms
          this.chkCaseSensitive.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
                      | System.Windows.Forms.AnchorStyles.Right)));
          this.chkCaseSensitive.FlatStyle = System.Windows.Forms.FlatStyle.System;
-         this.chkCaseSensitive.Location = new System.Drawing.Point(7, 32);
+         this.chkCaseSensitive.Location = new System.Drawing.Point(7, 56);
          this.chkCaseSensitive.Name = "chkCaseSensitive";
          this.chkCaseSensitive.Size = new System.Drawing.Size(178, 16);
          this.chkCaseSensitive.AutoSize = true;
@@ -615,7 +623,7 @@ namespace AstroGrep.Windows.Forms
          this.lnkExclusions.ActiveLinkColor = System.Drawing.SystemColors.HotTrack;
          this.lnkExclusions.FlatStyle = System.Windows.Forms.FlatStyle.System;
          this.lnkExclusions.LinkColor = System.Drawing.SystemColors.HotTrack;
-         this.lnkExclusions.Location = new System.Drawing.Point(5, 207);
+         this.lnkExclusions.Location = new System.Drawing.Point(5, 235);
          this.lnkExclusions.LinkBehavior = LinkBehavior.AlwaysUnderline;
          this.lnkExclusions.Name = "lnkExclusions";
          this.lnkExclusions.Size = new System.Drawing.Size(150, 16);
@@ -662,7 +670,6 @@ namespace AstroGrep.Windows.Forms
          this.btnSearch.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)));
          this.btnSearch.BackColor = System.Drawing.SystemColors.Control;
          this.btnSearch.FlatStyle = System.Windows.Forms.FlatStyle.Standard;
-         this.btnSearch.ShowSplit = true;
          this.btnSearch.Location = new System.Drawing.Point(7, 172);
          this.btnSearch.Name = "btnSearch";
          this.btnSearch.Size = new System.Drawing.Size(80, 23);
@@ -670,8 +677,6 @@ namespace AstroGrep.Windows.Forms
          this.btnSearch.Text = "&Search";
          this.btnSearch.UseVisualStyleBackColor = false;
          this.btnSearch.Click += new EventHandler(btnSearch_Click);
-         this.btnSearch.ContextMenu = ctxMenuBtnSearch;
-         this.btnSearch.ContextMenu.MenuItems[0].Enabled = false;
          // 
          // btnCancel
          // 
