@@ -1,4 +1,4 @@
-;--------------------------------
+﻿;--------------------------------
 ; AstroGrep.nsi
 ;
 ; It will install AstroGrep files 
