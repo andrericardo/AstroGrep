@@ -6,6 +6,10 @@ using System.Text;
 using libAstroGrep;
 using libAstroGrep.EncodingDetection;
 
+using AstroGrep.Common;
+using System.Xml.Serialization;
+using System.IO;
+
 namespace AstroGrep.Core
 {
    /// <summary>
@@ -45,8 +49,9 @@ namespace AstroGrep.Core
       /// [Curtis_Beard]      02/09/2015	CHG: 92, support for specific file encodings
       /// [Curtis_Beard]      04/07/2015	CHG: remove line numbers
       /// [Curtis_Beard]	   05/26/2015	FIX: 69, add performance setting for file detection
+      /// [Curtis_Beard]	   09/29/2016	CHG: 24/115, use one interface for search in prep for saving to file
       /// </history>
-      public struct SearchSpec : ISearchSpec
+      public class SearchSpec : ISearchSpec
       {
          /// <summary>starting directories</summary>
          public string[] StartDirectories { get; set; }
@@ -83,21 +88,77 @@ namespace AstroGrep.Core
 
          /// <summary>Current encoding options set by user</summary>
          public EncodingOptions EncodingDetectionOptions { get; set; }
-      }
 
-      /// <summary>
-      /// Implement IFileFilterSpec interface.
-      /// </summary>
-      /// <history>
-      /// [Curtis_Beard]		12/01/2014	Moved from frmMain.cs, adjusted to match new interface
-      /// </history>
-      public struct FileFilterSpec : IFileFilterSpec
-      {
          /// <summary>List of file filters used when retrieving files from a directory (multiples separated by , or ; )</summary>
          public string FileFilter { get; set; }
 
          /// <summary>List of FilterItems that can be used to filter out files/directories based on certain features of said file/directory.</summary>
          public List<FilterItem> FilterItems { get; set; }
+
+         /// <summary>
+         /// Comment about current instance of the class.
+         /// </summary>
+         public string Comment { get; set; }
+
+
+         /// <summary>
+         /// Gets the full location to the config file.
+         /// </summary>
+         static public string Location
+         {
+            get
+            {
+               return Path.Combine(ApplicationPaths.DataFolder, "AstroGrep.SearchSpec.config");
+            }
+         }
+
+         /// <summary>
+         /// Saves current class to default location.
+         /// </summary>
+         public void Save()
+         {
+            Save(Location);
+
+            //var spec = (SearchInterfaces.SearchSpec)GetSearchSpecFromUI(false);
+            //spec.Save();
+         }
+
+         /// <summary>
+         /// Saves current class to given location.
+         /// </summary>
+         /// <param name="path">Full path to file</param>
+         public void Save(string path)
+         {
+            using (var writer = new System.IO.StreamWriter(path))
+            {
+               var serializer = new XmlSerializer(this.GetType());
+               serializer.Serialize(writer, this);
+               writer.Flush();
+            }
+         }
+
+         /// <summary>
+         /// Loads the default file to a class instance.
+         /// </summary>
+         /// <returns>Instance of SearchSpec</returns>
+         static public SearchSpec Load()
+         {
+            return Load(Location);
+         }
+
+         /// <summary>
+         /// Loads give file to a class instance.
+         /// </summary>
+         /// <param name="path">Full path to file</param>
+         /// <returns>Instance of SearchSpec</returns>
+         static public SearchSpec Load(string path)
+         {
+            using (var reader = new System.IO.StreamReader(path))
+            {
+               var serializer = new XmlSerializer(typeof(SearchSpec));
+               return (SearchSpec)serializer.Deserialize(reader);
+            }
+         }
       }
    }
 }

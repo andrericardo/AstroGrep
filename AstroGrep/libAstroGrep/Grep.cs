@@ -51,6 +51,7 @@ namespace libAstroGrep
    /// [Andrew_Radford]    05/08/2008  CHG: Convert code to C# 3.5
    /// [Curtis_Beard]	   03/07/2012	ADD: 3131609, exclusions
    /// [Curtis_Beard]	   12/01/2014	ADD: support for detected encoding event
+   /// [Curtis_Beard]	   09/29/2016	CHG: 24/115, use one interface for search in prep for saving to file
    /// </history>
    public class Grep
    {
@@ -138,9 +139,6 @@ namespace libAstroGrep
       /// <summary>The PluginCollection containing IAstroGrepPlugins.</summary>
       public List<PluginWrapper> Plugins { get; set; }
 
-      /// <summary>The File filter specification.</summary>
-      public IFileFilterSpec FileFilterSpec { get; private set; }
-
       /// <summary>The Search specification.</summary>
       public ISearchSpec SearchSpec { get; private set; }
 
@@ -153,8 +151,9 @@ namespace libAstroGrep
       /// [Curtis_Beard]		07/12/2006	Created
       /// [Andrew_Radford]    13/08/2009  Added Const. dependency on ISearchSpec, IFileFilterSpec
       /// [Curtis_Beard]		05/28/2015	FIX: 69, Created for speed improvements for encoding detection
+      /// [Curtis_Beard]	   09/29/2016	CHG: 24/115, use one interface for search in prep for saving to file
       /// </history>
-      public Grep(ISearchSpec searchSpec, IFileFilterSpec filterSpec)
+      public Grep(ISearchSpec searchSpec)
       {
          if (searchSpec.EncodingDetectionOptions == null)
          {
@@ -162,13 +161,12 @@ namespace libAstroGrep
          }
 
          SearchSpec = searchSpec;
-         FileFilterSpec = filterSpec;
          MatchResults = new List<MatchResult>();
 
-         if (FileFilterSpec.FilterItems != null)
+         if (SearchSpec.FilterItems != null)
          {
             // get first file->minimum hit count filter (should only be 1)
-            var fileCountFilter = (from f in FileFilterSpec.FilterItems where f.FilterType.Category == FilterType.Categories.File && f.FilterType.SubCategory == FilterType.SubCategories.MinimumHitCount select f).FirstOrDefault();
+            var fileCountFilter = (from f in SearchSpec.FilterItems where f.FilterType.Category == FilterType.Categories.File && f.FilterType.SubCategory == FilterType.SubCategories.MinimumHitCount select f).FirstOrDefault();
 
             if (fileCountFilter != null)
             {
@@ -221,6 +219,7 @@ namespace libAstroGrep
       /// [Curtis_Beard]	   07/12/2006	CHG: remove parameters and use properties
       /// [Curtis_Beard]	   09/17/2013	CHG: 61, ability to split file filters by comma and semi colon (, ;)
       /// [Curtis_Beard]		11/10/2014	FIX: 59, check for duplicate entries of file filter
+      /// [Curtis_Beard]	   09/29/2016	CHG: 24/115, use one interface for search in prep for saving to file
       /// </history>
       public void Execute()
       {
@@ -234,7 +233,7 @@ namespace libAstroGrep
          }
          else
          {
-            if (string.IsNullOrEmpty(FileFilterSpec.FileFilter))
+            if (string.IsNullOrEmpty(SearchSpec.FileFilter))
             {
                foreach (var dir in SearchSpec.StartDirectories)
                {
@@ -244,7 +243,7 @@ namespace libAstroGrep
             else
             {
                // file filter defined, so separate, remove empty values, remove duplicates, and search each directory with that file filter
-               List<string> filters = FileFilterSpec.FileFilter.Split(new char[] { ',', ';' }, StringSplitOptions.RemoveEmptyEntries).Distinct(StringComparer.InvariantCultureIgnoreCase).ToList();
+               List<string> filters = SearchSpec.FileFilter.Split(new char[] { ',', ';' }, StringSplitOptions.RemoveEmptyEntries).Distinct(StringComparer.InvariantCultureIgnoreCase).ToList();
 
                foreach (var filter in filters)
                {
@@ -347,15 +346,16 @@ namespace libAstroGrep
       /// [Andrew_Radford]    13/08/2009  CHG: Remove searchtext param
       /// [Curtis_Beard]	   03/07/2012	ADD: 3131609, exclusions
       /// [Curtis_Beard]	   10/10/2012	CHG: 3131609, signal when directories are filtered out due to system/hidden flag
-      /// [Curtis_Beard]      09/17/2013    FIX: 45, check against a specific extension when only 3 characters is defined (*.txt can return things like *.txtabc due to .net GetFiles)
-      /// [Curtis_Beard]      09/20/2013    CHG: use EnumerateFiles and EnumerateDirectories instead of GetFiles,GetDirectories to not lock up on waiting for those methods.
+      /// [Curtis_Beard]      09/17/2013  FIX: 45, check against a specific extension when only 3 characters is defined (*.txt can return things like *.txtabc due to .net GetFiles)
+      /// [Curtis_Beard]      09/20/2013  CHG: use EnumerateFiles and EnumerateDirectories instead of GetFiles,GetDirectories to not lock up on waiting for those methods.
+      /// [Curtis_Beard]	   09/29/2016	CHG: 24/115, use one interface for search in prep for saving to file
       /// </history>
       private void Execute(DirectoryInfo sourceDirectory, string sourceDirectoryFilter, string sourceFileFilter)
       {
          // skip directory if matches an exclusion item
-         if (FileFilterSpec != null && FileFilterSpec.FilterItems != null)
+         if (SearchSpec != null && SearchSpec.FilterItems != null)
          {
-            var dirFilterItems = from f in FileFilterSpec.FilterItems where f.FilterType.Category == FilterType.Categories.Directory select f;
+            var dirFilterItems = from f in SearchSpec.FilterItems where f.FilterType.Category == FilterType.Categories.Directory select f;
             foreach (FilterItem item in dirFilterItems)
             {
                string filterValue = string.Empty;
@@ -417,6 +417,9 @@ namespace libAstroGrep
       /// Search the given file.
       /// </summary>
       /// <param name="SourceFile">FileInfo object to be searched</param>
+      /// <history>
+      /// [Curtis_Beard]	   09/29/2016	CHG: 24/115, use one interface for search in prep for saving to file
+      /// </history>
       private void SearchFile(FileInfo SourceFile)
       {
          try
@@ -424,7 +427,7 @@ namespace libAstroGrep
             // skip any files that are filtered out
             FilterItem filterItem = null;
             string filterValue = string.Empty;
-            if (ShouldFilterOut(SourceFile, FileFilterSpec, out filterItem, out filterValue))
+            if (ShouldFilterOut(SourceFile, SearchSpec, out filterItem, out filterValue))
             {
                OnFileFiltered(SourceFile, filterItem, filterValue);
             }
@@ -457,22 +460,23 @@ namespace libAstroGrep
       /// Return true if the file does not pass the fileFilterSpec, i.e should be skipped
       /// </summary>
       /// <param name="file">FileInfo object of current file</param>
-      /// <param name="fileFilterSpec">Current file filter settings</param>
+      /// <param name="searchSpec">Current search settings</param>
       /// <param name="filterItem">Item causing filtering, null if none</param>
       /// <param name="filterValue">Output of actual filter value</param>
       /// <returns>true if file does not pass file filter settings, false otherwise</returns>
       /// <history>
       /// [Andrew_Radford]    13/08/2009  Created
       /// [Curtis_Beard]	   03/07/2012	ADD: 3131609, exclusions
+      /// [Curtis_Beard]	   09/29/2016	CHG: 24/115, use one interface for search in prep for saving to file
       /// </history>
-      private static bool ShouldFilterOut(FileInfo file, IFileFilterSpec fileFilterSpec, out FilterItem filterItem, out string filterValue)
+      private static bool ShouldFilterOut(FileInfo file, ISearchSpec searchSpec, out FilterItem filterItem, out string filterValue)
       {
          filterItem = null;
          filterValue = string.Empty;
 
-         if (fileFilterSpec.FilterItems != null && fileFilterSpec.FilterItems.Count > 0)
+         if (searchSpec.FilterItems != null && searchSpec.FilterItems.Count > 0)
          {
-            var fileFilterItems = from f in fileFilterSpec.FilterItems where f.FilterType.Category == FilterType.Categories.File select f;
+            var fileFilterItems = from f in searchSpec.FilterItems where f.FilterType.Category == FilterType.Categories.File select f;
             foreach (FilterItem item in fileFilterItems)
             {
                filterValue = string.Empty;
@@ -521,6 +525,8 @@ namespace libAstroGrep
       /// [Curtis_Beard]	   05/26/2015	FIX: 69, add performance setting for file detection
       /// [Curtis_Beard]		06/02/2015	FIX: 75, use sample size from performance setting
       /// [theblackbunny]		06/25/2015	FIX: 39, remove context lines that intersect with each other in different MatchResults
+      /// [Curtis_Beard]	   08/18/2016	CHG: 109, adjust context lines to support max instead of hard coded
+      /// [Curtis_Beard]		05/26/2017	FIX: 97, detect file size change to read encoding again
       /// </history>
       private void SearchFileContents(FileInfo file)
       {
@@ -536,7 +542,7 @@ namespace libAstroGrep
          bool _hitOccurred = false;
          bool _fileNameDisplayed = false;
          int _maxContextLines = 0;
-         var _context = new string[11];
+         var _context = new string[SearchSpec.ContextLines + 1];
          int _contextIndex = -1;
          int _lastHit = 0;
          int userFilterCount = 0;
@@ -635,7 +641,7 @@ namespace libAstroGrep
             if (fileEncoding != null)
             {
                usedEncoder = "User";
-               encoding = fileEncoding.Encoding;
+               encoding = System.Text.Encoding.GetEncoding(fileEncoding.CodePage);
             }
             else
             {
@@ -644,17 +650,32 @@ namespace libAstroGrep
                //
                if (SearchSpec.EncodingDetectionOptions.DetectFileEncoding)
                {
-                  // encoding cache check
                   var key = file.FullName;
-                  if (SearchSpec.EncodingDetectionOptions.UseEncodingCache &&
-                     EncodingCache.Instance.ContainsKey(key))
-                  {
-                     var value = EncodingCache.Instance.GetItem(key);
+                  long fileSize = file.Length;
+                  bool encodingFoundInCache = false;
 
-                     usedEncoder = value.DetectorName;
-                     encoding = System.Text.Encoding.GetEncoding(value.CodePage);
+                  if (SearchSpec.EncodingDetectionOptions.UseEncodingCache)
+                  {
+                     // encoding cache check
+                     if (EncodingCache.Instance.ContainsKey(key))
+                     {
+                        var value = EncodingCache.Instance.GetItem(key);
+
+                        // if file size has changed then encoding may have changed
+                        if (fileSize != value.FileSize)
+                        {
+                           EncodingCache.Instance.RemoveItem(key);
+                        }
+                        else
+                        {
+                           usedEncoder = value.DetectorName;
+                           encoding = System.Text.Encoding.GetEncoding(value.CodePage);
+                           encodingFoundInCache = true;
+                        }
+                     }
                   }
-                  else
+                  
+                  if (!encodingFoundInCache)
                   {
                      byte[] sampleBytes;
 
@@ -680,7 +701,7 @@ namespace libAstroGrep
                      // add to cache if enabled
                      if (encoding != null && SearchSpec.EncodingDetectionOptions.UseEncodingCache)
                      {
-                        var value = new EncodingCacheItem() { CodePage = encoding.CodePage, DetectorName = usedEncoder };
+                        var value = new EncodingCacheItem() { CodePage = encoding.CodePage, DetectorName = usedEncoder, FileSize = fileSize };
                         EncodingCache.Instance.SetItem(key, value);
                      }
                   }
@@ -724,6 +745,7 @@ namespace libAstroGrep
             _reader = new StreamReader(_stream, encoding);
 
             _maxContextLines = SearchSpec.ContextLines + 1;
+
             do
             {
                string textLine = _reader.ReadLine();

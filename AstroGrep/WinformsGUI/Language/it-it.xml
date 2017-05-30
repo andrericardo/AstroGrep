@@ -14,7 +14,7 @@
       <control name="chkWholeWordOnly" value="&amp;Solo parole intere" tooltip="Ricerca solo parole intere, non porzioni di termini" />
       <control name="chkCaseSensitive" value="&amp;Maiuscole/minuscole" tooltip="Attiva la distinzione tra maiuscole e minuscole durante la ricerca" />
       <control name="chkRegularExpressions" value="Espressione &amp;regolare" tooltip="Esegue una ricerca per &apos;espressioni regolari&apos;" />
-      <control name="chkAllResultsAfterSearch" value="&amp;Mostra tutti i risultati dopo la ricerca" tooltip="Mostra tutti i risultati insieme nell'anteprima dopo una ricerca." />
+      <control name="chkAllResultsAfterSearch" value="&amp;Mostra tutti i risultati dopo la ricerca" tooltip="Mostra tutti i risultati insieme nell'anteprima dopo una ricerca" />
       <control name="chkSearchInResults" value="Cerca nei risultati" tooltip="Esegui ricerca all'interno dell'elenco dei file risultati attualmente visualizzato" />
       <control name="lblSearchOptions" value="Opzioni di ricerca" />
       <control name="picBrowse" tooltip="Sfoglia..." />
@@ -89,14 +89,15 @@
          <menuitem index="3" value="-" />
          <menuitem index="4" value="&amp;Controlla aggiornamenti..." />
          <menuitem index="5" value="-" />
-         <menuitem index="6" value="&amp;Informazioni su AstroGrep" />
+         <menuitem index="6" value="&amp;Donare" />
+         <menuitem index="7" value="&amp;Informazioni su AstroGrep" />
       </menu>
 
       <!-- status bar items default state-->
       <control name="sbTotalCountPanel" value="Totale: 0"/>
       <control name="sbFileCountPanel" value="File: 0"/>
-      <control name="sbFilterCountPanel" value="Esclusioni: 0" tooltip="Fare doppio clic per visualizzare le esclusioni."/>
-      <control name="sbErrorCountPanel" value="Errore: 0" tooltip="Fare doppio clic per visualizzare gli errori."/>
+      <control name="sbFilterCountPanel" value="Esclusioni: 0" tooltip="Fare doppio clic per visualizzare le esclusioni"/>
+      <control name="sbErrorCountPanel" value="Errore: 0" tooltip="Fare doppio clic per visualizzare gli errori"/>
    </screen>
    
    <screen name="frmAbout" value="Informazioni su {0}">
@@ -109,7 +110,7 @@
    
    <screen name="frmAddEditTextEditor" value="Editor di testo">
       <control name="lblAllTypesMessage" value="Per tutti i tipi di file sconosciuti è possibile utilizzare un editor di testo inserendo * come tipo di file." />
-      <control name="lblCmdOptions" value="Opzioni da riga di comando:&#xD;&#xA;  %1 - File&#xD;&#xA;  %2 - Numero riga&#xD;&#xA;  %3 - Colonna" />
+      <control name="lblCmdOptions" value="Opzioni da riga di comando:&#xD;&#xA;  %1 - File&#xD;&#xA;  %2 - Numero riga&#xD;&#xA;  %3 - Colonna&#xD;&#xA;  %4 - testo da ricercare" />
       <control name="lblCmdOptionsView" value="Anteprima: {0} {1}" />
       <control name="btnBrowse" tooltip="Sfoglia..." />
       <control name="lblCmdLineArgs" value="Riga di comando" />
@@ -117,13 +118,13 @@
       <control name="lblFileType" value="Tipo file" />
       <control name="btnCancel" value="&amp;Annulla" />
       <control name="btnOK" value="&amp;OK" />
-      <control name="lblMultiTypes" value="Tipi separati dal carattere |."/>
+      <control name="lblMultiTypes" value="Tipi separati dal carattere |"/>
       <control name="lblTabSize" value="Tabulazione" />
-      <control name="chkUseQuotesAroundFileName" value="&amp;Usa virgolette intorno al file."/>
+      <control name="chkUseQuotesAroundFileName" value="&amp;Usa virgolette intorno al file"/>
    </screen>
    
    <screen name="frmOptions" value="Opzioni">
-      <control name="chkRightClickOption" value="&amp;Aggiungi l&apos;opzione di ricerca al menu contestuale di Esplora Risorse" />
+      <control name="chkRightClickOption" value="Aggiungi l&apos;opzione di &amp;ricerca al menu contestuale di Esplora Risorse" />
       <control name="lblStoredPaths" value="Numero dei percorsi di archiaviazione usati più di recente" />
       <control name="btnEdit" value="&amp;Modifica..." />
       <control name="btnRemove" value="&amp;Cancella" />
@@ -151,19 +152,21 @@
       <control name="lblPluginDetailVersion" value="Versione:"/>
       <control name="lblPluginDetailAuthor" value="Autore:"/>
       <control name="btnFindFont" value="&amp;Trova carattere..."/>
-      <control name="chkShowExclusionErrorMessage" value="Mostra un messaggio &amp;quando gli elementi di ricerca vengono esclusi o si verifica un errore."/>
-      <control name="chkSaveSearchOptions" value="Salva le opzioni di ricerca in uscita."/>
+      <control name="chkShowExclusionErrorMessage" value="Mostra un messaggio &amp;quando gli elementi di ricerca vengono esclusi o si verifica un errore"/>
+      <control name="chkSaveSearchOptions" value="Salva le opzioni di ricerca in &amp;uscita"/>
       <control name="grpFileList" value="Elenco dei file" />
       <control name="btnFileFindFont" value="Trova carattere..."/>
-      <control name="chkDetectFileEncoding" value="Rileva la codifica del file."/>
-      <control name="chkSaveMessagesPosition" value="Salvare i messaggi &amp;posizione della finestra."/>      
-
+      <control name="chkDetectFileEncoding" value="Rileva la codifica del file"/>
+      <control name="chkSaveMessagesPosition" value="Salvare i messaggi &amp;posizione della finestra"/>
+      <control name="chkSaveExclusionsPosition" value="Salvare i &amp;esclusioni posizione della finestra"/>
+      <control name="chkLabelColor" value="Utilizza il colore dell'accento sulle &amp;intestazioni"/>
+      
       <control name="tabFileEncoding" value="Codifica File" />
       <control name="btnFileEncodingAdd" value="&amp;Aggiungi..."/>
       <control name="btnFileEncodingEdit" value="&amp;Modifica..."/>
       <control name="btnFileEncodingDelete" value="&amp;Cancella"/>
       <control name="lblPerformance" value="Prestazione"/>
-      <control name="chkUseEncodingCache" value="Attiva cache per le codifiche rilevate."/>
+      <control name="chkUseEncodingCache" value="Attiva cache per le codifiche rilevate"/>
       <control name="btnCacheClear" value="Cancella cache"/>
    </screen>
    

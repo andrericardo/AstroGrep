@@ -41,7 +41,7 @@ namespace AstroGrep.Windows.Forms
    /// [Curtis_Beard]	   05/06/2014	CHG: removed updater code
    /// [Curtis_Beard]      06/04/2015  CHG: remove header, text, image painting
    /// </history>
-	public partial class frmAbout : Form
+	public partial class frmAbout : BaseForm
 	{
       /// <summary>
       /// Creates an instance of the frmAbout class.

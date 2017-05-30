@@ -131,8 +131,15 @@
     <Reference Include="WindowsFormsIntegration" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AssemblyInfo.cs">
+    <Compile Include="Core\GeneralSettingsReset.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="..\AssemblyInfoCommon.cs">
+      <Link>Properties\AssemblyInfoCommon.cs</Link>
+    </Compile>
+    <Compile Include="..\AssemblyVersionCommon.cs">
+      <Link>Properties\AssemblyVersionCommon.cs</Link>
     </Compile>
     <Compile Include="Core\Constants.cs">
       <SubType>Code</SubType>
@@ -159,6 +166,7 @@
     <Compile Include="Core\TextEditor.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Core\TextEditorOpener.cs" />
     <Compile Include="Core\TextEditors.cs" />
     <Compile Include="Output\HTMLHelper.cs">
       <SubType>Code</SubType>
@@ -200,6 +208,9 @@
     </Compile>
     <Compile Include="Windows\Controls\VistaFolderBrowserDialog.cs">
       <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Windows\Forms\BaseForm.cs">
+      <SubType>Form</SubType>
     </Compile>
     <Compile Include="Windows\Forms\frmAbout.cs">
       <SubType>Form</SubType>
@@ -293,7 +304,11 @@
     <Compile Include="Windows\Win32.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Content Include="astrogrep.VisualElementsManifest.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Images\ascending-arrow-gray.gif" />
+    <Content Include="Images\AstroGrep_256x256.png" />
     <Content Include="Images\AstroGrep_Icon.ico" />
     <Content Include="Images\AstroGrep_Icon_256x256.ico" />
     <Content Include="Images\descending-arrow-gray.gif" />
@@ -302,8 +317,9 @@
     <EmbeddedResource Include="Language\da-dk.xml" />
     <EmbeddedResource Include="Language\de-de.xml" />
     <EmbeddedResource Include="Language\en-us.xml" />
-    <EmbeddedResource Include="Language\es-mx.xml" />
+    <EmbeddedResource Include="Language\es-es.xml" />
     <EmbeddedResource Include="Language\it-it.xml" />
+    <EmbeddedResource Include="Language\fr-fr.xml" />
     <EmbeddedResource Include="Output\Output-fileNameOnly.html" />
     <EmbeddedResource Include="Output\Output.css" />
     <EmbeddedResource Include="Output\Output.html" />
@@ -401,7 +417,6 @@
   <PropertyGroup>
     <PreBuildEvent>
     </PreBuildEvent>
-    <PostBuildEvent>
-    </PostBuildEvent>
+    <PostBuildEvent>copy $(ProjectDir)Images\AstroGrep_256x256.png $(TargetDir) /y</PostBuildEvent>
   </PropertyGroup>
 </Project>

@@ -4,18 +4,18 @@
       <control name="lblSearchHeading" value=" AstroGrep Suche" />
       <control name="lblSearchText" value="Text suchen" />
       <control name="lblFileTypes" value="Dateitypen" />
-      <control name="btnCancel" value="&amp;Abbrechen" />
+      <control name="btnCancel" value="Abbre&amp;chen" />
       <control name="lblSearchPath" value="Suchpfad" />
-      <control name="lblContextLines" value="Kontextzeilen" tooltip="Zeigt Zeilen über und unter dem Fund an." />
-      <control name="txtContextLines" tooltip="Zeigt Zeilen über und unter dem Fund an." />
-      <control name="chkNegation" value="&amp;Negierung" tooltip="Suche nach Dateien, die den Suchtext nicht enthalten." />
+      <control name="lblContextLines" value="Kontextzeilen" tooltip="Zeigt Zeilen über und unter dem Fund an" />
+      <control name="txtContextLines" tooltip="Zeigt Zeilen über und unter dem Fund an" />
+      <control name="chkNegation" value="&amp;Negierung" tooltip="Suche nach Dateien, die den Suchtext nicht enthalten" />
       <control name="chkFileNamesOnly" value="&amp;Zeige nur Dateinamen" tooltip="Zeigt nur die Dateinamen an, in welchen der Suchtext vorkommt (kann für große Dateien schneller sein)" />
       <control name="chkRecurse" value="&amp;Rekursiv" tooltip="Suche auch in Unterverzeichnissen" />
       <control name="chkWholeWordOnly" value="&amp;Ganzes Wörter" tooltip="Nur nach ganzen Wörtern suchen (nicht nach Teilworten)" />
-      <control name="chkCaseSensitive" value="&amp;Groß-/Kleinschreibung beachten" tooltip="Achtet genau auf groß- und kleingeschriebene Buchstaben" />
-      <control name="chkRegularExpressions" value="Reguläre &amp;Ausdrücke" tooltip="Benutzt &quot;Reguläre Ausdrücke&quot; zur Suche" />
-      <control name="chkAllResultsAfterSearch" value="&amp;Alle Ergebnisse anzeigen Suche nach" tooltip="Einen Überblick über die Ergebnisse zusammen in der Vorschau nach einer Suche." />
-      <control name="chkSearchInResults" value="Suche in den Ergebnissen" tooltip="Suche starten innerhalb aktuell angezeigten Ergebnisse Dateiliste" />
+      <control name="chkCaseSensitive" value="Groß-/&amp;Kleinschreibung beachten" tooltip="Achtet genau auf groß- und kleingeschriebene Buchstaben" />
+      <control name="chkRegularExpressions" value="Reguläre A&amp;usdrücke" tooltip="Benutzt &quot;Reguläre Ausdrücke&quot; zur Suche" />
+      <control name="chkAllResultsAfterSearch" value="Alle Ergebn&amp;isse anzeigen Suche nach" tooltip="Einen Überblick über die Ergebnisse zusammen in der Vorschau nach einer Suche" />
+      <control name="chkSearchInResults" value="Suche in den &amp;Ergebnissen" tooltip="Suche starten innerhalb aktuell angezeigten Ergebnisse Dateiliste" />
       <control name="lblSearchOptions" value="Such-Einstellungen" />
       <control name="picBrowse" tooltip="Durchsuchen..." />
       <control name="lnkExclusions" value="Ausschlüsse" />
@@ -89,14 +89,15 @@
          <menuitem index="3" value="-" />
          <menuitem index="4" value="&amp;prüfen Aktuelles..." />
          <menuitem index="5" value="-" />
-         <menuitem index="6" value="&amp;Über AstroGrep" />
+         <menuitem index="6" value="&amp;Spenden" />
+         <menuitem index="7" value="&amp;Über AstroGrep" />
       </menu>
 
       <!-- status bar items default state-->
       <control name="sbTotalCountPanel" value="Gesamtmenge: 0"/>
       <control name="sbFileCountPanel" value="Datei: 0"/>
-      <control name="sbFilterCountPanel" value="Ausschlüsse: 0" tooltip="Doppelklicken Sie auf Ausschlüsse anzuzeigen."/>
-      <control name="sbErrorCountPanel" value="Störung: 0" tooltip="Doppelklicken Sie auf die Anzeige von Fehlern."/>
+      <control name="sbFilterCountPanel" value="Ausschlüsse: 0" tooltip="Doppelklicken Sie auf Ausschlüsse anzuzeigen"/>
+      <control name="sbErrorCountPanel" value="Störung: 0" tooltip="Doppelklicken Sie auf die Anzeige von Fehlern"/>
    </screen>
 
    <screen name="frmAbout" value="Über {0}">
@@ -109,7 +110,7 @@
 
    <screen name="frmAddEditTextEditor" value="Texteditoren">
       <control name="lblAllTypesMessage" value="Um für alle Dateitypen einen Texteditor zu nutzen, muss man als Dateityp das * (Sternchen) eintragen." />
-      <control name="lblCmdOptions" value="Kommandozeilen-Einstellungen:&#xD;&#xA;  %1 - Datei&#xD;&#xA;  %2 - Zeilennummer&#xD;&#xA;  %3 - Spalte" />
+      <control name="lblCmdOptions" value="Kommandozeilen-Einstellungen:&#xD;&#xA;  %1 - Datei&#xD;&#xA;  %2 - Zeilennummer&#xD;&#xA;  %3 - Spalte&#xD;&#xA;  %4 - Suchtext" />
       <control name="lblCmdOptionsView" value="Vorschau: {0} {1}" />
       <control name="btnBrowse" tooltip="Durchsuchen..." />
       <control name="lblCmdLineArgs" value="Kommandozeile" />
@@ -117,14 +118,14 @@
       <control name="lblFileType" value="Dateityp" />
       <control name="btnCancel" value="&amp;Abbrechen" />
       <control name="btnOK" value="&amp;OK" />
-      <control name="lblMultiTypes" value="Separate Typen mit | Charakter."/>
+      <control name="lblMultiTypes" value="Separate Typen mit | Charakter"/>
       <control name="lblTabSize" value="Tabgröße" />
-      <control name="chkUseQuotesAroundFileName" value="&amp;Verwenden Sie Anführungszeichen um Datei."/>
+      <control name="chkUseQuotesAroundFileName" value="&amp;Verwenden Sie Anführungszeichen um Datei"/>
    </screen>
 
    <screen name="frmOptions" value="Einstellungen">
       <control name="chkRightClickOption" value="Auf &amp;Rechtsklick Ordnereinstellungen öffnen" />
-      <control name="lblStoredPaths" value="Anzahl an zuletzt benutzten Pfaden, die gespeichert werden." />
+      <control name="lblStoredPaths" value="Anzahl an zuletzt benutzten Pfaden, die gespeichert werden" />
       <control name="btnEdit" value="&amp;Bearbeiten..." />
       <control name="btnRemove" value="&amp;Löschen" />
       <control name="btnAdd" value="&amp;Hinzufügen..." />
@@ -151,19 +152,21 @@
       <control name="lblPluginDetailVersion" value="Version:"/>
       <control name="lblPluginDetailAuthor" value="Author:"/>
       <control name="btnFindFont" value="&amp;Schriftart suchen..."/>
-      <control name="chkShowExclusionErrorMessage" value="&amp;Zeigen Sie eine Eingabeaufforderung, wenn eine Suche liefert Produkte ausgeschlossen oder ein Fehler auftritt."/>
-      <control name="chkSaveSearchOptions" value="Suche speichern Optionen auf Exit."/>
+      <control name="chkShowExclusionErrorMessage" value="&amp;Zeigen Sie eine Eingabeaufforderung, wenn eine Suche liefert Produkte ausgeschlossen oder ein Fehler auftritt"/>
+      <control name="chkSaveSearchOptions" value="&amp;Suche speichern Optionen auf Exit"/>
       <control name="grpFileList" value="Dateiliste" />
       <control name="btnFileFindFont" value="Schriftart suchen..."/>
-      <control name="chkDetectFileEncoding" value="Detect-Datei-Codierung."/>
-      <control name="chkSaveMessagesPosition" value="&amp;Nachrichten speichern Fensterposition."/>
+      <control name="chkDetectFileEncoding" value="Detect-Datei-Codierung"/>
+      <control name="chkSaveMessagesPosition" value="&amp;Nachrichten speichern Fensterposition"/>
+      <control name="chkSaveExclusionsPosition" value="Nachricht &amp;Ausschluss Fensterposition"/>
+      <control name="chkLabelColor" value="&amp;Benutze Akzentfarbe auf Überschriften"/>
 
       <control name="tabFileEncoding" value="Dateikodierung" />
       <control name="btnFileEncodingAdd" value="&amp;Hinzufügen..."/>
       <control name="btnFileEncodingEdit" value="&amp;Bearbeiten..."/>
       <control name="btnFileEncodingDelete" value="&amp;Löschen"/>
       <control name="lblPerformance" value="Leistung"/>
-      <control name="chkUseEncodingCache" value="Aktivieren Sie Cache erkannt Kodierungen."/>
+      <control name="chkUseEncodingCache" value="Aktivieren Sie Cache erkannt Kodierungen"/>
       <control name="btnCacheClear" value="Cache Leeren"/>
    </screen>
 

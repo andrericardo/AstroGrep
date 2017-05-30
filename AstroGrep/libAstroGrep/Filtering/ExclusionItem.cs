@@ -6,7 +6,12 @@ using System.Text;
 namespace libAstroGrep
 {
    /// <summary>
-   /// Container for an exclusion item. [DEPRECATED, use FilterItem]
+   /// 
+   /// 
+   /// [DEPRECATED, use FilterItem]
+   /// 
+   /// 
+   /// Container for an exclusion item.
    /// Should only be used to convert exclusionitem to filteritem
    /// </summary>
    /// <remarks>

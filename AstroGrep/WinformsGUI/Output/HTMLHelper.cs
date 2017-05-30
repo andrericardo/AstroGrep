@@ -142,15 +142,27 @@ namespace AstroGrep.Output
       /// [Curtis_Beard]		10/30/2012	ADD: file hit count, CHG: recurse to Subfolders
       /// [Curtis_Beard]		02/12/2014	CHG: handle file search only better, add totalHits as parameter
       /// [Curtis_Beard]      11/11/2014	ADD: export all filteritems
+      /// [Curtis_Beard]      06/01/2016	FIX: 89, check start directories and start paths
+      /// [Curtis_Beard]	   09/29/2016	CHG: 24/115, use one interface for search in prep for saving to file
       /// </history>
       public static string ReplaceSearchOptions(string text, Grep grep, int totalHits, bool showLineNumbers, bool removeLeadingWhiteSpace)
       {
          var spec = grep.SearchSpec;
 
+         string searchPaths = string.Empty;
+         if (spec.StartFilePaths != null && spec.StartFilePaths.Length > 0)
+         {
+            searchPaths = string.Join(", ", spec.StartFilePaths);
+         }
+         else
+         {
+            searchPaths = string.Join(", ", spec.StartDirectories);
+         }
+
          text = text.Replace("%%totalhits%%", totalHits.ToString());
          text = text.Replace("%%year%%", DateTime.Now.Year.ToString());
-         text = text.Replace("%%searchpaths%%", "Search Path(s): " + string.Join(", ", spec.StartDirectories));
-         text = text.Replace("%%filetypes%%", "File Types: " + grep.FileFilterSpec.FileFilter);
+         text = text.Replace("%%searchpaths%%", "Search Path(s): " + searchPaths);
+         text = text.Replace("%%filetypes%%", "File Types: " + grep.SearchSpec.FileFilter);
          text = text.Replace("%%regex%%", "Regular Expressions: " + spec.UseRegularExpressions);
          text = text.Replace("%%casesen%%", "Case Sensitive: " + spec.UseCaseSensitivity);
          text = text.Replace("%%wholeword%%", "Whole Word: " + spec.UseWholeWordMatching);
@@ -163,10 +175,10 @@ namespace AstroGrep.Output
 
          // filter items
          StringBuilder filterBuilder = new StringBuilder();
-         if (grep.FileFilterSpec.FilterItems != null)
+         if (grep.SearchSpec.FilterItems != null)
          {
             filterBuilder.Append("Exclusions:<br/>");
-            foreach (FilterItem item in grep.FileFilterSpec.FilterItems)
+            foreach (FilterItem item in grep.SearchSpec.FilterItems)
             {
                string option = item.ValueOption.ToString();
                if (item.ValueOption == FilterType.ValueOptions.None)

@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 
+using AstroGrep.Core;
 using libAstroGrep;
 
 namespace AstroGrep.Windows.Forms
@@ -38,7 +40,7 @@ namespace AstroGrep.Windows.Forms
    /// [Curtis_Beard]	   03/07/2012	ADD: 3131609, exclusions
    /// [Curtis_Beard]	   11/11/2014	CHG: use FilterItem
    /// </history>
-   public partial class frmExclusions : Form
+   public partial class frmExclusions : BaseForm
    {
       private List<FilterItem> filterItems = new List<FilterItem>();
       private bool inhibitAutoCheck;
@@ -69,12 +71,34 @@ namespace AstroGrep.Windows.Forms
       /// <param name="sender">system parameter</param>
       /// <param name="e">system parameter</param>
       /// <history>
-      /// [Curtis_Beard]		03/07/2012	ADD: 3131609, exclusions
-      /// [Curtis_Beard]	   11/11/2014	CHG: add category column
+      /// [Curtis_Beard]      03/07/2012  ADD: 3131609, exclusions
+      /// [Curtis_Beard]      11/11/2014  CHG: add category column
+      /// [LinkNet]           04/27/2017  ADD: restore user window size, position and column widths
+      /// [LinkNet]           04/29/2017  CHG: set initial log display column widths corrected for DPI setting
       /// </history>
       private void frmExclusions_Load(object sender, EventArgs e)
       {
          Language.ProcessForm(this);
+
+         StartPosition = FormStartPosition.Manual;
+
+         // set default window size and position
+         Rectangle defaultBounds = new Rectangle(frmMain.ActiveForm.Left + ((frmMain.ActiveForm.Width - this.Width) / 2), frmMain.ActiveForm.Top + ((frmMain.ActiveForm.Height - this.Height) / 2), this.Width, this.Height);
+
+         // get window size and position from user settings
+         int width = GeneralSettings.ExclusionsDisplaySavePosition && GeneralSettings.ExclusionsDisplayWidth != -1 ? GeneralSettings.ExclusionsDisplayWidth : defaultBounds.Width;
+         int height = GeneralSettings.ExclusionsDisplaySavePosition && GeneralSettings.ExclusionsDisplayHeight != -1 ? GeneralSettings.ExclusionsDisplayHeight : defaultBounds.Height;
+         int left = GeneralSettings.ExclusionsDisplaySavePosition && GeneralSettings.ExclusionsDisplayLeft != -1 ? GeneralSettings.ExclusionsDisplayLeft : defaultBounds.X;
+         int top = GeneralSettings.ExclusionsDisplaySavePosition && GeneralSettings.ExclusionsDisplayTop != -1 ? GeneralSettings.ExclusionsDisplayTop : defaultBounds.Y;
+
+         // set window size and position from user settings
+         Bounds = new Rectangle(left, top, width, height);
+
+         // if form can't find a screen to fit on reset to default on primary screen
+         if (!Screen.AllScreens.Any(s => s.WorkingArea.IntersectsWith(Bounds)))
+         {
+            Bounds = defaultBounds;
+         }
 
          // set column text
          lstExclusions.Columns[0].Text = Language.GetGenericText("Exclusions.Enabled", "Enabled");
@@ -83,6 +107,33 @@ namespace AstroGrep.Windows.Forms
          lstExclusions.Columns[3].Text = Language.GetGenericText("Exclusions.Value", "Value");
          lstExclusions.Columns[4].Text = Language.GetGenericText("Exclusions.Option", "Option");
 
+         // set column widths from user settings
+
+         if ((GeneralSettings.ExclusionsDisplayColumnEnabledWidth != -1) && GeneralSettings.ExclusionsDisplaySavePosition)
+            lstExclusions.Columns[0].Width = GeneralSettings.ExclusionsDisplayColumnEnabledWidth;
+         else
+            lstExclusions.Columns[0].Width = Constants.EXCLUSIONS_DISPLAY_COLUMN_WIDTH_ENABLED * GeneralSettings.WindowsDPIPerCentSetting / 100;
+
+         if ((GeneralSettings.ExclusionsDisplayColumnCategoryWidth != -1) && GeneralSettings.ExclusionsDisplaySavePosition)
+            lstExclusions.Columns[1].Width = GeneralSettings.ExclusionsDisplayColumnCategoryWidth;
+         else
+            lstExclusions.Columns[1].Width = Constants.EXCLUSIONS_DISPLAY_COLUMN_WIDTH_CATEGORY * GeneralSettings.WindowsDPIPerCentSetting / 100;
+
+         if ((GeneralSettings.ExclusionsDisplayColumnTypeWidth != -1) && GeneralSettings.ExclusionsDisplaySavePosition)
+            lstExclusions.Columns[2].Width = GeneralSettings.ExclusionsDisplayColumnTypeWidth;
+         else
+            lstExclusions.Columns[2].Width = Constants.EXCLUSIONS_DISPLAY_COLUMN_WIDTH_TYPE * GeneralSettings.WindowsDPIPerCentSetting / 100;
+
+         if ((GeneralSettings.ExclusionsDisplayColumnValueWidth != -1) && GeneralSettings.ExclusionsDisplaySavePosition)
+            lstExclusions.Columns[3].Width = GeneralSettings.ExclusionsDisplayColumnValueWidth;
+         else
+            lstExclusions.Columns[3].Width = Constants.EXCLUSIONS_DISPLAY_COLUMN_WIDTH_VALUE * GeneralSettings.WindowsDPIPerCentSetting / 100;
+
+         if ((GeneralSettings.ExclusionsDisplayColumnOptionWidth != -1) && GeneralSettings.ExclusionsDisplaySavePosition)
+            lstExclusions.Columns[4].Width = GeneralSettings.ExclusionsDisplayColumnOptionWidth;
+         else
+            lstExclusions.Columns[4].Width = Constants.EXCLUSIONS_DISPLAY_COLUMN_WIDTH_OPTION * GeneralSettings.WindowsDPIPerCentSetting / 100;
+         
          LoadExclusions();
 
          SetButtonState();
@@ -431,6 +482,31 @@ namespace AstroGrep.Windows.Forms
          }
 
          return list;
+      }
+
+      /// <summary>
+      /// Save column widths and window position (if enabled).
+      /// </summary>
+      /// <param name="sender">system parameter</param>
+      /// <param name="e">system parameter</param>
+      /// <history>
+      /// [LinkNet]        04/28/2017	ADD: save form size, position and column widths
+      /// </history>
+      private void frmExclusionsDisplay_FormClosing(object sender, FormClosingEventArgs e)
+      {
+         if (GeneralSettings.ExclusionsDisplaySavePosition)
+         {
+            GeneralSettings.ExclusionsDisplayTop = this.Top;
+            GeneralSettings.ExclusionsDisplayLeft = this.Left;
+            GeneralSettings.ExclusionsDisplayWidth = this.Width;
+            GeneralSettings.ExclusionsDisplayHeight = this.Height;
+
+            GeneralSettings.ExclusionsDisplayColumnEnabledWidth = lstExclusions.Columns[0].Width;
+            GeneralSettings.ExclusionsDisplayColumnCategoryWidth = lstExclusions.Columns[1].Width;
+            GeneralSettings.ExclusionsDisplayColumnTypeWidth = lstExclusions.Columns[2].Width;
+            GeneralSettings.ExclusionsDisplayColumnValueWidth = lstExclusions.Columns[3].Width;
+            GeneralSettings.ExclusionsDisplayColumnOptionWidth = lstExclusions.Columns[4].Width;
+         }
       }
    }
 }

@@ -32,6 +32,7 @@ namespace libAstroGrep
    /// [Curtis_Beard]      02/09/2015	CHG: 92, support for specific file encodings
    /// [Curtis_Beard]      04/02/2015	CHG: remove line numbers option
    /// [Curtis_Beard]	   05/26/2015	FIX: 69, add encoding detection options
+   /// [Curtis_Beard]	   09/29/2016	CHG: 24/115, use one interface for search in prep for saving to file
    /// </history>
    public interface ISearchSpec
    {
@@ -70,5 +71,17 @@ namespace libAstroGrep
 
       /// <summary>Sets encoding options used when detecting encodings</summary>
       EncodingOptions EncodingDetectionOptions { get; }
+
+      /// <summary>The FileFilter</summary>
+      string FileFilter { get; }
+
+      /// <summary>
+      /// List of FilterItems that will filter out files/directories based on user inputted options.
+      /// </summary>
+      /// <remarks>
+      /// Examples are Files that are readonly, binary, or the name contains certain text.
+      /// Directories that are created after a certain date, or marked as system.
+      /// </remarks>
+      List<FilterItem> FilterItems { get; }
    }
 }

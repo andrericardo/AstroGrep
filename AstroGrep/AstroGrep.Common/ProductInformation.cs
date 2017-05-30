@@ -75,5 +75,7 @@ namespace AstroGrep.Common
       public static string VersionUrl = "http://astrogrep.sourceforge.net/version.html";
       /// <summary>The url to the download page</summary>
       public static string DownloadUrl = "http://astrogrep.sourceforge.net/download/";
+      /// <summary>The url to the donation page</summary>
+      public static string DonationUrl = "https://sourceforge.net/p/astrogrep/donate/";
    }
 }

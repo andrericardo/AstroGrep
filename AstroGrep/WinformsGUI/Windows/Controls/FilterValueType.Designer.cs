@@ -28,23 +28,19 @@
       /// </summary>
       private void InitializeComponent()
       {
-         this.dtpValue = new System.Windows.Forms.DateTimePicker();
          this.txtValue = new System.Windows.Forms.TextBox();
          this.numValue = new System.Windows.Forms.NumericUpDown();
          this.pnlSize = new System.Windows.Forms.Panel();
-         this.cboSize = new System.Windows.Forms.ComboBox();
          this.numSize = new System.Windows.Forms.NumericUpDown();
+         this.cboSize = new System.Windows.Forms.ComboBox();
+         this.pnlDateTime = new System.Windows.Forms.Panel();
+         this.dtpTimeValue = new System.Windows.Forms.DateTimePicker();
+         this.dtpValue = new System.Windows.Forms.DateTimePicker();
          ((System.ComponentModel.ISupportInitialize)(this.numValue)).BeginInit();
          this.pnlSize.SuspendLayout();
          ((System.ComponentModel.ISupportInitialize)(this.numSize)).BeginInit();
+         this.pnlDateTime.SuspendLayout();
          this.SuspendLayout();
-         // 
-         // dtpValue
-         // 
-         this.dtpValue.Location = new System.Drawing.Point(19, 26);
-         this.dtpValue.Name = "dtpValue";
-         this.dtpValue.Size = new System.Drawing.Size(200, 20);
-         this.dtpValue.TabIndex = 0;
          // 
          // txtValue
          // 
@@ -69,6 +65,15 @@
          this.pnlSize.Size = new System.Drawing.Size(196, 24);
          this.pnlSize.TabIndex = 3;
          // 
+         // numSize
+         // 
+         this.numSize.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+         this.numSize.Location = new System.Drawing.Point(0, 1);
+         this.numSize.Name = "numSize";
+         this.numSize.Size = new System.Drawing.Size(117, 20);
+         this.numSize.TabIndex = 2;
+         // 
          // cboSize
          // 
          this.cboSize.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
@@ -84,28 +89,49 @@
          this.cboSize.Size = new System.Drawing.Size(73, 21);
          this.cboSize.TabIndex = 1;
          // 
-         // numSize
+         // pnlDateTime
          // 
-         this.numSize.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+         this.pnlDateTime.Controls.Add(this.dtpTimeValue);
+         this.pnlDateTime.Controls.Add(this.dtpValue);
+         this.pnlDateTime.Location = new System.Drawing.Point(19, 14);
+         this.pnlDateTime.Name = "pnlDateTime";
+         this.pnlDateTime.Size = new System.Drawing.Size(200, 20);
+         this.pnlDateTime.TabIndex = 5;
+         // 
+         // dtpTimeValue
+         // 
+         this.dtpTimeValue.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+         this.dtpTimeValue.Format = System.Windows.Forms.DateTimePickerFormat.Time;
+         this.dtpTimeValue.Location = new System.Drawing.Point(117, 0);
+         this.dtpTimeValue.Name = "dtpTimeValue";
+         this.dtpTimeValue.ShowUpDown = true;
+         this.dtpTimeValue.Size = new System.Drawing.Size(83, 20);
+         this.dtpTimeValue.TabIndex = 6;
+         // 
+         // dtpValue
+         // 
+         this.dtpValue.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-         this.numSize.Location = new System.Drawing.Point(0, 1);
-         this.numSize.Name = "numSize";
-         this.numSize.Size = new System.Drawing.Size(117, 20);
-         this.numSize.TabIndex = 2;
+         this.dtpValue.Format = System.Windows.Forms.DateTimePickerFormat.Short;
+         this.dtpValue.Location = new System.Drawing.Point(0, 0);
+         this.dtpValue.Name = "dtpValue";
+         this.dtpValue.Size = new System.Drawing.Size(111, 20);
+         this.dtpValue.TabIndex = 5;
          // 
          // FilterValueType
          // 
          this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
          this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+         this.Controls.Add(this.pnlDateTime);
          this.Controls.Add(this.pnlSize);
          this.Controls.Add(this.numValue);
          this.Controls.Add(this.txtValue);
-         this.Controls.Add(this.dtpValue);
          this.Name = "FilterValueType";
          this.Size = new System.Drawing.Size(306, 159);
          ((System.ComponentModel.ISupportInitialize)(this.numValue)).EndInit();
          this.pnlSize.ResumeLayout(false);
          ((System.ComponentModel.ISupportInitialize)(this.numSize)).EndInit();
+         this.pnlDateTime.ResumeLayout(false);
          this.ResumeLayout(false);
          this.PerformLayout();
 
@@ -113,11 +139,13 @@
 
       #endregion
 
-      private System.Windows.Forms.DateTimePicker dtpValue;
       private System.Windows.Forms.TextBox txtValue;
       private System.Windows.Forms.NumericUpDown numValue;
       private System.Windows.Forms.Panel pnlSize;
       private System.Windows.Forms.ComboBox cboSize;
       private System.Windows.Forms.NumericUpDown numSize;
+      private System.Windows.Forms.Panel pnlDateTime;
+      private System.Windows.Forms.DateTimePicker dtpTimeValue;
+      private System.Windows.Forms.DateTimePicker dtpValue;
    }
 }

@@ -5,7 +5,7 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("AstroGrep.Common")]
+[assembly: AssemblyTitle("libAstroGrep")]
 [assembly: AssemblyDescription("This application and its source code are freely distributable.")]
 
 // Setting ComVisible to false makes the types in this assembly not visible 
@@ -14,4 +14,4 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("8d3022ee-ee2d-4b13-9e87-7223a03ef492")]
+[assembly: Guid("2d73f63e-5a3f-490a-bb49-35d4c344c806")]

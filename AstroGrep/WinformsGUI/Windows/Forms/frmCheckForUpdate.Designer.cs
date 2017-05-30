@@ -42,9 +42,9 @@
          // 
          this.btnCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
          this.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-         this.btnCancel.Location = new System.Drawing.Point(315, 290);
+         this.btnCancel.Location = new System.Drawing.Point(300, 287);
          this.btnCancel.Name = "btnCancel";
-         this.btnCancel.Size = new System.Drawing.Size(75, 23);
+         this.btnCancel.Size = new System.Drawing.Size(90, 25);
          this.btnCancel.TabIndex = 0;
          this.btnCancel.Text = "&Cancel";
          this.btnCancel.UseVisualStyleBackColor = true;
@@ -55,16 +55,16 @@
          this.lblVersionCheck.AutoSize = true;
          this.lblVersionCheck.Location = new System.Drawing.Point(9, 20);
          this.lblVersionCheck.Name = "lblVersionCheck";
-         this.lblVersionCheck.Size = new System.Drawing.Size(117, 13);
+         this.lblVersionCheck.Size = new System.Drawing.Size(131, 15);
          this.lblVersionCheck.TabIndex = 1;
          this.lblVersionCheck.Text = "Checking for updates...";
          // 
          // btnNext
          // 
          this.btnNext.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-         this.btnNext.Location = new System.Drawing.Point(234, 290);
+         this.btnNext.Location = new System.Drawing.Point(205, 287);
          this.btnNext.Name = "btnNext";
-         this.btnNext.Size = new System.Drawing.Size(75, 23);
+         this.btnNext.Size = new System.Drawing.Size(90, 25);
          this.btnNext.TabIndex = 3;
          this.btnNext.Text = "&Next >";
          this.btnNext.UseVisualStyleBackColor = true;
@@ -82,9 +82,9 @@
          // lblDownloadMessage
          // 
          this.lblDownloadMessage.AutoSize = true;
-         this.lblDownloadMessage.Location = new System.Drawing.Point(9, 206);
+         this.lblDownloadMessage.Location = new System.Drawing.Point(9, 207);
          this.lblDownloadMessage.Name = "lblDownloadMessage";
-         this.lblDownloadMessage.Size = new System.Drawing.Size(100, 13);
+         this.lblDownloadMessage.Size = new System.Drawing.Size(117, 15);
          this.lblDownloadMessage.TabIndex = 5;
          this.lblDownloadMessage.Text = "Download message";
          // 
@@ -105,9 +105,9 @@
          // lblWhatsNew
          // 
          this.lblWhatsNew.AutoSize = true;
-         this.lblWhatsNew.Location = new System.Drawing.Point(9, 46);
+         this.lblWhatsNew.Location = new System.Drawing.Point(9, 45);
          this.lblWhatsNew.Name = "lblWhatsNew";
-         this.lblWhatsNew.Size = new System.Drawing.Size(66, 13);
+         this.lblWhatsNew.Size = new System.Drawing.Size(73, 15);
          this.lblWhatsNew.TabIndex = 7;
          this.lblWhatsNew.Text = "What\'s new:";
          this.lblWhatsNew.Visible = false;
@@ -115,8 +115,8 @@
          // frmCheckForUpdate
          // 
          this.AcceptButton = this.btnNext;
-         this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
-         this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+         this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
+         this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
          this.CancelButton = this.btnCancel;
          this.ClientSize = new System.Drawing.Size(402, 325);
          this.Controls.Add(this.lblWhatsNew);
@@ -126,6 +126,7 @@
          this.Controls.Add(this.btnNext);
          this.Controls.Add(this.lblVersionCheck);
          this.Controls.Add(this.btnCancel);
+         this.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
          this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
          this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
          this.MaximizeBox = false;

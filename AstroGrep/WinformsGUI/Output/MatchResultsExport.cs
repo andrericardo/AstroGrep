@@ -87,6 +87,8 @@ namespace AstroGrep.Output
       /// [Curtis_Beard]      11/11/2014	ADD: export all filteritems
       /// [Curtis_Beard]      12/03/2014	CHG: use grepIndexes instead of ListView
       /// [Curtis_Beard]      04/08/2015	CHG: update export delegate with settings class
+      /// [Curtis_Beard]      06/01/2016	FIX: 89, check start directories and start paths
+      /// [Curtis_Beard]	   09/29/2016	CHG: 24/115, use one interface for search in prep for saving to file
       /// </history>
       public static void SaveResultsAsText(ExportSettings settings)
       {
@@ -154,8 +156,17 @@ namespace AstroGrep.Output
             // output options
             writer.WriteLine("Search Options");
             writer.WriteLine("-------------------------------------------------------");
-            writer.WriteLine("Search Paths: {0}", string.Join(", ", settings.Grep.SearchSpec.StartDirectories));
-            writer.WriteLine("File Types: {0}", settings.Grep.FileFilterSpec.FileFilter);
+            string searchPaths = string.Empty;
+            if (settings.Grep.SearchSpec.StartFilePaths != null && settings.Grep.SearchSpec.StartFilePaths.Length > 0)
+            {
+               searchPaths = string.Join(", ", settings.Grep.SearchSpec.StartFilePaths);
+            }
+            else
+            {
+               searchPaths = string.Join(", ", settings.Grep.SearchSpec.StartDirectories);
+            }
+            writer.WriteLine("Search Paths: {0}", searchPaths);
+            writer.WriteLine("File Types: {0}", settings.Grep.SearchSpec.FileFilter);
             writer.WriteLine("Regular Expressions: {0}", settings.Grep.SearchSpec.UseRegularExpressions.ToString());
             writer.WriteLine("Case Sensitive: {0}", settings.Grep.SearchSpec.UseCaseSensitivity.ToString());
             writer.WriteLine("Whole Word: {0}", settings.Grep.SearchSpec.UseWholeWordMatching.ToString());
@@ -167,10 +178,10 @@ namespace AstroGrep.Output
             writer.WriteLine("Context Lines: {0}", settings.Grep.SearchSpec.ContextLines.ToString());
 
             // filter items
-            if (settings.Grep.FileFilterSpec.FilterItems != null)
+            if (settings.Grep.SearchSpec.FilterItems != null)
             {
                writer.WriteLine("Exclusions:");
-               foreach (FilterItem item in settings.Grep.FileFilterSpec.FilterItems)
+               foreach (FilterItem item in settings.Grep.SearchSpec.FilterItems)
                {
                   string option = item.ValueOption.ToString();
                   if (item.ValueOption == FilterType.ValueOptions.None)
@@ -291,6 +302,8 @@ namespace AstroGrep.Output
       /// [Curtis_Beard]      11/11/2014	ADD: export all filteritems
       /// [Curtis_Beard]      12/03/2014	CHG: use grepIndexes instead of ListView
       /// [Curtis_Beard]      04/08/2015	CHG: update export delegate with settings class
+      /// [Curtis_Beard]      06/01/2016	FIX: 89, check start directories and start paths
+      /// [Curtis_Beard]	   09/29/2016	CHG: 24/115, use one interface for search in prep for saving to file
       /// </history>
       public static void SaveResultsAsXML(ExportSettings settings)
       {
@@ -306,8 +319,17 @@ namespace AstroGrep.Output
 
             // write out search options
             writer.WriteStartElement("options");
-            writer.WriteElementString("searchPaths", string.Join(", ", settings.Grep.SearchSpec.StartDirectories));
-            writer.WriteElementString("fileTypes", settings.Grep.FileFilterSpec.FileFilter);
+            string searchPaths = string.Empty;
+            if (settings.Grep.SearchSpec.StartFilePaths != null && settings.Grep.SearchSpec.StartFilePaths.Length > 0)
+            {
+               searchPaths = string.Join(", ", settings.Grep.SearchSpec.StartFilePaths);
+            }
+            else
+            {
+               searchPaths = string.Join(", ", settings.Grep.SearchSpec.StartDirectories);
+            }
+            writer.WriteElementString("searchPaths", searchPaths);
+            writer.WriteElementString("fileTypes", settings.Grep.SearchSpec.FileFilter);
             writer.WriteElementString("searchText", settings.Grep.SearchSpec.SearchText);
             writer.WriteElementString("regularExpressions", settings.Grep.SearchSpec.UseRegularExpressions.ToString());
             writer.WriteElementString("caseSensitive", settings.Grep.SearchSpec.UseCaseSensitivity.ToString());
@@ -319,10 +341,10 @@ namespace AstroGrep.Output
             writer.WriteElementString("removeLeadingWhiteSpace", settings.RemoveLeadingWhiteSpace.ToString());
             writer.WriteElementString("contextLines", settings.Grep.SearchSpec.ContextLines.ToString());
             // filter items
-            if (settings.Grep.FileFilterSpec.FilterItems != null)
+            if (settings.Grep.SearchSpec.FilterItems != null)
             {
                writer.WriteStartElement("exclusions");
-               foreach (FilterItem item in settings.Grep.FileFilterSpec.FilterItems)
+               foreach (FilterItem item in settings.Grep.SearchSpec.FilterItems)
                {
                   string option = item.ValueOption.ToString();
                   if (item.ValueOption == FilterType.ValueOptions.None)
@@ -401,6 +423,8 @@ namespace AstroGrep.Output
       /// [Curtis_Beard]      11/11/2014	ADD: export all filteritems
       /// [Curtis_Beard]      12/03/2014	CHG: use grepIndexes instead of ListView
       /// [Curtis_Beard]      04/08/2015	CHG: update export delegate with settings class
+      /// [Curtis_Beard]      06/01/2016	FIX: 89, check start directories and start paths
+      /// [Curtis_Beard]	   09/29/2016	CHG: 24/115, use one interface for search in prep for saving to file
       /// </history>
       public static void SaveResultsAsJSON(ExportSettings settings)
       {
@@ -413,8 +437,17 @@ namespace AstroGrep.Output
             // write out search options
             writer.WriteLine("\t\"options\":");
             writer.WriteLine("\t{");
-            writer.WriteLine(string.Format("\t\t\"searchPaths\":{0},", JSONHelper.ToJSONString(settings.Grep.SearchSpec.StartDirectories)));
-            writer.WriteLine(string.Format("\t\t\"fileTypes\":{0},", JSONHelper.ToJSONString(settings.Grep.FileFilterSpec.FileFilter)));
+            string[] searchPaths = null;
+            if (settings.Grep.SearchSpec.StartFilePaths != null && settings.Grep.SearchSpec.StartFilePaths.Length > 0)
+            {
+               searchPaths = settings.Grep.SearchSpec.StartFilePaths;
+            }
+            else
+            {
+               searchPaths = settings.Grep.SearchSpec.StartDirectories;
+            }
+            writer.WriteLine(string.Format("\t\t\"searchPaths\":{0},", JSONHelper.ToJSONString(searchPaths)));
+            writer.WriteLine(string.Format("\t\t\"fileTypes\":{0},", JSONHelper.ToJSONString(settings.Grep.SearchSpec.FileFilter)));
             writer.WriteLine(string.Format("\t\t\"searchText\":{0},", JSONHelper.ToJSONString(settings.Grep.SearchSpec.SearchText)));
             writer.WriteLine(string.Format("\t\t\"regularExpressions\":{0},", JSONHelper.ToJSONString(settings.Grep.SearchSpec.UseRegularExpressions)));
             writer.WriteLine(string.Format("\t\t\"caseSensitive\":{0},", JSONHelper.ToJSONString(settings.Grep.SearchSpec.UseCaseSensitivity)));
@@ -426,11 +459,11 @@ namespace AstroGrep.Output
             writer.WriteLine(string.Format("\t\t\"removeLeadingWhiteSpace\":{0},", JSONHelper.ToJSONString(settings.RemoveLeadingWhiteSpace)));
             writer.WriteLine(string.Format("\t\t\"contextLines\":{0},", JSONHelper.ToJSONString(settings.Grep.SearchSpec.ContextLines)));
             // filter items
-            if (settings.Grep.FileFilterSpec.FilterItems != null)
+            if (settings.Grep.SearchSpec.FilterItems != null)
             {
                writer.WriteLine("\t\t\"exclusions\":");
                writer.WriteLine("\t\t\t[");
-               foreach (FilterItem item in settings.Grep.FileFilterSpec.FilterItems)
+               foreach (FilterItem item in settings.Grep.SearchSpec.FilterItems)
                {
                   writer.Write("\t\t\t\t{");
                   string option = item.ValueOption.ToString();
@@ -528,6 +561,7 @@ namespace AstroGrep.Output
       /// <returns>print document as a string</returns>
       /// <history>
       /// [Curtis_Beard]      04/10/2015	CHG: move printing exporting here
+      /// [Curtis_Beard]      05/19/2016	FIX: 90, always output line text
       /// </history>
       public static string PrintSelected(ExportSettings settings)
       {
@@ -546,14 +580,19 @@ namespace AstroGrep.Output
             for (int j = 0; j < match.Matches.Count; j++)
             {
                var matchLine = match.Matches[j];
-               if (matchLine.LineNumber > -1)
+
+               string line = matchLine.Line;
+               if (settings.RemoveLeadingWhiteSpace)
                {
-                  document.AppendLine(string.Format("{0}: {1}", matchLine.LineNumber, matchLine.Line));
+                  line = line.TrimStart();
                }
-               else
+
+               if (settings.ShowLineNumbers && matchLine.LineNumber > -1)
                {
-                  document.AppendLine(string.Empty);
+                  line = string.Format("{0}: {1}", matchLine.LineNumber, line);
                }
+
+               document.AppendLine(line);
             }
 
             document.AppendLine(string.Empty);
@@ -569,6 +608,7 @@ namespace AstroGrep.Output
       /// <returns>print document as a string</returns>
       /// <history>
       /// [Curtis_Beard]      04/10/2015	CHG: move printing exporting here
+      /// [Curtis_Beard]      05/19/2016	FIX: 90, always output line text
       /// </history>
       public static string PrintAll(ExportSettings settings)
       {
@@ -583,14 +623,19 @@ namespace AstroGrep.Output
             for (int i = 0; i < match.Matches.Count; i++)
             {
                var matchLine = match.Matches[i];
-               if (matchLine.LineNumber > -1)
+
+               string line = matchLine.Line;
+               if (settings.RemoveLeadingWhiteSpace)
                {
-                  document.AppendLine(string.Format("{0}: {1}", matchLine.LineNumber, matchLine.Line));
+                  line = line.TrimStart();
                }
-               else
+
+               if (settings.ShowLineNumbers && matchLine.LineNumber > -1)
                {
-                  document.AppendLine(string.Empty);
+                  line = string.Format("{0}: {1}", matchLine.LineNumber, line);
                }
+
+               document.AppendLine(line);
             }
 
             document.AppendLine(string.Empty);

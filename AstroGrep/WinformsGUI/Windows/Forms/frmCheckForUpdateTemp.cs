@@ -43,7 +43,7 @@ namespace AstroGrep.Windows.Forms
    /// <history>
    /// [Curtis_Beard]	   11/26/2014	Initial: partial update to update checking
    /// </history>
-   public partial class frmCheckForUpdateTemp : Form
+   public partial class frmCheckForUpdateTemp : BaseForm
    {
       private delegate void UpdateMessageCallBack(string message, string newestVersion);
 
@@ -186,6 +186,29 @@ namespace AstroGrep.Windows.Forms
       private void lnkDownload_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
       {
          System.Diagnostics.Process.Start(ProductInformation.DownloadUrl);
+      }
+
+      /// <summary>
+      /// Process Escape and Enter keys for this form.
+      /// </summary>
+      /// <param name="keyData">Current key data</param>
+      /// <returns>true if processed, false otherwise</returns>
+      /// <history>
+      /// [Curtis_Beard]      06/04/2015  Initial, handle escape and enter keys
+      /// </history>
+      protected override bool ProcessDialogKey(Keys keyData)
+      {
+         if (Form.ModifierKeys == Keys.None && keyData == Keys.Escape)
+         {
+            this.Close();
+            return true;
+         }
+         else if (Form.ModifierKeys == Keys.None && keyData == Keys.Enter)
+         {
+            return true;
+         }
+
+         return base.ProcessDialogKey(keyData);
       }
    }
 }

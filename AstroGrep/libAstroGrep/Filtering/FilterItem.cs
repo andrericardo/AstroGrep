@@ -346,10 +346,10 @@ namespace libAstroGrep
       }
 
       /// <summary>
-      /// 
+      /// Check given date against user defined date.
       /// </summary>
-      /// <param name="checkValue"></param>
-      /// <returns></returns>
+      /// <param name="checkValue">Current date to check</param>
+      /// <returns>true if needs to be filtered, false otherwise</returns>
       /// <history>
       /// [Curtis_Beard]	   10/31/2014	ADD: exclusions update
       /// </history>

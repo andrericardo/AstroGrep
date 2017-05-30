@@ -50,13 +50,13 @@ namespace AstroGrep.Windows.Forms
    /// [Curtis_Beard]	    03/07/2012	ADD: 3131609, exclusions
    /// [Curtis_Beard]       09/26/2012	CHG: 3572487, move command line logic to program.cs and use property for value
    /// </history>
-   public partial class frmMain : Form
+   public partial class frmMain : BaseForm
    {
       #region Declarations
 
       private int __SortColumn = -1;
       private Grep __Grep = null;
-      private int __FileListHeight = Core.GeneralSettings.DEFAULT_FILE_PANEL_HEIGHT;
+      private int __FileListHeight = GeneralSettings.DEFAULT_FILE_PANEL_HEIGHT;
       private readonly List<LogItem> LogItems = new List<LogItem>();
       private List<FilterItem> __FilterItems = new List<FilterItem>();
       private CommandLineProcessing.CommandLineArguments __CommandLineArgs = new CommandLineProcessing.CommandLineArguments();
@@ -105,6 +105,8 @@ namespace AstroGrep.Windows.Forms
       /// [Curtis_Beard]	   09/18/2013	ADD: 58, add drag/drop support for path
       /// [Curtis_Beard]	   05/06/2015	CHG: remove events no longer used
       /// [Curtis_Beard]	   05/14/2015	CHG: move event handlers to designer partial class
+      /// [LinkNet]			   04/24/2017	CHG: remove unused "ToolsMRUAll_Click" event handler
+      /// [LinkNet]			   04/24/2017	CHG: move enlarge label font code to Form Load Event
       /// </history>
       public frmMain()
       {
@@ -114,10 +116,6 @@ namespace AstroGrep.Windows.Forms
          InitializeComponent();
 
          API.ListViewExtensions.SetTheme(lstFileNames);
-
-         // enlarge font without changing font family
-         lblSearchHeading.Font = new Font(lblSearchHeading.Font.FontFamily, 12F);
-         lblSearchOptions.Font = new Font(lblSearchOptions.Font.FontFamily, 12F);
       }
 
       #region Form Events
@@ -140,9 +138,14 @@ namespace AstroGrep.Windows.Forms
       /// [Curtis_Beard]		01/30/2012	CHG: 1955653, set focus to search text on startup
       /// [Curtis_Beard]	   02/24/2012	CHG: 3489693, save state of search options
       /// [Curtis_Beard]		09/26/2012	CHG: 3572487, remove init of command line options (now in program.cs)
+      /// [LinkNet]				04/30/2017	ADD: Load Windows DPI settings
+      /// [Curtis_Beard]	   05/19/2017	CHG: 120, add option to use accent color
       /// </history>
       private void frmMain_Load(object sender, System.EventArgs e)
       {
+         // Load Windows DPI settings and set window and column positions and fonts to defaults if setting has changed
+         LoadDPISettings();
+
          // set defaults
          txtContextLines.Maximum = Constants.MAX_CONTEXT_LINES;
 
@@ -179,6 +182,18 @@ namespace AstroGrep.Windows.Forms
 
          // set focus to search text combobox
          cboSearchForText.Select();
+
+         // Enlarge font without changing font family
+         lblSearchHeading.Font = new Font(lblSearchHeading.Font.FontFamily, 12F);
+         lblSearchOptions.Font = new Font(lblSearchOptions.Font.FontFamily, 12F);
+         if (!GeneralSettings.UseAstroGrepAccentColor)
+         {
+            lblSearchHeading.ForeColor = Color.Black;
+            lblSearchOptions.ForeColor = Color.Black;
+         }
+
+         MainMenu.Font = this.Font;
+         stbStatus.Font = this.Font;
       }
 
       /// <summary>
@@ -199,7 +214,7 @@ namespace AstroGrep.Windows.Forms
       {
          SaveSettings();
 
-         if (Core.GeneralSettings.SaveSearchOptionsOnExit)
+         if (GeneralSettings.SaveSearchOptionsOnExit)
          {
             SaveSearchSettings();
          }
@@ -285,13 +300,14 @@ namespace AstroGrep.Windows.Forms
       /// <param name="e">system parameter</param>
       /// <history>
       /// [Curtis_Beard]	   05/06/2015	Created
+      /// [Curtis_Beard]	   05/19/2017	CHG: 120, add option to use accent color
       /// </history>
       private void lblSearchOptions_Paint(object sender, PaintEventArgs e)
       {
          var rect = lblSearchOptions.ClientRectangle;
          rect.Height -= 1;
 
-         e.Graphics.DrawLine(new Pen(ProductInformation.ApplicationColor) { Width = 2 }, rect.X, rect.Height, rect.Width, rect.Height);
+         e.Graphics.DrawLine(new Pen(GeneralSettings.UseAstroGrepAccentColor ? ProductInformation.ApplicationColor : Color.Black) { Width = 2 }, rect.X, rect.Height, rect.Width, rect.Height);
       }
 
       /// <summary>
@@ -301,13 +317,14 @@ namespace AstroGrep.Windows.Forms
       /// <param name="e">system parameter</param>
       /// <history>
       /// [Curtis_Beard]	   05/06/2015	Created
+      /// [Curtis_Beard]	   05/19/2017	CHG: 120, add option to use accent color
       /// </history>
       private void lblSearchHeading_Paint(object sender, PaintEventArgs e)
       {
          var rect = lblSearchHeading.ClientRectangle;
          rect.Height -= 1;
 
-         e.Graphics.DrawLine(new Pen(ProductInformation.ApplicationColor) { Width = 2 }, rect.X, rect.Height, rect.Width, rect.Height);
+         e.Graphics.DrawLine(new Pen(GeneralSettings.UseAstroGrepAccentColor ? ProductInformation.ApplicationColor : Color.Black) { Width = 2 }, rect.X, rect.Height, rect.Width, rect.Height);
       }
 
       /// <summary>
@@ -462,7 +479,8 @@ namespace AstroGrep.Windows.Forms
             if (lstFileNames.SelectedItems.Count == 0)
                return;
 
-            TextEditors.EditFile(__Grep.RetrieveMatchResult(int.Parse(lstFileNames.SelectedItems[0].SubItems[Constants.COLUMN_INDEX_GREP_INDEX].Text)));
+            var match = __Grep.RetrieveMatchResult(int.Parse(lstFileNames.SelectedItems[0].SubItems[Constants.COLUMN_INDEX_GREP_INDEX].Text));
+            TextEditors.Open(TextEditorOpener.FromMatch(match, __Grep.SearchSpec.SearchText));
          }
       }
 
@@ -732,6 +750,35 @@ namespace AstroGrep.Windows.Forms
             }
          }
       }
+
+      /// <summary>
+      /// Hide tooltip for a ToolStripStatusLabel.
+      /// </summary>
+      /// <param name="sender">Current ToolStripStatusLabel</param>
+      /// <param name="e">System parameter</param>
+      /// <history>
+      /// [Curtis_Beard]	   08/16/2016	FIX: 88, manually show tooltip to avoid being shown over control
+      /// </history>
+      private void CountPanel_MouseLeave(object sender, EventArgs e)
+      {
+         toolTip1.Hide(this);
+      }
+
+      /// <summary>
+      /// Show tooltip for a ToolStripStatusLabel.
+      /// </summary>
+      /// <param name="sender">Current ToolStripStatusLabel</param>
+      /// <param name="e">System parameter</param>
+      /// <history>
+      /// [Curtis_Beard]	   08/16/2016	FIX: 88, manually show tooltip to avoid being shown over control
+      /// </history>
+      private void CountPanel_MouseEnter(object sender, EventArgs e)
+      {
+         var label = (ToolStripStatusLabel)sender;
+         label.ToolTipText = "";
+         var newPoint = this.PointToClient(Cursor.Position);
+         toolTip1.Show(Language.GetControlToolTipText(label), this, newPoint.X, newPoint.Y);
+      }
       #endregion
 
       #region Private Methods
@@ -739,23 +786,24 @@ namespace AstroGrep.Windows.Forms
       /// Load the general settings values.
       /// </summary>
       /// <history>
-      /// [Curtis_Beard]	   10/11/2006	Created
-      /// [Curtis_Beard]	   11/22/2006	CHG: Remove use of browse in combobox
-      /// [Curtis_Beard]	   02/24/2012	CHG: 3488321, ability to change results font
-      /// [Curtis_Beard]	   10/10/2012	ADD: 3479503, ability to change file list font
-      /// [Curtis_Beard]	   04/08/2015	CHG: 20/81, load word wrap and entire file options
+      /// [Curtis_Beard]      10/11/2006	Created
+      /// [Curtis_Beard]      11/22/2006	CHG: Remove use of browse in combobox
+      /// [Curtis_Beard]      02/24/2012	CHG: 3488321, ability to change results font
+      /// [Curtis_Beard]      10/10/2012	ADD: 3479503, ability to change file list font
+      /// [Curtis_Beard]      04/08/2015	CHG: 20/81, load word wrap and entire file options
+      /// [LinkNet]           04/27/2017	CHG: Moved text editor load code to LoadTextEditorSettings
       /// </history>
       private void LoadSettings()
       {
          //  Only load up to the desired number of paths.
-         if (AstroGrep.Core.GeneralSettings.MaximumMRUPaths < 0 || AstroGrep.Core.GeneralSettings.MaximumMRUPaths > Constants.MAX_STORED_PATHS)
+         if (GeneralSettings.MaximumMRUPaths < 0 || GeneralSettings.MaximumMRUPaths > Constants.MAX_STORED_PATHS)
          {
-            AstroGrep.Core.GeneralSettings.MaximumMRUPaths = Constants.MAX_STORED_PATHS;
+            GeneralSettings.MaximumMRUPaths = Constants.MAX_STORED_PATHS;
          }
 
-         LoadComboBoxEntry(cboFilePath, AstroGrep.Core.GeneralSettings.SearchStarts);
-         LoadComboBoxEntry(cboFileName, AstroGrep.Core.GeneralSettings.SearchFilters);
-         LoadComboBoxEntry(cboSearchForText, AstroGrep.Core.GeneralSettings.SearchTexts);
+         LoadComboBoxEntry(cboFilePath, GeneralSettings.SearchStarts);
+         LoadComboBoxEntry(cboFileName, GeneralSettings.SearchFilters);
+         LoadComboBoxEntry(cboSearchForText, GeneralSettings.SearchTexts);
 
          // Path
          if (cboFilePath.Items.Count > 0 && cboFilePath.Items.Count != 1)
@@ -778,31 +826,22 @@ namespace AstroGrep.Windows.Forms
          {
             cboSearchForText.SelectedIndex = 0;
          }
-
-         // Results Window
-         var foreground = Convertors.ConvertStringToSolidColorBrush(Core.GeneralSettings.ResultsForeColor);
-         var background = Convertors.ConvertStringToSolidColorBrush(Core.GeneralSettings.ResultsBackColor);
-         var contextForeground = Convertors.ConvertStringToSolidColorBrush(Core.GeneralSettings.ResultsContextForeColor);
-         var font = Convertors.ConvertStringToFont(Core.GeneralSettings.ResultsFont);
-         txtHits.Foreground = foreground;
-         txtHits.Background = background;
-         txtHits.LineNumbersForeground = contextForeground;
-         txtHits.LineNumbersMatchForeground = foreground;
-         txtHits.FontFamily = new System.Windows.Media.FontFamily(font.FontFamily.Name);
-         txtHits.FontSize = font.SizeInPoints * 96 / 72;
-         txtHits.WordWrap = WordWrapMenuItem.Checked = Core.GeneralSettings.ResultsWordWrap;
-
+         
          // Viewing options
-         RemoveWhiteSpaceMenuItem.Checked = Core.GeneralSettings.RemoveLeadingWhiteSpace;
-         EntireFileMenuItem.Checked = Core.GeneralSettings.ShowEntireFile;
+         RemoveWhiteSpaceMenuItem.Checked = GeneralSettings.RemoveLeadingWhiteSpace;
+         EntireFileMenuItem.Checked = GeneralSettings.ShowEntireFile;
 
          // File list columns
-         lstFileNames.Font = Convertors.ConvertStringToFont(Core.GeneralSettings.FilePanelFont);
+         lstFileNames.Font = Convertors.ConvertStringToFont(GeneralSettings.FilePanelFont);
          SetColumnsText();
 
+         // Load the window settings
          LoadWindowSettings();
 
-         // Load the text editors
+         // Load the text editor settings
+         LoadTextEditorSettings();
+
+         // Load the text editor
          TextEditors.Load();
       }
 
@@ -812,27 +851,59 @@ namespace AstroGrep.Windows.Forms
       /// <history>
       /// [Curtis_Beard]	   06/28/2007	Created
       /// [Curtis_Beard]	   03/02/2015	FIX: 63, fix issue when window doesn't fit on a screen (like when a screen is removed)
-      /// [Curtis_Beard]	   03/02/2015	FIX: 49, graphical glitch when using 125% dpi setting
       /// [Curtis_Beard]	   05/14/2015	CHG: adjust display of MenuStrip in Windows XP
+      /// [LinkNet]			   04/24/2017	CHG: set initial form start position to center of screen corrected for DPI setting
+      /// [LinkNet]			   04/27/2017	CHG: increase minimum search panel width to avoid cutoff text with higher DPI settings
+      /// [LinkNet]			   04/29/2017	CHG: set initial file panel column widths corrected for DPI setting
+      /// [LinkNet]			   04/29/2017	CHG: set initial file panel height corrected for DPI setting
       /// </history>
       private void LoadWindowSettings()
       {
-         int _state = Core.GeneralSettings.WindowState;
+         int _state = GeneralSettings.WindowState;
 
          Rectangle defaultBounds = this.Bounds;
 
-         // set the top/left
-         if (Core.GeneralSettings.WindowTop != -1)
-            Top = Core.GeneralSettings.WindowTop;
-         if (Core.GeneralSettings.WindowLeft != -1)
-            Left = Core.GeneralSettings.WindowLeft;
+         // set the form start position method
+         StartPosition = FormStartPosition.Manual;
 
-         // set the width/height
-         if (Core.GeneralSettings.WindowWidth != -1)
-            Width = Core.GeneralSettings.WindowWidth;
-         if (Core.GeneralSettings.WindowHeight != -1)
-            Height = Core.GeneralSettings.WindowHeight;
+         // set the form top position
+         if (GeneralSettings.WindowTop != -1)
+            Top = GeneralSettings.WindowTop;
+         else
+         {
+            Top = (Screen.PrimaryScreen.Bounds.Height - Constants.WINDOW_HEIGHT * GeneralSettings.WindowsDPIPerCentSetting / 100) / 2;
+            if (Top < 0) Top = 0;
+         }
 
+         // set the form left position
+         if (GeneralSettings.WindowLeft != -1)
+            Left = GeneralSettings.WindowLeft;
+         else
+         {
+            Left = (Screen.PrimaryScreen.Bounds.Width - Constants.WINDOW_WIDTH * GeneralSettings.WindowsDPIPerCentSetting / 100) / 2;
+            if (Left < 0) Left = 0;
+         }
+
+         // set the form width
+         if (GeneralSettings.WindowWidth != -1)
+            Width = GeneralSettings.WindowWidth;
+         else
+         {
+            Width = Constants.WINDOW_WIDTH * GeneralSettings.WindowsDPIPerCentSetting / 100;
+            if (Width > Screen.PrimaryScreen.Bounds.Width)
+               Width = Constants.WINDOW_WIDTH;
+         }
+
+         // set the form height
+         if (GeneralSettings.WindowHeight != -1)
+            Height = GeneralSettings.WindowHeight;
+         else
+         {
+            Height = Constants.WINDOW_HEIGHT * GeneralSettings.WindowsDPIPerCentSetting / 100;
+            if (Height > Screen.PrimaryScreen.Bounds.Height)
+               Height = Constants.WINDOW_HEIGHT;
+         }
+         
          // form can't find a screen to fit on, so reset to center screen on primary screen
          if (!Screen.AllScreens.Any(s => s.WorkingArea.IntersectsWith(this.Bounds)))
          {
@@ -844,27 +915,23 @@ namespace AstroGrep.Windows.Forms
             WindowState = FormWindowState.Maximized;
          }
 
-         // set the splitter positions
-         if (Core.GeneralSettings.WindowSearchPanelWidth != -1)
-            pnlSearch.Width = Core.GeneralSettings.WindowSearchPanelWidth;
-         if (Core.GeneralSettings.WindowFilePanelHeight != -1)
-            this.lstFileNames.Height = Core.GeneralSettings.WindowFilePanelHeight;
+         // set the splitter position
+         if (GeneralSettings.WindowSearchPanelWidth != -1)
+            pnlSearch.Width = GeneralSettings.WindowSearchPanelWidth;
 
-         // ugly hack for now to fix Medium text DPI issues 
-         using (var graphics = this.CreateGraphics())
+         // set the file panel height
+         if (GeneralSettings.WindowFilePanelHeight != -1)
+            lstFileNames.Height = GeneralSettings.WindowFilePanelHeight;
+         else
+            lstFileNames.Height = GeneralSettings.DEFAULT_FILE_PANEL_HEIGHT * GeneralSettings.WindowsDPIPerCentSetting / 100;
+
+         // increase minimum default splitter position to avoid cutoff text with increasing DPI values
+         splitLeftRight.MinSize = Constants.DEFAULT_SEARCH_PANEL_WIDTH * GeneralSettings.WindowsDPIPerCentSetting / 100;
+
+         // adjust splitter position if neccessary
+         if (pnlSearch.Width < splitLeftRight.MinSize)
          {
-            if (API.GetCurrentDPIFontScalingSize(graphics) == API.DPIFontScalingSizes.Medium)
-            {
-               LogClient.Instance.Logger.Info("Adjusting display for font scaling mode medium.");
-               //btnCancel.Height += 3;// fixes issue where cancel button isn't same height as search
-               
-               // fixes issue with cutoff text in search panel area, making it bigger
-               splitLeftRight.MinSize = Constants.DEFAULT_SEARCH_PANEL_WIDTH_MEDIUM_FONT;
-               if (pnlSearch.Width < Constants.DEFAULT_SEARCH_PANEL_WIDTH_MEDIUM_FONT)
-               {
-                  pnlSearch.Width = Constants.DEFAULT_SEARCH_PANEL_WIDTH_MEDIUM_FONT;
-               }
-            }
+            pnlSearch.Width = splitLeftRight.MinSize;
          }
 
          // for windows xp and below, use the system render mode to make it look better
@@ -872,6 +939,73 @@ namespace AstroGrep.Windows.Forms
          {
             MainMenu.RenderMode = ToolStripRenderMode.System;
          }
+
+         // set file column widths from user settings
+
+         if (GeneralSettings.WindowFileColumnNameWidth != -1)
+            lstFileNames.Columns[Constants.COLUMN_INDEX_FILE].Width = GeneralSettings.WindowFileColumnNameWidth;
+         else
+            lstFileNames.Columns[Constants.COLUMN_INDEX_FILE].Width = Constants.COLUMN_WIDTH_FILE * GeneralSettings.WindowsDPIPerCentSetting / 100;
+
+         if (GeneralSettings.WindowFileColumnLocationWidth != -1)
+            lstFileNames.Columns[Constants.COLUMN_INDEX_DIRECTORY].Width = GeneralSettings.WindowFileColumnLocationWidth;
+         else
+            lstFileNames.Columns[Constants.COLUMN_INDEX_DIRECTORY].Width = Constants.COLUMN_WIDTH_DIRECTORY * GeneralSettings.WindowsDPIPerCentSetting / 100;
+
+         if (GeneralSettings.WindowFileColumnFileExtWidth != -1)
+            lstFileNames.Columns[Constants.COLUMN_INDEX_FILE_EXT].Width = GeneralSettings.WindowFileColumnFileExtWidth;
+         else
+            lstFileNames.Columns[Constants.COLUMN_INDEX_FILE_EXT].Width = Constants.COLUMN_WIDTH_FILE_EXT * GeneralSettings.WindowsDPIPerCentSetting / 100;
+
+         if (GeneralSettings.WindowFileColumnDateWidth != -1)
+            lstFileNames.Columns[Constants.COLUMN_INDEX_DATE].Width = GeneralSettings.WindowFileColumnDateWidth;
+         else
+            lstFileNames.Columns[Constants.COLUMN_INDEX_DATE].Width = Constants.COLUMN_WIDTH_DATE * GeneralSettings.WindowsDPIPerCentSetting / 100;
+
+         if (GeneralSettings.WindowFileColumnSizeWidth != -1)
+            lstFileNames.Columns[Constants.COLUMN_INDEX_SIZE].Width = GeneralSettings.WindowFileColumnSizeWidth;
+         else
+            lstFileNames.Columns[Constants.COLUMN_INDEX_SIZE].Width = Constants.COLUMN_WIDTH_SIZE * GeneralSettings.WindowsDPIPerCentSetting / 100;
+
+         if (GeneralSettings.WindowFileColumnCountWidth != -1)
+            lstFileNames.Columns[Constants.COLUMN_INDEX_COUNT].Width = GeneralSettings.WindowFileColumnCountWidth;
+         else
+            lstFileNames.Columns[Constants.COLUMN_INDEX_COUNT].Width = Constants.COLUMN_WIDTH_COUNT * GeneralSettings.WindowsDPIPerCentSetting / 100;
+      }
+
+      /// <summary>
+      /// Load the texteditor settings.
+      /// </summary>
+      /// <history>
+      /// [LinkNet]        04/27/2016  ADD: Created
+      /// [LinkNet]        04/27/2017  CHG: add "txtHits.PreviewMouseDoubleClick" event (removed from frmMain designer)
+      /// [LinkNet]        04/27/2017  CHG: add texteditor scrollbar visibility code (removed from frmMain designer)
+      /// [LinkNet]        04/27/2016  CHG: Duplicate code transferred from LoadSettings and OptionsMenuItem_Click
+      /// [LinkNet]        04/27/2016  ADD: Adjust texteditor font size for DPI font scaling
+      /// </history>
+      private void LoadTextEditorSettings()
+      {
+         var foreground = Convertors.ConvertStringToSolidColorBrush(GeneralSettings.ResultsForeColor);
+         var background = Convertors.ConvertStringToSolidColorBrush(GeneralSettings.ResultsBackColor);
+         var contextForeground = Convertors.ConvertStringToSolidColorBrush(GeneralSettings.ResultsContextForeColor);
+         var font = Convertors.ConvertStringToFont(GeneralSettings.ResultsFont);
+
+         txtHits.Foreground = foreground;
+         txtHits.Background = background;
+         txtHits.LineNumbersForeground = contextForeground;
+         txtHits.LineNumbersMatchForeground = foreground;
+         txtHits.FontFamily = new System.Windows.Media.FontFamily(font.FontFamily.Name);
+         txtHits.FontSize = font.SizeInPoints * 96 / 72;
+         txtHits.WordWrap = WordWrapMenuItem.Checked = GeneralSettings.ResultsWordWrap;
+
+         // Sets texteditor scroll bar visibilty to windows system default
+         txtHits.HorizontalScrollBarVisibility = System.Windows.Controls.ScrollBarVisibility.Auto;
+         txtHits.VerticalScrollBarVisibility = System.Windows.Controls.ScrollBarVisibility.Auto;
+
+         // Handles finding the current line under the mouse pointer during a double click to open the texteditor at that location
+         txtHits.PreviewMouseDoubleClick += txtHits_PreviewMouseDoubleClick;
+
+         // adjust texteditor font size
       }
 
       /// <summary>
@@ -888,28 +1022,28 @@ namespace AstroGrep.Windows.Forms
          SaveWindowSettings();
 
          //save column widths
-         Core.GeneralSettings.WindowFileColumnNameWidth = lstFileNames.Columns[Constants.COLUMN_INDEX_FILE].Width;
-         Core.GeneralSettings.WindowFileColumnLocationWidth = lstFileNames.Columns[Constants.COLUMN_INDEX_DIRECTORY].Width;
-         Core.GeneralSettings.WindowFileColumnDateWidth = lstFileNames.Columns[Constants.COLUMN_INDEX_DATE].Width;
-         Core.GeneralSettings.WindowFileColumnCountWidth = lstFileNames.Columns[Constants.COLUMN_INDEX_COUNT].Width;
-         Core.GeneralSettings.WindowFileColumnSizeWidth = lstFileNames.Columns[Constants.COLUMN_INDEX_SIZE].Width;
-         Core.GeneralSettings.WindowFileColumnFileExtWidth = lstFileNames.Columns[Constants.COLUMN_INDEX_FILE_EXT].Width;
+         GeneralSettings.WindowFileColumnNameWidth = lstFileNames.Columns[Constants.COLUMN_INDEX_FILE].Width;
+         GeneralSettings.WindowFileColumnLocationWidth = lstFileNames.Columns[Constants.COLUMN_INDEX_DIRECTORY].Width;
+         GeneralSettings.WindowFileColumnDateWidth = lstFileNames.Columns[Constants.COLUMN_INDEX_DATE].Width;
+         GeneralSettings.WindowFileColumnCountWidth = lstFileNames.Columns[Constants.COLUMN_INDEX_COUNT].Width;
+         GeneralSettings.WindowFileColumnSizeWidth = lstFileNames.Columns[Constants.COLUMN_INDEX_SIZE].Width;
+         GeneralSettings.WindowFileColumnFileExtWidth = lstFileNames.Columns[Constants.COLUMN_INDEX_FILE_EXT].Width;
 
          //save divider panel positions
-         Core.GeneralSettings.WindowSearchPanelWidth = pnlSearch.Width;
-         Core.GeneralSettings.WindowFilePanelHeight = lstFileNames.Height;
+         GeneralSettings.WindowSearchPanelWidth = pnlSearch.Width;
+         GeneralSettings.WindowFilePanelHeight = lstFileNames.Height;
 
          //save search comboboxes
-         Core.GeneralSettings.SearchStarts = Convertors.GetComboBoxEntriesAsString(cboFilePath);
-         Core.GeneralSettings.SearchFilters = Convertors.GetComboBoxEntriesAsString(cboFileName);
-         Core.GeneralSettings.SearchTexts = Convertors.GetComboBoxEntriesAsString(cboSearchForText);
+         GeneralSettings.SearchStarts = Convertors.GetComboBoxEntriesAsString(cboFilePath);
+         GeneralSettings.SearchFilters = Convertors.GetComboBoxEntriesAsString(cboFileName);
+         GeneralSettings.SearchTexts = Convertors.GetComboBoxEntriesAsString(cboSearchForText);
 
          //save view options
-         Core.GeneralSettings.ResultsWordWrap = WordWrapMenuItem.Checked;
-         Core.GeneralSettings.RemoveLeadingWhiteSpace = RemoveWhiteSpaceMenuItem.Checked;
-         Core.GeneralSettings.ShowEntireFile = EntireFileMenuItem.Checked;
+         GeneralSettings.ResultsWordWrap = WordWrapMenuItem.Checked;
+         GeneralSettings.RemoveLeadingWhiteSpace = RemoveWhiteSpaceMenuItem.Checked;
+         GeneralSettings.ShowEntireFile = EntireFileMenuItem.Checked;
 
-         Core.GeneralSettings.Save();
+         GeneralSettings.Save();
       }
 
       /// <summary>
@@ -922,16 +1056,16 @@ namespace AstroGrep.Windows.Forms
       {
          if (WindowState == FormWindowState.Normal)
          {
-            Core.GeneralSettings.WindowLeft = this.Left;
-            Core.GeneralSettings.WindowTop = this.Top;
-            Core.GeneralSettings.WindowWidth = this.Width;
-            Core.GeneralSettings.WindowHeight = this.Height;
-            Core.GeneralSettings.WindowState = (int)this.WindowState;
+            GeneralSettings.WindowLeft = this.Left;
+            GeneralSettings.WindowTop = this.Top;
+            GeneralSettings.WindowWidth = this.Width;
+            GeneralSettings.WindowHeight = this.Height;
+            GeneralSettings.WindowState = (int)this.WindowState;
          }
          else
          {
             // just save the state, so that previous normal dimensions are valid
-            Core.GeneralSettings.WindowState = (int)this.WindowState;
+            GeneralSettings.WindowState = (int)this.WindowState;
          }
       }
 
@@ -953,9 +1087,9 @@ namespace AstroGrep.Windows.Forms
             if (items.Length > 0)
             {
                int start = items.Length;
-               if (start > Core.GeneralSettings.MaximumMRUPaths)
+               if (start > GeneralSettings.MaximumMRUPaths)
                {
-                  start = Core.GeneralSettings.MaximumMRUPaths;
+                  start = GeneralSettings.MaximumMRUPaths;
                }
 
                combo.BeginUpdate();
@@ -1035,12 +1169,12 @@ namespace AstroGrep.Windows.Forms
       {
          if (lstFileNames.Columns.Count == 0)
          {
-            lstFileNames.Columns.Add(Language.GetGenericText("ResultsColumnFile"), Core.GeneralSettings.WindowFileColumnNameWidth, HorizontalAlignment.Left);
-            lstFileNames.Columns.Add(Language.GetGenericText("ResultsColumnLocation"), Core.GeneralSettings.WindowFileColumnLocationWidth, HorizontalAlignment.Left);
-            lstFileNames.Columns.Add(Language.GetGenericText("ResultsColumnFileExt"), Core.GeneralSettings.WindowFileColumnFileExtWidth, HorizontalAlignment.Left);
-            lstFileNames.Columns.Add(Language.GetGenericText("ResultsColumnDate"), Core.GeneralSettings.WindowFileColumnDateWidth, HorizontalAlignment.Left);
-            lstFileNames.Columns.Add(Language.GetGenericText("ResultsColumnSize"), Core.GeneralSettings.WindowFileColumnSizeWidth, HorizontalAlignment.Left);
-            lstFileNames.Columns.Add(Language.GetGenericText("ResultsColumnCount"), Core.GeneralSettings.WindowFileColumnCountWidth, HorizontalAlignment.Left);
+            lstFileNames.Columns.Add(Language.GetGenericText("ResultsColumnFile"), GeneralSettings.WindowFileColumnNameWidth, HorizontalAlignment.Left);
+            lstFileNames.Columns.Add(Language.GetGenericText("ResultsColumnLocation"), GeneralSettings.WindowFileColumnLocationWidth, HorizontalAlignment.Left);
+            lstFileNames.Columns.Add(Language.GetGenericText("ResultsColumnFileExt"), GeneralSettings.WindowFileColumnFileExtWidth, HorizontalAlignment.Left);
+            lstFileNames.Columns.Add(Language.GetGenericText("ResultsColumnDate"), GeneralSettings.WindowFileColumnDateWidth, HorizontalAlignment.Left);
+            lstFileNames.Columns.Add(Language.GetGenericText("ResultsColumnSize"), GeneralSettings.WindowFileColumnSizeWidth, HorizontalAlignment.Left);
+            lstFileNames.Columns.Add(Language.GetGenericText("ResultsColumnCount"), GeneralSettings.WindowFileColumnCountWidth, HorizontalAlignment.Left);
          }
          else
          {
@@ -1175,7 +1309,7 @@ namespace AstroGrep.Windows.Forms
 
             // Only store as many paths as has been set in options.
             //if (combo.Items.Count > Common.NUM_STORED_PATHS)
-            if (combo.Items.Count > Core.GeneralSettings.MaximumMRUPaths)
+            if (combo.Items.Count > GeneralSettings.MaximumMRUPaths)
             {
                // Remove the last item in the list.
                combo.Items.RemoveAt(combo.Items.Count - 1);
@@ -1225,9 +1359,9 @@ namespace AstroGrep.Windows.Forms
             else if (txtHits.TextArea.TextView.LineTransformers[i] is AllResultHighlighter)
                txtHits.TextArea.TextView.LineTransformers.RemoveAt(i);
          }
-         var foreground = Convertors.ConvertStringToSolidColorBrush(Core.GeneralSettings.HighlightForeColor);
-         var background = Convertors.ConvertStringToSolidColorBrush(Core.GeneralSettings.HighlightBackColor);
-         var nonForeground = Convertors.ConvertStringToSolidColorBrush(Core.GeneralSettings.ResultsContextForeColor);
+         var foreground = Convertors.ConvertStringToSolidColorBrush(GeneralSettings.HighlightForeColor);
+         var background = Convertors.ConvertStringToSolidColorBrush(GeneralSettings.HighlightBackColor);
+         var nonForeground = Convertors.ConvertStringToSolidColorBrush(GeneralSettings.ResultsContextForeColor);
          txtHits.TextArea.TextView.LineTransformers.Add(new ResultHighlighter(match, RemoveWhiteSpaceMenuItem.Checked)
          {
             MatchForeground = foreground,
@@ -1305,9 +1439,9 @@ namespace AstroGrep.Windows.Forms
             else if (txtHits.TextArea.TextView.LineTransformers[i] is AllResultHighlighter)
                txtHits.TextArea.TextView.LineTransformers.RemoveAt(i);
          }
-         var foreground = Convertors.ConvertStringToSolidColorBrush(Core.GeneralSettings.HighlightForeColor);
-         var background = Convertors.ConvertStringToSolidColorBrush(Core.GeneralSettings.HighlightBackColor);
-         var nonForeground = Convertors.ConvertStringToSolidColorBrush(Core.GeneralSettings.ResultsContextForeColor);
+         var foreground = Convertors.ConvertStringToSolidColorBrush(GeneralSettings.HighlightForeColor);
+         var background = Convertors.ConvertStringToSolidColorBrush(GeneralSettings.HighlightBackColor);
+         var nonForeground = Convertors.ConvertStringToSolidColorBrush(GeneralSettings.ResultsContextForeColor);
          txtHits.TextArea.TextView.LineTransformers.Add(new ResultHighlighter(match, false, true)
          {
             MatchForeground = foreground,
@@ -1357,9 +1491,9 @@ namespace AstroGrep.Windows.Forms
                else if (txtHits.TextArea.TextView.LineTransformers[i] is AllResultHighlighter)
                   txtHits.TextArea.TextView.LineTransformers.RemoveAt(i);
             }
-            var foreground = Convertors.ConvertStringToSolidColorBrush(Core.GeneralSettings.HighlightForeColor);
-            var background = Convertors.ConvertStringToSolidColorBrush(Core.GeneralSettings.HighlightBackColor);
-            var nonForeground = Convertors.ConvertStringToSolidColorBrush(Core.GeneralSettings.ResultsContextForeColor);
+            var foreground = Convertors.ConvertStringToSolidColorBrush(GeneralSettings.HighlightForeColor);
+            var background = Convertors.ConvertStringToSolidColorBrush(GeneralSettings.HighlightBackColor);
+            var nonForeground = Convertors.ConvertStringToSolidColorBrush(GeneralSettings.ResultsContextForeColor);
             txtHits.TextArea.TextView.LineTransformers.Add(new AllResultHighlighter(__Grep.MatchResults, RemoveWhiteSpaceMenuItem.Checked)
             {
                MatchForeground = foreground,
@@ -1972,29 +2106,50 @@ namespace AstroGrep.Windows.Forms
       /// </summary>
       /// <history>
       /// [Curtis_Beard]      05/16/2007  ADD: created
+      /// [LinkNet]           04/29/2017  CHG: removed redundant commented out code
       /// </history>
       private void LoadViewStates()
       {
          // set view state of results preview
-         //if (Core.GeneralSettings.ShowResultsPreview)
-         //{
-         __FileListHeight = Core.GeneralSettings.WindowFilePanelHeight;
-         //}
-         //txtHits.Visible = !Core.GeneralSettings.ShowResultsPreview;
-         //mnuViewPreview_Click(null, null);
-         //if (!Core.GeneralSettings.ShowResultsPreview)
-         //{
-         //  __FileListHeight = Core.GeneralSettings.DEFAULT_FILE_PANEL_HEIGHT;
-         //}
+         __FileListHeight = GeneralSettings.WindowFilePanelHeight;
+      }
+      /// <summary>
+      /// Load Windows DPI settings and set window and column positions and fonts to defaults if setting has changed.
+      /// </summary>
+      /// <history>
+      /// [LinkNet]        04/30/2016  ADD: Created
+      /// </history>
+      private void LoadDPISettings()
+      {
+         using (var graphics = CreateGraphics())
+         {
+            // get Windows DPI percent scale setting
+            int dpi_percent = API.GetCurrentDPISettingPerCent(graphics);
 
-         // Set view state of status bar
-         //mnuViewStatusBar.Checked = Core.GeneralSettings.ShowStatusBar;
-         //stbStatus.Visible = Core.GeneralSettings.ShowStatusBar;
+            // set window and column positions and fonts to defaults if DPI percent scale setting has changed
+            if (dpi_percent != GeneralSettings.WindowsDPIPerCentSetting)
+            {
+               // set default window and column positions
+               GeneralSettingsReset.WindowSetDefaultPositions();
+               GeneralSettingsReset.WindowFileSetDefaultPositions();
+               GeneralSettingsReset.LogDisplaySetDefaultPositions();
+               GeneralSettingsReset.ExclusionsDisplaySetDefaultPositions();
 
-         //if (GeneralSettings.UseEncodingCache)
-         //{
-         //   EncodingCache.Instance.Load((EncodingOptions.Performance)GeneralSettings.EncodingPerformance);            
-         //}
+               // if first start for version with this variable
+               if (GeneralSettings.SetDefaultFonts)
+               {
+                  // set default fonts
+                  GeneralSettings.FilePanelFont = GeneralSettings.FilePanelFontDefault;
+                  GeneralSettings.ResultsFont = GeneralSettings.ResultsFontDefault;
+               }
+            }
+
+            // disable after first start
+            GeneralSettings.SetDefaultFonts = false;
+
+            // store setting in global variables
+            GeneralSettings.WindowsDPIPerCentSetting = dpi_percent;
+         }
       }
 
       #endregion
@@ -2106,6 +2261,7 @@ namespace AstroGrep.Windows.Forms
       /// [Andrew_Radford]   20/09/2009	Initial
       /// [Curtis_Beard]     12/03/2014	CHG: pass grep indexes instead of ListView
       /// [Curtis_Beard]     04/08/2015	CHG: update export delegate with settings class
+      /// [Curtis_Beard]      05/19/2016	FIX: 89, add logging
       /// </history>
       private void OutputResults(string filename, MatchResultsExport.FileDelegate outputter)
       {
@@ -2130,6 +2286,8 @@ namespace AstroGrep.Windows.Forms
          }
          catch (Exception ex)
          {
+            LogClient.Instance.Logger.Error("Save Results Error: {0}", LogClient.GetAllExceptions(ex));
+
             MessageBox.Show(
                 String.Format(Language.GetGenericText("SaveError"), ex),
                 ProductInformation.ApplicationName,
@@ -2166,7 +2324,7 @@ namespace AstroGrep.Windows.Forms
                RemoveLeadingWhiteSpace = RemoveWhiteSpaceMenuItem.Checked
             };
 
-            using (var printForm = new frmPrint(settings, Convertors.ConvertStringToFont(Core.GeneralSettings.ResultsFont), Icon))
+            using (var printForm = new frmPrint(settings, Convertors.ConvertStringToFont(GeneralSettings.ResultsFont), Icon))
             {
                printForm.ShowDialog(this);
             }
@@ -2441,7 +2599,8 @@ namespace AstroGrep.Windows.Forms
       {
          for (int i = 0; i < lstFileNames.SelectedItems.Count; i++)
          {
-            TextEditors.EditFile(__Grep.RetrieveMatchResult(int.Parse(lstFileNames.SelectedItems[i].SubItems[Constants.COLUMN_INDEX_GREP_INDEX].Text)));
+            var match = __Grep.RetrieveMatchResult(int.Parse(lstFileNames.SelectedItems[i].SubItems[Constants.COLUMN_INDEX_GREP_INDEX].Text));
+            TextEditors.Open(TextEditorOpener.FromMatch(match, __Grep.SearchSpec.SearchText));
          }
       }
 
@@ -2461,10 +2620,10 @@ namespace AstroGrep.Windows.Forms
          cboFileName.Items.Clear();
          cboSearchForText.Items.Clear();
 
-         AstroGrep.Core.GeneralSettings.SearchStarts = string.Empty;
-         AstroGrep.Core.GeneralSettings.SearchFilters = string.Empty;
-         AstroGrep.Core.GeneralSettings.SearchTexts = string.Empty;
-         AstroGrep.Core.GeneralSettings.Save();
+         GeneralSettings.SearchStarts = string.Empty;
+         GeneralSettings.SearchFilters = string.Empty;
+         GeneralSettings.SearchTexts = string.Empty;
+         GeneralSettings.Save();
       }
 
       /// <summary>
@@ -2479,8 +2638,8 @@ namespace AstroGrep.Windows.Forms
       {
          cboFilePath.Items.Clear();
 
-         AstroGrep.Core.GeneralSettings.SearchStarts = string.Empty;
-         AstroGrep.Core.GeneralSettings.Save();
+         GeneralSettings.SearchStarts = string.Empty;
+         GeneralSettings.Save();
       }
 
       /// <summary>
@@ -2495,8 +2654,8 @@ namespace AstroGrep.Windows.Forms
       {
          cboFileName.Items.Clear();
 
-         AstroGrep.Core.GeneralSettings.SearchFilters = string.Empty;
-         AstroGrep.Core.GeneralSettings.Save();
+         GeneralSettings.SearchFilters = string.Empty;
+         GeneralSettings.Save();
       }
 
       /// <summary>
@@ -2511,28 +2670,8 @@ namespace AstroGrep.Windows.Forms
       {
          cboSearchForText.Items.Clear();
 
-         AstroGrep.Core.GeneralSettings.SearchTexts = string.Empty;
-         AstroGrep.Core.GeneralSettings.Save();
-      }
-
-      /// <summary>
-      /// Clear All MRUs event.
-      /// </summary>
-      /// <param name="sender">system parameter</param>
-      /// <param name="e">system parameter</param>
-      /// <history>
-      /// [Curtis_Beard]	   11/07/2014	ADD: clear each MRU list individually
-      /// </history>
-      private void ToolsMRUAll_Click(object sender, EventArgs e)
-      {
-         cboFilePath.Items.Clear();
-         cboFileName.Items.Clear();
-         cboSearchForText.Items.Clear();
-
-         AstroGrep.Core.GeneralSettings.SearchStarts = string.Empty;
-         AstroGrep.Core.GeneralSettings.SearchFilters = string.Empty;
-         AstroGrep.Core.GeneralSettings.SearchTexts = string.Empty;
-         AstroGrep.Core.GeneralSettings.Save();
+         GeneralSettings.SearchTexts = string.Empty;
+         GeneralSettings.Save();
       }
 
       /// <summary>
@@ -2566,6 +2705,7 @@ namespace AstroGrep.Windows.Forms
       /// [Curtis_Beard]	   09/26/2012	CHG: Update status bar text
       /// [Curtis_Beard]	   10/10/2012	ADD: 3479503, ability to change file list font
       /// [Curtis_Beard]		06/15/2015	CHG: 57, support external language files
+      /// [Curtis_Beard]	   05/19/2017	CHG: 120, add option to use accent color
       /// </history>
       private void OptionsMenuItem_Click(object sender, System.EventArgs e)
       {
@@ -2576,11 +2716,11 @@ namespace AstroGrep.Windows.Forms
          if (optionsForm.ShowDialog(this) == DialogResult.OK)
          {
             //update combobox lengths
-            while (cboFilePath.Items.Count > Core.GeneralSettings.MaximumMRUPaths)
+            while (cboFilePath.Items.Count > GeneralSettings.MaximumMRUPaths)
                cboFilePath.Items.RemoveAt(cboFilePath.Items.Count - 1);
-            while (cboFileName.Items.Count > Core.GeneralSettings.MaximumMRUPaths)
+            while (cboFileName.Items.Count > GeneralSettings.MaximumMRUPaths)
                cboFileName.Items.RemoveAt(cboFileName.Items.Count - 1);
-            while (cboSearchForText.Items.Count > Core.GeneralSettings.MaximumMRUPaths)
+            while (cboSearchForText.Items.Count > GeneralSettings.MaximumMRUPaths)
                cboSearchForText.Items.RemoveAt(cboSearchForText.Items.Count - 1);
 
             // load new language if necessary
@@ -2596,19 +2736,21 @@ namespace AstroGrep.Windows.Forms
                CalculateTotalCount();
             }
 
-            // change results display and rehighlight
-            var foreground = Convertors.ConvertStringToSolidColorBrush(Core.GeneralSettings.ResultsForeColor);
-            var background = Convertors.ConvertStringToSolidColorBrush(Core.GeneralSettings.ResultsBackColor);
-            var contextForeground = Convertors.ConvertStringToSolidColorBrush(Core.GeneralSettings.ResultsContextForeColor);
-            var font = Convertors.ConvertStringToFont(Core.GeneralSettings.ResultsFont);
-            txtHits.Foreground = foreground;
-            txtHits.Background = background;
-            txtHits.LineNumbersForeground = contextForeground;
-            txtHits.LineNumbersMatchForeground = foreground;
-            txtHits.FontFamily = new System.Windows.Media.FontFamily(font.FontFamily.Name);
-            txtHits.FontSize = font.SizeInPoints * 96 / 72;
+            // reload the text editor settings
+            LoadTextEditorSettings();
 
-            lstFileNames.Font = Convertors.ConvertStringToFont(Core.GeneralSettings.FilePanelFont);
+            lstFileNames.Font = Convertors.ConvertStringToFont(GeneralSettings.FilePanelFont);
+
+            if (GeneralSettings.UseAstroGrepAccentColor)
+            {
+               lblSearchHeading.ForeColor = ProductInformation.ApplicationColor;
+               lblSearchOptions.ForeColor = ProductInformation.ApplicationColor;
+            }
+            else
+            {
+               lblSearchHeading.ForeColor = Color.Black;
+               lblSearchOptions.ForeColor = Color.Black;
+            }
 
             // update current display
             if (lstFileNames.SelectedItems.Count > 0)
@@ -2931,7 +3073,7 @@ namespace AstroGrep.Windows.Forms
                // retrieve the filename
                path = hit.File.FullName;
 
-               TextEditors.OpenFileWithDefaultApp(path);
+               TextEditors.OpenWithDefault(path);
             }
          }
          catch (Exception ex)
@@ -3043,6 +3185,19 @@ namespace AstroGrep.Windows.Forms
          {
             Clipboard.SetFileDropList(files);
          }
+      }
+
+      /// <summary>
+      /// Handle donate menu item selection.
+      /// </summary>
+      /// <param name="sender">system parameter</param>
+      /// <param name="e">system parameter</param>
+      /// <history>
+      /// [Curtis_Beard]      09/18/2013  CHG: 113, add donation link
+      /// </history>
+      private void donateToolStripMenuItem_Click(object sender, EventArgs e)
+      {
+         System.Diagnostics.Process.Start(ProductInformation.DonationUrl);
       }
 
       #endregion
@@ -3324,6 +3479,7 @@ namespace AstroGrep.Windows.Forms
       /// [Curtis_Beard]	   12/06/2012	CHG: 1741735, rework to use common LogItems
       /// [Curtis_Beard]	   11/11/2014	CHG: use new log items viewer form
       /// [Curtis_Beard]	   03/03/2015	CHG: 93, used saved window position if enabled, add bounds check
+      /// [Curtis_Beard]	   08/15/2016	FIX: 92, use a copy of the log items so we don't cause a write/read conflict
       /// </history>
       private void DisplaySearchMessages(LogItem.LogItemTypes? displayType)
       {
@@ -3338,17 +3494,17 @@ namespace AstroGrep.Windows.Forms
          {
             using (var frm = new frmLogDisplay())
             {
-               frm.LogItems = LogItems;
+               frm.LogItems = LogItems.ToList();
 
                frm.DefaultFilterType = displayType;
                frm.StartPosition = FormStartPosition.Manual;
 
                Rectangle defaultBounds = new Rectangle(this.Left + 20, this.Bottom - frm.Height - stbStatus.Height - 20, this.Width - 40, frm.Height);
 
-               int width = Core.GeneralSettings.LogDisplaySavePosition && Core.GeneralSettings.LogDisplayWidth != -1 ? Core.GeneralSettings.LogDisplayWidth : defaultBounds.Width;
-               int height = Core.GeneralSettings.LogDisplaySavePosition && Core.GeneralSettings.LogDisplayHeight != -1 ? Core.GeneralSettings.LogDisplayHeight : defaultBounds.Height;
-               int left = Core.GeneralSettings.LogDisplaySavePosition && Core.GeneralSettings.LogDisplayLeft != -1 ? Core.GeneralSettings.LogDisplayLeft : defaultBounds.X;
-               int top = Core.GeneralSettings.LogDisplaySavePosition && Core.GeneralSettings.LogDisplayTop != -1 ? Core.GeneralSettings.LogDisplayTop : defaultBounds.Y;
+               int width = GeneralSettings.LogDisplaySavePosition && GeneralSettings.LogDisplayWidth != -1 ? GeneralSettings.LogDisplayWidth : defaultBounds.Width;
+               int height = GeneralSettings.LogDisplaySavePosition && GeneralSettings.LogDisplayHeight != -1 ? GeneralSettings.LogDisplayHeight : defaultBounds.Height;
+               int left = GeneralSettings.LogDisplaySavePosition && GeneralSettings.LogDisplayLeft != -1 ? GeneralSettings.LogDisplayLeft : defaultBounds.X;
+               int top = GeneralSettings.LogDisplaySavePosition && GeneralSettings.LogDisplayTop != -1 ? GeneralSettings.LogDisplayTop : defaultBounds.Y;
                
                frm.Bounds = new Rectangle(left, top, width, height);
 
@@ -3574,37 +3730,19 @@ namespace AstroGrep.Windows.Forms
       /// [Curtis_Beard]		02/24/2015	CHG: remove isSearching check so that you can view selected file during a search
       /// [Curtis_Beard]		05/26/2015  CHG: add stop search messsage to log with time
       /// [Curtis_Beard]		04/12/2016  FIX: 78, use selected items for search in results if available
+      /// [Curtis_Beard]	   09/29/2016	CHG: 24/115, use one interface for search in prep for saving to file
       /// </history>
       private void StartSearch(bool searchWithInResults)
       {
          try
          {
-            string path = cboFilePath.Text.Trim();
-
-            List<string> filePaths = new List<string>();
-            if (searchWithInResults)
-            {
-               // get currently listed file paths from ListView either by selection or all
-               if (lstFileNames.SelectedItems != null && lstFileNames.SelectedItems.Count > 0)
-               {
-                  for (int i = 0; i < lstFileNames.SelectedItems.Count; i++)
-                  {
-                     filePaths.Add(Path.Combine(lstFileNames.SelectedItems[i].SubItems[Constants.COLUMN_INDEX_DIRECTORY].Text, lstFileNames.SelectedItems[i].SubItems[Constants.COLUMN_INDEX_FILE].Text));
-                  }
-               }
-               else
-               {
-                  for (int i = 0; i < lstFileNames.Items.Count; i++)
-                  {
-                     filePaths.Add(Path.Combine(lstFileNames.Items[i].SubItems[Constants.COLUMN_INDEX_DIRECTORY].Text, lstFileNames.Items[i].SubItems[Constants.COLUMN_INDEX_FILE].Text));
-                  }
-               }
-            }
+            // generate search specification from user interface
+            var searchSpec = GetSearchSpecFromUI(searchWithInResults);
 
             // update combo selections
             AddComboSelection(cboSearchForText, cboSearchForText.Text);
             AddComboSelection(cboFileName, cboFileName.Text);
-            AddComboSelection(cboFilePath, path);
+            AddComboSelection(cboFilePath, cboFilePath.Text.Trim());
 
             SetWindowText();
 
@@ -3622,14 +3760,10 @@ namespace AstroGrep.Windows.Forms
 
             ClearItems();
             txtHits.LineNumbers = null;
-            txtHits.Clear();
-
-            // setup structs to pass to grep
-            var fileFilterSpec = GetFilterSpecFromUI();
-            var searchSpec = GetSearchSpecFromUI(path, fileFilterSpec.FileFilter, filePaths.ToArray());
+            txtHits.Clear();            
 
             // create new grep instance
-            __Grep = new Grep(searchSpec, fileFilterSpec);
+            __Grep = new Grep(searchSpec);
 
             // add plugins
             __Grep.Plugins = Core.PluginManager.Items;
@@ -3648,7 +3782,7 @@ namespace AstroGrep.Windows.Forms
 
             API.TaskbarProgress.SetState(this.Handle, API.TaskbarProgress.TaskbarStates.Indeterminate);
             LogItems.Add(new LogItem(LogItem.LogItemTypes.Status, "SearchStarted"));
-            LogStartSearchMessage(searchSpec, fileFilterSpec);
+            LogStartSearchMessage(searchSpec);
             StartingTime = Stopwatch.GetTimestamp();
 
             __Grep.BeginExecute();
@@ -3674,12 +3808,11 @@ namespace AstroGrep.Windows.Forms
       /// Logs a start search message to log file.
       /// </summary>
       /// <param name="searchSpec">Current search specification</param>
-      /// <param name="fileFilterSpec">Current file filter specification</param>
       /// <history>
       /// [Curtis_Beard]		05/15/2015	Initial
       /// [Curtis_Beard]	   05/26/2015	FIX: 69, add performance setting, cache for file encoding detection
       /// </history>
-      private void LogStartSearchMessage(ISearchSpec searchSpec, IFileFilterSpec fileFilterSpec)
+      private void LogStartSearchMessage(ISearchSpec searchSpec)
       {
          StringBuilder searchTextOptions = new StringBuilder();
          LogSearchOptionHelper(searchTextOptions, searchSpec.UseRegularExpressions, "regex");
@@ -3713,7 +3846,7 @@ namespace AstroGrep.Windows.Forms
          LogClient.Instance.Logger.Info("Search started in '{0}'{1} against {2}{3} for {4}{5}",
             searchSpec.StartFilePaths != null && searchSpec.StartFilePaths.Length > 0 ? string.Join(", ", searchSpec.StartFilePaths) : string.Join(", ", searchSpec.StartDirectories),
             searchSpec.SearchInSubfolders ? "[include sub folders]" : "",
-            fileFilterSpec.FileFilter,
+            searchSpec.FileFilter,
             fileEncoding.ToString(),
             searchSpec.SearchText,
             searchTextOptions.ToString());
@@ -3777,40 +3910,7 @@ namespace AstroGrep.Windows.Forms
       /// <summary>
       /// Sets the grep options
       /// </summary>
-      /// <history>
-      /// [Andrew_Radford]		13/08/2009  CHG: Now retruns IFileFilterSpec rather than altering global state
-      /// [Curtis_Beard]		01/31/2012  ADD: 1561584, ability to ignore hidden/system files/directories
-      /// [Curtis_Beard]      02/09/2012  ADD: 3424156, size drop down selection
-      /// [Curtis_Beard]	   03/07/2012	ADD: 3131609, exclusions
-      /// [Curtis_Beard]	   02/04/2014	FIX: use NumericUpDown's Value property instead of text
-      /// [Curtis_Beard]	   12/01/2014	CHG: updated struct definition and moved struct declaration to SearchInterfaces.cs under Core.
-      /// </history>
-      private IFileFilterSpec GetFilterSpecFromUI()
-      {
-         string fileName = cboFileName.Text;
-
-         // update path and fileName if fileName has a path in it
-         int slashPos = fileName.LastIndexOf(Path.DirectorySeparatorChar.ToString());
-         if (slashPos > -1)
-         {
-            fileName = fileName.Substring(slashPos + 1);
-         }
-
-         var spec = new SearchInterfaces.FileFilterSpec
-         {
-            FileFilter = fileName,
-            FilterItems = __FilterItems.FindAll(delegate(FilterItem i) { return i.Enabled; })
-         };
-
-         return spec;
-      }
-
-      /// <summary>
-      /// Sets the grep options
-      /// </summary>
-      /// <param name="path">current directory path(s)</param>
-      /// <param name="fileFilter">current file filter restrictions</param>
-      /// <param name="filePaths">optional full file paths (used for search in results)</param>
+      /// <param name="searchWithInResults">is true when desired to search within current results list</param>
       /// <history>
       /// [Curtis_Beard]		10/17/2005	Created
       /// [Curtis_Beard]		07/28/2006  ADD: extension exclusion list
@@ -3822,9 +3922,32 @@ namespace AstroGrep.Windows.Forms
       /// [Curtis_Beard]	   12/01/2014	CHG: moved struct declaration to SearchInterfaces.cs under Core.
       /// [Curtis_Beard]      02/09/2015	CHG: 92, support for specific file encodings
       /// [Curtis_Beard]	   05/26/2015	FIX: 69, add performance setting for file detection
+      /// [Curtis_Beard]	   09/29/2016	CHG: 24/115, use one interface for search in prep for saving to file
       /// </history>
-      private ISearchSpec GetSearchSpecFromUI(string path, string fileFilter, string[] filePaths)
+      private ISearchSpec GetSearchSpecFromUI(bool searchWithInResults)
       {
+         string path = cboFilePath.Text.Trim();
+
+         List<string> filePaths = new List<string>();
+         if (searchWithInResults)
+         {
+            // get currently listed file paths from ListView either by selection or all
+            if (lstFileNames.SelectedItems != null && lstFileNames.SelectedItems.Count > 0)
+            {
+               for (int i = 0; i < lstFileNames.SelectedItems.Count; i++)
+               {
+                  filePaths.Add(Path.Combine(lstFileNames.SelectedItems[i].SubItems[Constants.COLUMN_INDEX_DIRECTORY].Text, lstFileNames.SelectedItems[i].SubItems[Constants.COLUMN_INDEX_FILE].Text));
+               }
+            }
+            else
+            {
+               for (int i = 0; i < lstFileNames.Items.Count; i++)
+               {
+                  filePaths.Add(Path.Combine(lstFileNames.Items[i].SubItems[Constants.COLUMN_INDEX_DIRECTORY].Text, lstFileNames.Items[i].SubItems[Constants.COLUMN_INDEX_FILE].Text));
+               }
+            }
+         }
+
          var spec = new SearchInterfaces.SearchSpec
          {
             UseCaseSensitivity = chkCaseSensitive.Checked,
@@ -3841,12 +3964,23 @@ namespace AstroGrep.Windows.Forms
                DetectFileEncoding = GeneralSettings.DetectFileEncoding,
                PerformanceSetting = (EncodingOptions.Performance)GeneralSettings.EncodingPerformance,
                UseEncodingCache = GeneralSettings.UseEncodingCache
-            }
+            },
+            FilterItems = __FilterItems.FindAll(delegate(FilterItem i) { return i.Enabled; })
          };
 
-         if (filePaths != null && filePaths.Length > 0)
+         // handle paths used in file filter entry, update path and fileName if fileName has a path in it
+         string fileName = cboFileName.Text;
+         int slashPos = fileName.LastIndexOf(Path.DirectorySeparatorChar.ToString());
+         if (slashPos > -1)
          {
-            spec.StartFilePaths = filePaths;
+            fileName = fileName.Substring(slashPos + 1);
+         }
+         spec.FileFilter = fileName;
+
+         // setup file paths if defined, otherwise setup directories
+         if (filePaths != null && filePaths.Count > 0)
+         {
+            spec.StartFilePaths = filePaths.ToArray();
             spec.StartDirectories = null;
          }
          else
@@ -3854,13 +3988,13 @@ namespace AstroGrep.Windows.Forms
             string[] paths = path.Split(new char[] { '|' }, StringSplitOptions.RemoveEmptyEntries);
 
             // fileName has a slash, so append the directory and get the file filter
-            int slashPos = fileFilter.LastIndexOf(Path.DirectorySeparatorChar.ToString());
+            slashPos = spec.FileFilter.LastIndexOf(Path.DirectorySeparatorChar.ToString());
             if (slashPos > -1)
             {
                // append to each starting directory
                for (int i = 0; i < paths.Length; i++)
                {
-                  paths[i] += fileFilter.Substring(0, slashPos);
+                  paths[i] += spec.FileFilter.Substring(0, slashPos);
                }
             }
             spec.StartDirectories = paths;
@@ -3960,7 +4094,7 @@ namespace AstroGrep.Windows.Forms
          }
 
          // only show if not disabled by user and either filter count or error count is greater than 0
-         if (Core.GeneralSettings.ShowExclusionErrorMessage &&
+         if (GeneralSettings.ShowExclusionErrorMessage &&
             (GetLogItemsCountByType(LogItem.LogItemTypes.Exclusion) > 0 ||
             GetLogItemsCountByType(LogItem.LogItemTypes.Error) > 0))
          {
@@ -4010,9 +4144,9 @@ namespace AstroGrep.Windows.Forms
       /// <history>
       /// [Curtis_Beard]		06/29/2015	CHG: reconfigure to use common method
       /// </history>
-      private TextEditors.TextEditorOpener GetEditorAtLocation(ICSharpCode.AvalonEdit.TextViewPosition? position)
+      private TextEditorOpener GetEditorAtLocation(ICSharpCode.AvalonEdit.TextViewPosition? position)
       {
-         var opener = new TextEditors.TextEditorOpener();
+         var opener = new TextEditorOpener();
 
          if (position.HasValue)
          {
@@ -4045,7 +4179,7 @@ namespace AstroGrep.Windows.Forms
                         }
                      }
 
-                     opener = new TextEditors.TextEditorOpener(path, lineNumber, columnNumber, line);
+                     opener = new TextEditorOpener(path, lineNumber, columnNumber, line, __Grep.SearchSpec.SearchText);
                   }
                }
                else if (lstFileNames.SelectedItems.Count > 0 && __Grep != null)
@@ -4062,7 +4196,7 @@ namespace AstroGrep.Windows.Forms
                      columnNumber = matchLine.ColumnNumber;
                   }
 
-                  opener = new TextEditors.TextEditorOpener(path, lineNumber, columnNumber, line);
+                  opener = new TextEditorOpener(path, lineNumber, columnNumber, line, __Grep.SearchSpec.SearchText);
                }
             }
             catch { }
@@ -4094,7 +4228,7 @@ namespace AstroGrep.Windows.Forms
             if (opener.HasValue())
             {
                e.Handled = true;
-               TextEditors.EditFile(opener);
+               TextEditors.Open(opener);
             }
          }
       }
@@ -4129,7 +4263,7 @@ namespace AstroGrep.Windows.Forms
          var opener = GetEditorAtLocation(txtHits.GetPositionFromRightClickPoint());
          if (opener.HasValue())
          {
-            TextEditors.EditFile(opener);
+            TextEditors.Open(opener);
          }
       }
 

@@ -5,6 +5,7 @@ using System.Drawing.Printing;
 using System.Windows.Forms;
 
 using AstroGrep.Common;
+using AstroGrep.Common.Logging;
 using AstroGrep.Output;
 using libAstroGrep;
 
@@ -39,7 +40,7 @@ namespace AstroGrep.Windows.Forms
    /// [Curtis_Beard]      11/02/2005	CHG: cleanup, pass in font info, comment headers changed
    /// [Andrew_Radford]    17/08/2008	CHG: Moved Winforms designer stuff to a .designer file
    /// </history>
-   public partial class frmPrint : Form
+   public partial class frmPrint : BaseForm
    {
       #region Declarations
       
@@ -115,6 +116,7 @@ namespace AstroGrep.Windows.Forms
       /// <param name="e">system parm</param>
       /// <history>
       /// [Curtis_Beard]      02/02/2005	Created
+      /// [Curtis_Beard]      05/19/2016	FIX: 90, add logging
       /// </history>
       private void cmdPrint_Click(object sender, EventArgs e)
       {
@@ -127,8 +129,10 @@ namespace AstroGrep.Windows.Forms
             if (dialog.ShowDialog(this) == DialogResult.OK)
                printDocument.Print();
          }
-         catch
+         catch (Exception ex)
          {
+            LogClient.Instance.Logger.Error("Print Error: {0}", LogClient.GetAllExceptions(ex));
+
             MessageBox.Show(Language.GetGenericText("PrintErrorPrint"),
                ProductInformation.ApplicationName, MessageBoxButtons.OK, MessageBoxIcon.Error);
          }
@@ -143,6 +147,8 @@ namespace AstroGrep.Windows.Forms
       /// [Curtis_Beard]      02/02/2005	Created
       /// [Curtis_Beard]      10/06/2006	CHG: Set icon and make resizable
       /// [Curtis_Beard]      11/02/2006	CHG: translate form text
+      /// [Curtis_Beard]      05/19/2016	FIX: 90, add logging
+      /// [Curtis_Beard]      08/16/2016	CHG: make preview form larger, adjust location
       /// </history>
       private void cmdPreview_Click(object sender, EventArgs e)
       {
@@ -153,8 +159,12 @@ namespace AstroGrep.Windows.Forms
             ppd.Document = printDocument;
 
             // Set properties of preview dialog
-            ppd.StartPosition = FormStartPosition.CenterScreen;
-            ppd.Size = new Size(640, 480);
+            ppd.StartPosition = FormStartPosition.Manual;
+            Rectangle defaultBounds = new Rectangle(Owner.Left + 50, Owner.Top + 50, Math.Max(Owner.Width - 100, 640), Math.Max(Owner.Height - 100, 480));
+            ppd.Bounds = defaultBounds;
+            ppd.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
+            ppd.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
+            ppd.UseAntiAlias = true;
             ppd.FormBorderStyle = FormBorderStyle.Sizable;
             ppd.Icon = previewIcon;
             ppd.Text = Language.GetControlText(cmdPreview).Replace("&", string.Empty);
@@ -164,8 +174,10 @@ namespace AstroGrep.Windows.Forms
 
             ppd.ShowDialog(this);
          }
-         catch
+         catch (Exception ex)
          {
+            LogClient.Instance.Logger.Error("Print Preview Error: {0}", LogClient.GetAllExceptions(ex));
+
             MessageBox.Show(Language.GetGenericText("PrintErrorPreview"),
                ProductInformation.ApplicationName, MessageBoxButtons.OK, MessageBoxIcon.Error);
          }
@@ -179,6 +191,7 @@ namespace AstroGrep.Windows.Forms
       /// <history>
       /// [Curtis_Beard]      02/02/2005	Created
       /// [Curtis_Beard]      11/02/2005	CHG: remove setting the default margins
+      /// [Curtis_Beard]      05/19/2016	FIX: 90, add logging
       /// </history>
       private void cmdPageSetup_Click(object sender, EventArgs e)
       {
@@ -192,8 +205,10 @@ namespace AstroGrep.Windows.Forms
             if (psd.ShowDialog(this) == DialogResult.OK)
                printDocument.DefaultPageSettings = psd.PageSettings;
          }
-         catch
+         catch (Exception ex)
          {
+            LogClient.Instance.Logger.Error("Print Page Setup Error: {0}", LogClient.GetAllExceptions(ex));
+
             MessageBox.Show(Language.GetGenericText("PrintErrorPageSettings"),
                ProductInformation.ApplicationName, MessageBoxButtons.OK, MessageBoxIcon.Error);
          }
@@ -327,6 +342,7 @@ namespace AstroGrep.Windows.Forms
       /// [Curtis_Beard]      11/02/2005	CHG: Use try/catch and set doc to error message in catch
       /// [Curtis_Beard]      11/14/2014	CHG: Remove printing of current hit
       /// [Curtis_Beard]      04/10/2015	ADD: use delegate for print methods
+      /// [Curtis_Beard]      05/19/2016	FIX: 90, add logging
       /// </history>
       private void SetDocument()
       {
@@ -344,12 +360,14 @@ namespace AstroGrep.Windows.Forms
                   currentContent = OutputResults(MatchResultsExport.PrintFileList);
                   break;
                default:
-                  currentContent = string.Empty;
+                  currentContent = string.Format(Language.GetGenericText("PrintErrorDocument"), "invalid selection");;
                   break;
             }
          }
          catch (Exception ex)
          {
+            LogClient.Instance.Logger.Error("Print SetDocument Error: {0}", LogClient.GetAllExceptions(ex));
+
             // display error to user in document if an error occurred trying to generate
             // the document for printing
             currentContent = string.Format(Language.GetGenericText("PrintErrorDocument"), ex.Message);

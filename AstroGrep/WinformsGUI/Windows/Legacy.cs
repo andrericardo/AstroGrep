@@ -428,8 +428,8 @@ namespace AstroGrep.Windows
 		/// <history>
 		/// [Curtis_Beard]		05/22/2007  Created
 		/// [Curtis_Beard]		08/30/2007  ADD: support for installer language values
-      /// [Curtis_Beard]		01/24/2012  CHG: remove default case
-      /// [Curtis_Beard]		05/08/2014  CHG: 70, installer support
+        /// [Curtis_Beard]		01/24/2012  CHG: remove default case
+        /// [Curtis_Beard]		05/08/2014  CHG: 70, installer support
 		/// </history>
 		public static void ConvertLanguageValue()
 		{
@@ -444,7 +444,7 @@ namespace AstroGrep.Windows
 			{
 				case "Español":
 				case "1034":
-					Core.GeneralSettings.Language = "es-mx";
+					Core.GeneralSettings.Language = "es-es";
 					break;
 
 				case "Deutsch":
@@ -458,6 +458,7 @@ namespace AstroGrep.Windows
 					break;
 
 				case "Danish":
+				case "Dansk":
 				case "1030":
 					Core.GeneralSettings.Language = "da-dk";
 					break;
@@ -465,6 +466,17 @@ namespace AstroGrep.Windows
 				case "English":
 				case "1033":
 					Core.GeneralSettings.Language = "en-us";
+					break;
+
+				case "French":
+				case "Français":
+				case "1036":
+					Core.GeneralSettings.Language = "fr-fr";
+					break;
+
+				case "Polski":
+				case "1045":
+					Core.GeneralSettings.Language = "pl-pl";
 					break;
 			}
 

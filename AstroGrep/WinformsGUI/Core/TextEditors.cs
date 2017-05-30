@@ -42,55 +42,9 @@ namespace AstroGrep.Core
       private const string DELIMETER = "|;;|";
 
       /// <summary>
-      /// Edit file from given MatchResult at first match if available.
+      /// Open a file with a user defined text editor/executable.
       /// </summary>
-      /// <param name="match">Current MatchResult</param>
-      /// <history>
-      /// [Curtis_Beard]	   05/27/2015	FIX: 73, open text editor even when no first match (usually during file only search)
-      /// </history>
-      public static void EditFile(libAstroGrep.MatchResult match)
-      {
-         if (match != null)
-         {
-            // open the default editor at first match
-            var lineNumber = 1;
-            var columnNumber = 1;
-            var lineText = string.Empty;
-
-            var matchLine = match.GetFirstMatch();
-            if (matchLine != null)
-            {
-               lineNumber = matchLine.LineNumber;
-               columnNumber = matchLine.ColumnNumber;
-               lineText = matchLine.Line;
-            }
-            
-            EditFile(match.File.FullName, lineNumber, columnNumber, lineText);
-         }
-      }
-
-      /// <summary>
-      /// Edit a file that the user has double clicked on.
-      /// </summary>
-      /// <param name="opener">TextEditorOpener object containing the information necessary top edit a file.</param>
-      /// <history>
-      /// [Curtis_Beard]	   06/25/2015	Initial
-      /// </history>
-      public static void EditFile(TextEditorOpener opener)
-      {
-         if (opener != null && opener.HasValue())
-         {
-            EditFile(opener.Path, opener.LineNumber, opener.ColumnNumber, opener.LineText);
-         }
-      }
-
-      /// <summary>
-      /// Edit a file that the user has double clicked on
-      /// </summary>
-      /// <param name="path">Fully qualified file path</param>
-      /// <param name="line">Line number</param>
-      /// <param name="column">Column position</param>
-      /// <param name="lineText">Current line</param>
+      /// <param name="opener">TextEditorOpener object containing the information necessary to edit a file.</param>
       /// <history>
       /// [Theodore_Ward]     ??/??/????  Initial
       /// [Curtis_Beard]	   01/11/2005	.Net Conversion, Try/Catch
@@ -101,96 +55,112 @@ namespace AstroGrep.Core
       /// [Curtis_Beard]		04/07/2015	CHG: check for a valid line text before using
       /// [Curtis_Beard]	   04/08/2015	CHG: add logging
       /// [Curtis_Beard]	   08/20/2015	FIX: 81, use associated app instead of displaying message
+      /// [Curtis_Beard]	   08/16/2016	CHG: use common class for parameters, rename from EditFile -> Open
       /// </history>
-      public static void EditFile(string path, int line, int column, string lineText)
+      public static void Open(TextEditorOpener opener)
       {
-         try
+         if (opener != null && opener.HasValue())
          {
-            // pick the correct editor to use
-            System.IO.FileInfo file = new System.IO.FileInfo(path);
-            TextEditor editorToUse = null;
-
-            // find extension match
-            if (__TextEditors != null)
+            try
             {
-               foreach (TextEditor editor in __TextEditors)
-               {
-                  // handle multiple types for one editor
-                  string[] types = new string[1] { editor.FileType };
-                  if (editor.FileType.Contains(Constants.TEXT_EDITOR_TYPE_SEPARATOR))
-                  {
-                     types = editor.FileType.Split(Constants.TEXT_EDITOR_TYPE_SEPARATOR.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
-                  }
+               // pick the correct editor to use
+               System.IO.FileInfo file = new System.IO.FileInfo(opener.Path);
+               TextEditor editorToUse = null;
 
-                  // loop through all types defined for this editor
-                  foreach (string type in types)
-                  {
-                     string currentType = type;
-
-                     // add missing start . if file type has it and the user didn't add it.
-                     if (currentType != Constants.ALL_FILE_TYPES && !currentType.StartsWith(".") && file.Extension.StartsWith("."))
-                        currentType = string.Format(".{0}", currentType);
-
-                     if (currentType.IndexOf(file.Extension, StringComparison.OrdinalIgnoreCase) > -1)
-                     {
-                        // use this editor
-                        editorToUse = editor;
-                        break;
-                     }
-                  }
-
-                  if (editorToUse != null)
-                     break;
-               }
-
-               // try finding default for all types (*)
-               if (editorToUse == null)
+               // find extension match
+               if (__TextEditors != null)
                {
                   foreach (TextEditor editor in __TextEditors)
                   {
-                     if (editor.FileType.Equals(Constants.ALL_FILE_TYPES))
+                     // handle multiple types for one editor
+                     string[] types = new string[1] { editor.FileType };
+                     if (editor.FileType.Contains(Constants.TEXT_EDITOR_TYPE_SEPARATOR))
                      {
-                        // use this editor
-                        editorToUse = editor;
-                        break;
+                        types = editor.FileType.Split(Constants.TEXT_EDITOR_TYPE_SEPARATOR.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
                      }
-                  }
-               }
 
-               if (editorToUse == null)
-               {
-                  // since nothing defined, just use default app associated with file type
-                  OpenFileWithDefaultApp(path);
-               }
-               else
-               {
-                  // adjust column if tab size is set
-                  if (editorToUse.TabSize > 0 && column > 0 && !string.IsNullOrEmpty(lineText))
-                  {
-                     // count how many tabs before found hit column index
-                     int count = 0;
-                     for (int i = column - 1; i >= 0; i--)
+                     // loop through all types defined for this editor
+                     foreach (string type in types)
                      {
-                        if (lineText[i] == '\t')
+                        string currentType = type;
+
+                        // add missing start . if file type has it and the user didn't add it.
+                        if (currentType != Constants.ALL_FILE_TYPES && !currentType.StartsWith(".") && file.Extension.StartsWith("."))
+                           currentType = string.Format(".{0}", currentType);
+
+                        if (currentType.IndexOf(file.Extension, StringComparison.OrdinalIgnoreCase) > -1)
                         {
-                           count++;
+                           // use this editor
+                           editorToUse = editor;
+                           break;
                         }
                      }
 
-                     column += ((count * editorToUse.TabSize) - count);
+                     if (editorToUse != null)
+                        break;
                   }
 
-                  OpenEditor(editorToUse, path, line, column);
+                  // try finding default for all types (*)
+                  if (editorToUse == null)
+                  {
+                     foreach (TextEditor editor in __TextEditors)
+                     {
+                        if (editor.FileType.Equals(Constants.ALL_FILE_TYPES))
+                        {
+                           // use this editor
+                           editorToUse = editor;
+                           break;
+                        }
+                     }
+                  }
+
+                  if (editorToUse == null)
+                  {
+                     // since nothing defined, just use default app associated with file type
+                     OpenWithDefault(opener.Path);
+                  }
+                  else
+                  {
+                     // adjust column if tab size is set
+                     if (editorToUse.TabSize > 0 && opener.ColumnNumber > 0 && !string.IsNullOrEmpty(opener.LineText))
+                     {
+                        // count how many tabs before found hit column index
+                        int count = 0;
+                        for (int i = opener.ColumnNumber - 1; i >= 0; i--)
+                        {
+                           if (opener.LineText[i] == '\t')
+                           {
+                              count++;
+                           }
+                        }
+
+                        opener.ColumnNumber += ((count * editorToUse.TabSize) - count);
+                     }
+
+                     LaunchEditor(editorToUse, opener.Path, opener.LineNumber, opener.ColumnNumber, string.Empty);
+                  }
                }
             }
-         }
-         catch (Exception ex)
-         {
-            LogClient.Instance.Logger.Error("Unable to open text editor for file {0} at line {1}, column {2}, with text {3} and message {4}", path, line, column, lineText, ex.Message);
+            catch (Exception ex)
+            {
+               LogClient.Instance.Logger.Error("Unable to open text editor for file {0} at line {1}, column {2}, with text {3} and message {4}", opener.Path, opener.LineNumber, opener.ColumnNumber, opener.LineText, ex.Message);
 
-            MessageBox.Show(String.Format(Language.GetGenericText("TextEditorsErrorGeneric"), path, ex.Message),
-                  ProductInformation.ApplicationName, MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+               MessageBox.Show(String.Format(Language.GetGenericText("TextEditorsErrorGeneric"), opener.Path, ex.Message),
+                     ProductInformation.ApplicationName, MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+            }
          }
+      }
+
+      /// <summary>
+      /// Opens the given file using the default associated application.
+      /// </summary>
+      /// <param name="path">Full path to file</param>
+      /// <history>
+      /// [Curtis_Beard]      02/12/2014  ADD: 67, open selected file(s) with associated application
+      /// </history>
+      public static void OpenWithDefault(string path)
+      {
+         System.Diagnostics.Process.Start(path);
       }
 
       /// <summary>
@@ -276,18 +246,6 @@ namespace AstroGrep.Core
          AstroGrep.Core.GeneralSettings.Save();
       }
 
-      /// <summary>
-      /// Opens the given file using the default associated application.
-      /// </summary>
-      /// <param name="path">Full path to file</param>
-      /// <history>
-      /// [Curtis_Beard]      02/12/2014  ADD: 67, open selected file(s) with associated application
-      /// </history>
-      public static void OpenFileWithDefaultApp(string path)
-      {
-         System.Diagnostics.Process.Start(path);
-      }
-
       #region Private Methods
 
       /// <summary>
@@ -297,6 +255,7 @@ namespace AstroGrep.Core
       /// <param name="path">Fully qualified file path</param>
       /// <param name="line">Line number</param>
       /// <param name="column">Column position</param>
+      /// <param name="searchText">Current search text</param>
       /// <history>
       /// [Curtis_Beard]	   07/10/2006	ADD: Initial
       /// [Curtis_Beard]	   07/26/2006	ADD: 1512026, column position
@@ -304,14 +263,15 @@ namespace AstroGrep.Core
       /// [Curtis_Beard]		03/06/2015	FIX: 65, check editor for using quotes around file name, cleanup
       /// [Curtis_Beard]	   04/08/2015	CHG: add logging
       /// [Curtis_Beard]	   08/20/2015	CHG: 80, make check for empty editor to use default app the first check.
+      /// [Curtis_Beard]	   08/16/2016	CHG: 108, PAT: 3, add search text, rename from OpenEditor to LaunchEditor
       /// </history>
-      private static void OpenEditor(TextEditor textEditor, string path, int line, int column)
+      private static void LaunchEditor(TextEditor textEditor, string path, int line, int column, string searchText)
       {
          try
          {
             if (string.IsNullOrEmpty(textEditor.Editor))
             {
-               OpenFileWithDefaultApp(path);
+               OpenWithDefault(path);
             }
             else if (textEditor.Arguments.IndexOf("%1") == -1)
             {
@@ -325,6 +285,7 @@ namespace AstroGrep.Core
                //  %1 with filename 
                //  %2 with line number
                //  %3 with column
+               //  %4 with search text
                string args = textEditor.Arguments;
                if (textEditor.UseQuotesAroundFileName)
                {
@@ -333,6 +294,7 @@ namespace AstroGrep.Core
                args = args.Replace("%1", path);
                args = args.Replace("%2", line.ToString());
                args = args.Replace("%3", column.ToString());
+               args = args.Replace("%4", searchText);
 
                System.Diagnostics.Process.Start(textEditor.Editor, args);
             }
@@ -347,59 +309,5 @@ namespace AstroGrep.Core
       }
 
       #endregion
-
-      /// <summary>
-      /// TextEditor opener object to wrap around necessary values to edit a file.
-      /// </summary>
-      /// <history>
-      /// [Curtis_Beard]	   06/25/2015	Initial
-      /// </history>
-      public class TextEditorOpener
-      {
-         /// <summary>Full file path</summary>
-         public string Path { get; set; }
-         /// <summary>Line number</summary>
-         public int LineNumber { get; set; }
-         /// <summary>Column number</summary>
-         public int ColumnNumber { get; set; }
-         /// <summary>Current line's text</summary>
-         public string LineText { get; set; }
-
-         /// <summary>
-         /// Create an instance of this class.
-         /// </summary>
-         public TextEditorOpener()
-         {
-            Path = string.Empty;
-            LineNumber = 1;
-            ColumnNumber = 1;
-            LineText = string.Empty;
-         }
-
-         /// <summary>
-         /// Create an instance of this class.
-         /// </summary>
-         /// <param name="path">full file path</param>
-         /// <param name="lineNumber">line number</param>
-         /// <param name="columnNumber">column number</param>
-         /// <param name="lineText">current line's text</param>
-         public TextEditorOpener(string path, int lineNumber, int columnNumber, string lineText)
-            : this()
-         {
-            Path = path;
-            LineNumber = lineNumber;
-            ColumnNumber = columnNumber;
-            LineText = lineText;
-         }
-
-         /// <summary>
-         /// Determines if object has a value or is empty.
-         /// </summary>
-         /// <returns>true if value present, false otherwise</returns>
-         public bool HasValue()
-         {
-            return !string.IsNullOrEmpty(Path);
-         }
-      }
    }
 }

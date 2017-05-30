@@ -1,0 +1,364 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<language displayName="Français" culture="fr-fr" version="1.0">
+   <screen name="frmMain" value="AstroGrep">
+      <control name="lblSearchHeading" value=" Recherche AstroGrep" />
+      <control name="lblSearchText" value="Texte ou expression recherché" />
+      <control name="lblFileTypes" value="Types de fichier" />
+      <control name="btnCancel" value="&amp;Annuler" />
+      <control name="lblSearchPath" value="Répertoire de recherche" />
+      <control name="lblContextLines" value="Lignes de contexte" tooltip="Affiche le nombre de lignes de contexte correspondantes au-dessus et au-dessous de l’expression trouvée" />
+      <control name="txtContextLines" tooltip="Affiche le nombre de lignes de contexte correspondantes au-dessus et au-dessous de l’expression trouvée" />
+      <control name="chkNegation" value="&amp;Inverser la recherche" tooltip="Recherche les fichiers qui ne contiennent pas l’expression" />
+      <control name="chkFileNamesOnly" value="Afficher &amp;seulement les noms de fichier" tooltip="Affiche les noms mais pas le contexte des fichiers trouvés (peut accélérer la recherche sur de gros fichiers)" />
+      <control name="chkRecurse" value="Explorer les sous-&amp;répertoires" tooltip="Recherche aussi dans les sous-répertoires" />
+      <control name="chkWholeWordOnly" value="&amp;Mots entiers" tooltip="Recherche seulement des correspondances avec des mots entiers (pas de parties de mots)" />
+      <control name="chkCaseSensitive" value="Sensible à la &amp;casse" tooltip="Recherche des correspondances avec des majuscules et minuscules identiques" />
+      <control name="chkRegularExpressions" value="E&amp;xpressions rationnelles" tooltip="Utiliser les expressions rationnelles" />
+      <control name="chkAllResultsAfterSearch" value="Afficher &amp;tous les contextes à la fin" tooltip="Affiche le contexte de tous les résultats ensemble en fin de la recherche" />
+      <control name="chkSearchInResults" value="Rechercher parm&amp;i les résultats" tooltip="Lancer la recherche sur la liste des derniers résultats (Tous ou la sélection)" />
+      <control name="lblSearchOptions" value=" Options de recherche" />
+      <control name="picBrowse" tooltip="Explorer..." />
+      <control name="lnkExclusions" value="Exclusions" />
+      <control name="lstFileNames">
+         <menuitem index="0" value="Copier la ligne" />
+         <menuitem index="1" value="Copier le nom du fichier" />
+         <menuitem index="2" value="Copier le chemin du répertoire" />
+         <menuitem index="3" value="Copier le chemin du fichier" />
+         <menuitem index="4" value="-" />
+         <menuitem index="5" value="Opérations sur ce fichier">
+            <menuitem index="0" value="Copier" />
+            <menuitem index="1" value="Supprimer" />
+         </menuitem>
+         <menuitem index="6" value="-" />
+         <menuitem index="7" value="Ouvrir le fichier" />
+         <menuitem index="8" value="Ouvrir le répertoire" />
+         <menuitem index="9" value="Ouvrir le fichier avec l’application par défaut" />
+         <menuitem index="10" value="-" />
+         <menuitem index="11" value="Supprimer de la liste" />
+      </control>
+      <control name="btnSearch" value="&amp;Rechercher" />
+
+      <menu index="0" value="&amp;Fichier">
+         <menuitem index="0" value="&amp;Nouvelle fenêtre" />
+         <menuitem index="1" value="-" />
+         <menuitem index="2" value="Sélectionner un &amp;répertoire de recheche..." />
+         <menuitem index="3" value="-" />
+         <menuitem index="4" value="&amp;Enregistrer les résultats..." />
+         <menuitem index="5" value="&amp;Imprimer les résultats..." />
+         <menuitem index="6" value="-" />
+         <menuitem index="7" value="&amp;Quitter" />
+      </menu>
+      <menu index="1" value="&amp;Édition">
+         <menuitem index="0" value="&amp;Sélectionner tous les fichiers" />
+         <menuitem index="1" value="&amp;Ouvrir les fichiers sélectionnés" />
+      </menu>
+      <menu index="2" value="&amp;Affichage">
+         <menuitem index="0" value="&amp;Barre d’état" />
+         <menuitem index="1" value="Fichiers &amp;exclus" />
+         <menuitem index="2" value="Messages d’e&amp;rreur" />
+         <menuitem index="3" value="Tous les &amp;messages" />
+         <menuitem index="4" value="-" />
+         <menuitem index="5" value="&amp;Zoom">
+            <menuitem index="0" value="Zoom avant (Ctrl + Roulette de la souris vers le haut)"/>
+            <menuitem index="1" value="Zoom arrière (Ctrl + Roulette de la souris vers le bas)"/>
+            <menuitem index="2" value="Restaurer le zoom par défaut"/>
+         </menuitem>
+         <menuitem index="6" value="Numéros de ligne" />
+         <menuitem index="7" value="Renvoi à la ligne automatique" />
+         <menuitem index="8" value="&amp;Supprimer les espaces vides en fin de ligne"/>
+         <menuitem index="9" value="Fichier entier" />
+         <menuitem index="10" value="-" />
+         <menuitem index="11" value="Tous les résultats" />
+      </menu>
+      <menu index="3" value="&amp;Outils">
+         <menuitem index="0" value="&amp;Effacer la mémoire des dernières recherches">
+            <menuitem index="0" value="Répertoire de recherche"/>
+            <menuitem index="1" value="Types de fichier"/>
+            <menuitem index="2" value="Texte ou expression recherché"/>
+            <menuitem index="3" value="-"/>
+            <menuitem index="4" value="Tous"/>
+         </menuitem>
+         <menuitem index="1" value="-" />
+         <menuitem index="2" value="&amp;Enregistrer les options de recherche" />
+         <menuitem index="3" value="&amp;Options" />
+      </menu>
+      <menu index="4" value="&amp;Aide">
+         <menuitem index="0" value="Afficher l’&amp;aide" />
+         <menuitem index="1" value="E&amp;xpressions rationnelles" />
+         <menuitem index="2" value="&amp;Journal" />
+         <menuitem index="3" value="-" />
+         <menuitem index="4" value="&amp;Vérifier les mises à jour..." />
+         <menuitem index="5" value="-" />
+         <menuitem index="6" value="&amp;Faire un don" />
+         <menuitem index="7" value="À propos d’Astro&amp;Grep" />
+      </menu>
+      
+      <!-- status bar items default state-->
+      <control name="sbTotalCountPanel" value="Total : 0"/>
+      <control name="sbFileCountPanel" value="Fichiers : 0"/>
+      <control name="sbFilterCountPanel" value="Exclusions : 0" tooltip="Double cliquer pour afficher les exclusions"/>
+      <control name="sbErrorCountPanel" value="Erreurs : 0" tooltip="Double cliquer pour afficher les erreurs"/>
+   </screen>
+   
+   <screen name="frmAbout" value="À propos d’{0}">
+      <control name="lnkHomePage" value="Page d’accueil d’{0}" />
+      <control name="LicenseLinkLabel" value="Licence GNU"/>
+      <control name="CopyrightLabel" value="Copyright (C) 2002 - {0} AstroComma Inc."/>
+      <control name="lblDescription" value="Copyright supplémentaire (C) 2002 de Theodore L. Ward. AstroGrep est publié sans offrir AUCUNE GARANTIE D’AUCUNE SORTE. Cette application est un logiciel libre, et vos contributions sont les bienvenues sous certaines conditions."/>
+      <control name="lblDisclaimer" value="Créé par Theodore Ward et porté par Curtis Beard sur .Net"/>
+   </screen>
+   
+   <screen name="frmAddEditTextEditor" value="Éditeurs de texte">
+      <control name="lblAllTypesMessage" value="Un éditeur de texte peut être utilisé pour tous les types de fichier inconnus en précisant un astéristique (*) pour le type de fichier." />
+      <control name="lblCmdOptions" value="Options de la ligne de commande :&#xD;&#xA;  %1 - Chemin d’un fichier&#xD;&#xA;  %2 - Numéro de ligne&#xD;&#xA;  %3 - Colonne&#xD;&#xA;  %4 - Texte ou expression recherché" />
+      <control name="lblCmdOptionsView" value="Aperçu : {0} {1}" />
+      <control name="btnBrowse" tooltip="Explorer..." />
+      <control name="lblCmdLineArgs" value="Ligne de commande" />
+      <control name="lblTextEditorLocation" value="Chemin vers l’éditeur de texte" />
+      <control name="lblFileType" value="Types de fichier" />
+      <control name="btnCancel" value="&amp;Annuler" />
+      <control name="btnOK" value="&amp;OK" />
+      <control name="lblMultiTypes" value="Séparer chaque type avec le caractère barre verticale (|)"/>
+      <control name="lblTabSize" value="Nombre de tabulations" />
+      <control name="chkUseQuotesAroundFileName" value="&amp;Echapper les noms de fichier avec des guillemets anglais doubles (&quot;)"/>
+   </screen>
+   
+   <screen name="frmOptions" value="Options">
+      <control name="chkRightClickOption" value="&amp;Définir l’option clic droit pour les répertoires" />
+      <control name="lblStoredPaths" value="Nombre d’entrées à conserver dans l’historique des saisies de recherche" />
+      <control name="btnEdit" value="&amp;Modifier..." />
+      <control name="btnRemove" value="&amp;Supprimer" />
+      <control name="btnAdd" value="&amp;Ajouter..." />
+      <control name="lblResultPreview" value="Aperçu" />
+      <control name="lblResultsWindowBack" value="Couleur de l’arrière-plan" />
+      <control name="lblResultsWindowFore" value="Couleur du texte" />
+      <control name="lblResultsContextForeColor" value="Couleur du texte de contexte" />
+      <control name="grpResultWindow" value="Fenêtre des résultats" />
+      <control name="BackColorLabel" value="Couleur de l’arrière-plan" />
+      <control name="ForeColorLabel" value="Couleur du texte" />
+      <control name="grpResultMatch" value="Résultats trouvés" />
+      <control name="btnOK" value="&amp;OK" />
+      <control name="btnCancel" value="&amp;Annuler" />
+      <control name="tabResults" value="Résultats" />
+      <control name="tabGeneral" value="Général" />
+      <control name="tabTextEditors" value="Éditeurs de texte" />
+      <control name="LanguageGroup" value="Langue"/>
+      <control name="tabPlugins" value="Extensions"/>
+      <control name="chkDesktopShortcut" value="Raccourcis du &amp;bureau"/>
+      <control name="chkStartMenuShortcut" value="&amp;Raccourcis du menu démarrer"/>
+      <control name="ShortcutGroup" value="Raccourcis"/>
+      <control name="PluginDetailsGroup" value="Détails de l’extension"/>
+      <control name="lblPluginDetailName" value="Nom :"/>
+      <control name="lblPluginDetailVersion" value="Version :"/>
+      <control name="lblPluginDetailAuthor" value="Auteur :"/>
+      <control name="btnFindFont" value="Choisir une &amp;police..."/>
+      <control name="chkShowExclusionErrorMessage" value="Affiche un &amp;message lorsqu’une recherche renvoie des éléments exclus ou provoque une erreur"/>
+      <control name="chkSaveSearchOptions" value="Enregistrer les options de recherche en &amp;quittant"/>
+      <control name="grpFileList" value="Liste des fichiers" />
+      <control name="btnFileFindFont" value="Choisir une police..."/>
+      <control name="chkDetectFileEncoding" value="Détécter l’&amp;encodage des fichiers."/>
+      <control name="chkSaveMessagesPosition" value="Enregistrer la position de la &amp;fenêtre des messages"/>
+      <control name="chkSaveExclusionsPosition" value="Enregistrer la position de la fenêtre des &amp;exclusions"/>
+      <control name="chkLabelColor" value="&amp;Utilisez la couleur d'accent sur les en-têtes"/>
+
+      <control name="tabFileEncoding" value="Encodage des fichiers" />
+      <control name="btnFileEncodingAdd" value="&amp;Ajouter..."/>
+      <control name="btnFileEncodingEdit" value="&amp;Modifier..."/>
+      <control name="btnFileEncodingDelete" value="&amp;Supprimer"/>
+      <control name="lblPerformance" value="Performance"/>
+      <control name="chkUseEncodingCache" value="Activer le cache pour la détéction d’encodage"/>
+      <control name="btnCacheClear" value="Effacer le cache"/>
+   </screen>
+   
+   <screen name="frmPrint" value="Impression">
+      <control name="cmdCancel" value="&amp;Annuler" />
+      <control name="lblSelect" value="Veuillez choisir le type de contenu du rapport :" />
+      <control name="cmdPageSetup" value="&amp;Configuration" />
+      <control name="cmdPrint" value="&amp;Imprimer" />
+      <control name="cmdPreview" value="&amp;Aperçu" />
+   </screen>
+
+   <screen name="frmExclusions" value="Exclusions">
+      <control name="btnEdit" value="&amp;Modifier..." />
+      <control name="btnDelete" value="&amp;Supprimer" />
+      <control name="btnAdd" value="&amp;Ajouter..." />
+      <control name="btnOK" value="&amp;OK" />
+      <control name="btnCancel" value="&amp;Annuler" />
+      <control name="btnRestoreDefaults" value="&amp;Restaurer les paramètres par défaut" />
+   </screen>
+
+   <screen name="frmAddEditExclusions" value="Exclusions">
+      <control name="lblCategory" value="Catégorie" />
+      <control name="lblType" value="Type" />
+      <control name="lblOptions" value="Options" />
+      <control name="lblValue" value="Valeur" />
+      <control name="chkIgnoreCase" value="Ignorer la casse" />
+      <control name="btnCancel" value="&amp;Annuler" />
+      <control name="btnOK" value="&amp;OK" />
+   </screen>
+
+   <screen name="frmCommandLine" value="AstroGrep">
+      <control name="btnOK" value="&amp;OK"/>
+   </screen>
+
+   <screen name="frmLogDisplay" value="Messages">
+      <control name="sbtnStatus" value="État"/>
+      <control name="sbtnExclusions" value="Exclusion"/>
+      <control name="sbtnError" value="Erreur"/>
+   </screen>
+
+   <screen name="frmCheckForUpdateTemp" value="Vérifier les mises à jour">
+      <control name="lblVersionCheck" value="Vérification des mises à jour..." />
+   </screen>
+
+   <screen name="frmAddEditFileEncoding" value="Encodage de fichier">
+      <control name="picBrowse" tooltip="Explorer..." />
+      <control name="btnOK" value="&amp;OK" />
+      <control name="btnCancel" value="&amp;Annuler" />
+      <control name="lblFilePath" value="Chemin du fichier" />
+      <control name="lblEncoding" value="Encodage" />
+   </screen>
+   
+   <generic>
+      <text name="Browse" value="Explorer..."/>
+      
+      <text name="SaveDialogTitle" value="Enregistrer les résultats sous..." />
+      <text name="SaveNoResults" value="Aucun résultat à enregistrer."/>
+      <text name="SaveError" value="Impossible d’enregistrer les résultats : {0}"/>
+      <text name="SaveSaving" value="Enregistrement des résultats : {0}"/>
+      <text name="SaveSaved" value="Résultats enregistrés"/>
+      
+      <text name="PrintTypeSelected" value="Résultats sélectionnés"/>
+      <text name="PrintTypeFile" value="Liste des fichiers trouvés"/>
+      <text name="PrintTypeAll" value="Tous les résultats"/>
+      <text name="PrintErrorPageSettings" value="Une erreur a été rencontrée pendant le chargement de la configuration d’impression. Assurez-vous que l’imprimante est disponible. Une imprimante doit être connectée et accessible pour imprimer le travail."/>
+      <text name="PrintErrorPreview" value="Une erreur a été rencontrée pendant le chargement du document pour l’aperçu. An error occurred while trying to load the document for Print Preview. Assurez-vous que l’imprimante est disponible. Une imprimante doit être connectée et accessible pour imprimer le travail."/>
+      <text name="PrintErrorPrint" value="Une erreur a été rencontrée pendant le chargement du document pour l’impression. Assurez-vous que l’imprimante est disponible. Une imprimante doit être connectée et accessible pour imprimer le travail."/>
+      <text name="PrintErrorDocument" value="Une erreur a été rencontrée pendant la création du document à imprimer ({0})."/>
+      <text name="PrintNoResults" value="Aucun résultat à imprimer."/>
+      
+      <text name="OpenFolderDescription" value="Veuillez sélectionner un répertoire de recherche."/>
+      
+      <text name="VerifyErrorContextLines" value="Le nombre de lignes de contexte doit être compris entre {0} et {1}."/>
+      <text name="VerifyErrorFileType" value="Vous devez indiquer le nom d’un fichier dans lequel rechercher."/>
+      <text name="VerifyErrorNoStartPath" value="Vous devez indiquer le chemin où commencer la recherche."/>
+      <text name="VerifyErrorInvalidStartPath" value="’{0}’ n’est pas un répertoire correcte."/>
+      <text name="VerifyErrorNoSearchText" value="Vous devez indiquer un texte ou une expression à rechercher."/>
+      <text name="VerifyErrorInvalidRegEx" value="L’expression rationnelle indiquée est incorrecte ({0}). Veuillez la contrôler."/>
+      <text name="VerifyErrorGeneric" value="Impossible de valider les paramètres spécifiés. Veuillez vérifier s’ils sont correctes."/>
+      <text name="VerifyErrorFileHitCount" value="Le nombre minimum de fichiers doit être supérieur ou égal à {0}."/>
+      <text name="VerifyErrorNoResultsToSearchIn" value="Il n’y a pas de résultats sur lesquels lancer une nouvelle recherche. Veuillez désactiver l’option « Rechercher parmi les résultats »."/>
+
+      <text name="SearchGenericError" value="Une erreur a été rencontrée pendant la recherche."/>
+      <text name="SearchFileError" value="Une erreur a été rencontrée pendant l’analyse du fichier: {0}."/>
+      <text name="SearchCancelled" value="Recherche annulée"/>
+      <text name="SearchFinished" value="Recherche terminée"/>
+      <text name="SearchStarted" value="Recherche démarrée"/>
+      <text name="SearchSearching" value="Analyse de {0}"/>
+      <text name="SearchSearchingByPlugin" value="L’extension {0} était utilisée pour analyser le fichier." />
+      <text name="SearchExplorerItem" value="Analyse en utilisant {0}..."/>
+
+      <text name="ResultsPreviewSpacerText" value="(21)"/>
+      <text name="ResultsPreviewText" value="&#x9;Exemple d’une ligne de résultat et d’une correspondance affichées"/>
+      <text name="ResultsPreviewTextMatch" value="correspondance"/>
+      <text name="ResultsPreviewLargeBinaryFile" value="Ce fichier est très grand ou au format binaire. Êtes-vous certain de vouloir l’afficher en entier ?"/>
+      
+      <text name="ColorOtherText" value="&amp;Personnaliser..."/>
+      <!-- todo: color names -->
+      
+      <text name="TextEditorsErrorNoCmdLineForFile" value="Aucun argument de ligne de commande indiqué pour le chemin du fichier. &#xD;&#xA; Veuillez indiquer l’argument « Chemin vers le fichier » dans le menu Outils->Options."/>
+      <text name="TextEditorsErrorGeneric" value="Erreur à l’édition du fichier {0}.&#xD;&#xA;Le problème suivant a été rencontré : {1}"/>
+      <text name="TextEditorsBrowseTitle" value="Sélectionner le fichier exécutable de l’éditeur de texte"/>
+      <text name="TextEditorsAllTypesDefined" value="Le jocker de types de fichier (*) a déjà été utilisé."/>
+      <text name="TextEditorsColumnFileType" value="Type de fichier"/>
+      <text name="TextEditorsColumnLocation" value="Éditeur de texte"/>
+      <text name="TextEditorsColumnCmdLine" value="Ligne de commande"/>
+      <text name="TextEditorsColumnTabSize" value="Nombre de tabulations"/>
+      <text name="TextEditorsErrorNoEditor" value="Veuillez indiquer un éditeur de texte."/>
+      <text name="TextEditorsErrorFileTypeExists" value="Ce type de fichier existe déjà. Veuillez en choisir un autre."/>
+      
+      <text name="ResultsColumnFile" value="Nom"/>
+      <text name="ResultsColumnLocation" value="Répertoire"/>
+      <text name="ResultsColumnDate" value="Modifié le"/>
+      <text name="ResultsColumnCount" value="Correspondances"/>
+      <text name="ResultsColumnSize" value="Taille"/>
+      <text name="ResultsColumnFileExt" value="Extension"/>
+      
+      <text name="ResultsStatusTotalCount" value="Total : {0}"/>
+      <text name="ResultsStatusFileCount" value="Fichiers : {0}"/>
+      <text name="ResultsStatusFilterCount" value="Exclusions : {0}"/>
+      <text name="ResultsStatusErrorCount" value="Erreurs : {0}"/>
+
+      <text name="ResultsContextMenu.OpenFileCurrentLine" value="Ouvrir le fichier à la ligne courante"/>
+      <text name="ResultsContextMenu.Copy" value="Copier"/>
+      <text name="ResultsContextMenu.SelectAll" value="Tout sélectionner"/>
+      
+      <text name="PluginsColumnEnabled" value="Activée"/>
+      <text name="PluginsColumnName" value="Nom"/>
+      <text name="PluginsColumnExtensions" value="Extensions"/>
+
+      <text name="Update.Current" value="{0} est à jour ({1})"/>
+      <text name="Update.NewVersion" value="Le version {1} d’{0} est disponible."/>
+      <text name="Update.Latest" value="Télécharger {0} mise à jour {1}"/>
+      <text name="Update.Error" value="Vérification de la mise à jour échouée"/>
+
+      <text name="Exclusions.Enabled" value="Activé"/>
+      <text name="Exclusions.Category" value="Catégories"/>
+      <text name="Exclusions.Type" value="Type"/>
+      <text name="Exclusions.Value" value="Valeur"/>
+      <text name="Exclusions.Option" value="Options"/>
+
+      <text name="Exclusions.File" value="Fichier"/>
+      <text name="Exclusions.Directory" value="Répertoire"/>
+
+      <text name="Exclusions.Name" value="Nom"/>
+      <text name="Exclusions.Path" value="Chemin"/>
+      <text name="Exclusions.Hidden" value="Masqué"/>
+      <text name="Exclusions.System" value="Système"/>
+      <text name="Exclusions.DateModified" value="Modifié le"/>
+      <text name="Exclusions.DateCreated" value="Créé le"/>
+      <text name="Exclusions.Extension" value="Extension"/>
+      <text name="Exclusions.Size" value="Taille"/>
+      <text name="Exclusions.Binary" value="Binaire"/>
+      <text name="Exclusions.MinimumHitCount" value="Correspondance minimum"/>
+      <text name="Exclusions.ReadOnly" value="Lecture seule"/>
+            
+      <text name="Exclusions.None" value=""/>
+      <text name="Exclusions.Equals" value="Égal à"/>
+      <text name="Exclusions.Contains" value="Contient"/>
+      <text name="Exclusions.StartsWith" value="Commence par"/>
+      <text name="Exclusions.EndsWith" value="Termine par"/>
+      <text name="Exclusions.NotEquals" value="Différent de"/>
+      <text name="Exclusions.GreaterThan" value="Supérieur à"/>
+      <text name="Exclusions.GreaterThanEquals" value="Supérieur ou égal à"/>
+      <text name="Exclusions.LessThan" value="Inférieur à"/>
+      <text name="Exclusions.LessThanEquals" value="Inférieur ou égal à"/>
+      <text name="Exclusions.IgnoreCase" value=" (Casse ignorée)"/>
+
+      <text name="Exclusions.Error.NoCategory" value="Veuillez sélectionner une catégorie."/>
+      <text name="Exclusions.Error.NoType" value="Veuillez sélectionner un type."/>
+      <text name="Exclusions.Error.NoValue" value="Veuillez sélectionner une valeur."/>
+      <!--<text name="Exclusions.Error.InvalidExtensionFormat" value="Format d’extension incorrect. Le format est .xxx"/>-->
+      <text name="Exclusions.Error.InvalidOptions" value="Veuillez sélectionner une valeur correcte pour l’option."/>
+      <text name="Exclusions.Error.TypeCategoryLimit" value="Désolé, vous ne pouvez pas avoir plus d’un type {0} pour la catégorie {1}."/>
+      
+      <text name="ExclusionErrorMessageText" value="Votre recherche a retourné des éléments exclus ou provoqué des erreurs. &#xA;Vous pouvez en consulter la liste en double cliquant sur la case correspondante de la barre d’état en bas à droite. &#xA;&#xA;Vous pouvez désactiver ce message dans les options."/>
+
+      <text name="LogDisplay.Column.Date" value="Date"/>
+      <text name="LogDisplay.Column.Type" value="Type"/>
+      <text name="LogDisplay.Column.Value" value="Valeur"/>
+      <text name="LogDisplay.Column.Details" value="Détails"/>
+      <text name="LogDisplay.Status" value="État"/>
+      <text name="LogDisplay.Exclusion" value="Exclusion"/>
+      <text name="LogDisplay.Error" value="Erreur"/>
+
+      <text name="FileEncoding.Enabled" value="Activé"/>
+      <text name="FileEncoding.FilePath" value="Chemin du fichier"/>
+      <text name="FileEncoding.Encoding" value="Encodage"/>
+      <text name="FileEncoding.Performance.Speed" value="Vitesse"/>
+      <text name="FileEncoding.Performance.Default" value="Par défaut"/>
+      <text name="FileEncoding.Performance.Accuracy" value="Précision"/>
+      <text name="FileEncoding.CacheCleared" value="Cache vidé."/>
+   </generic>
+   
+</language>

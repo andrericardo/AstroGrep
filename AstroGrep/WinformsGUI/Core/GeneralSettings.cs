@@ -43,13 +43,15 @@ namespace AstroGrep.Core
    /// [Curtis_Beard]	   10/16/2012	CHG: Save search settings on exit
    /// [Curtis_Beard]	   10/28/2012	ADD: 3575509, results word wrap
    /// [Curtis_Beard]	   10/28/2012	ADD: 3479503, ability to change file list font
-   /// [Curtis_Beard]		10/27/2014	CHG: 88, add file extension column
-   /// [Curtis_Beard]		11/11/2014	CHG: 85, remove leading white space
-   /// [Curtis_Beard]	   03/02/2015	FIX: 49, graphical glitch when using 125% dpi setting (increase search panel width)
-   /// [Curtis_Beard]		03/06/2015	CHG: default texteditor is created instead of using delimeter which is now private
+   /// [Curtis_Beard]      10/27/2014	CHG: 88, add file extension column
+   /// [Curtis_Beard]      11/11/2014	CHG: 85, remove leading white space
+   /// [Curtis_Beard]      03/06/2015	CHG: default texteditor is created instead of using delimeter which is now private
    /// [Curtis_Beard]	   04/08/2015	ADD: 20, option to show entire file contents
-   /// [Curtis_Beard]	   03/02/2015	FIX: 49, graphical glitch when using 125% dpi setting
    /// [Curtis_Beard]	   05/26/2015	FIX: 69, add performance setting for file detection
+   /// [LinkNet]           04/24/2017	CHG: Changed default main form window width	
+   /// [LinkNet]           04/24/2017	CHG: Increased default file panel font size from 8.25 to 9 points
+   /// [LinkNet]           04/27/2017	ADD: Added save and restore exclusions window position settings
+   /// [Curtis_Beard]	   05/19/2017	CHG: 120, add option to use accent color
    /// </history>
    public sealed class GeneralSettings
    {
@@ -70,35 +72,50 @@ namespace AstroGrep.Core
       private string matchForeColor = string.Format("255{0}255{0}255{0}255", Constants.COLOR_SEPARATOR);
       private string matchBackColor = string.Format("251{0}127{0}6{0}255", Constants.COLOR_SEPARATOR);
       private string resultsFont = string.Format("Lucida Console{0}9.75{0}Regular", Constants.FONT_SEPARATOR);
+      private string resultsFontDefault = string.Format("Lucida Console{0}9.75{0}Regular", Constants.FONT_SEPARATOR);
       private int mruListCount = 15;
 
       private string language = Constants.DEFAULT_LANGUAGE;
       private string extExcludeList = string.Empty;
 
+      private int windowsDPIPerCentSetting = 100;
+      private bool setDefaultFonts = true;
+
       private int windowLeft = -1;
       private int windowTop = -1;
-      private int windowWidth = 800;
-      private int windowHeight = 600;
+      private int windowWidth = -1;
+      private int windowHeight = -1;
       private int windowState = -1;
       
       private int searchPanelWidth = Constants.DEFAULT_SEARCH_PANEL_WIDTH;
-      private int filePanelHeight = DEFAULT_FILE_PANEL_HEIGHT;
-      private int columnFile = 100;
-      private int columnLocation = 200;
-      private int columnDate = 150;
-      private int columnCount = 60;
-      private int columnSize = 80;
-      private int columnFileExt = 120;
+      private int filePanelHeight = -1;
+      private int columnFile = -1;
+      private int columnLocation = -1;
+      private int columnDate = -1;
+      private int columnCount = -1;
+      private int columnSize = -1;
+      private int columnFileExt = -1;
 
       private bool logDisplaySaveWindowPosition = true;
-      private int columnLogDisplayDate = 175;
-      private int columnLogDisplayType = 86;
-      private int columnLogDisplayValue = 600;
-      private int columnLogDisplayDetails = 425;
+      private int columnLogDisplayDate = -1;
+      private int columnLogDisplayType = -1;
+      private int columnLogDisplayValue = -1;
+      private int columnLogDisplayDetails = -1;
       private int logDisplayTop = -1;
       private int logDisplayLeft = -1;
       private int logDisplayWidth = -1;
       private int logDisplayHeight = -1;
+
+      private bool exclusionsDisplaySaveWindowPosition = true;
+      private int columnExclusionsDisplayEnabled = -1;
+      private int columnExclusionsDisplayCategory = -1;
+      private int columnExclusionsDisplayType = -1;
+      private int columnExclusionsDisplayValue = -1;
+      private int columnExclusionsDisplayOption = -1;
+      private int exclusionsDisplayTop = -1;
+      private int exclusionsDisplayLeft = -1;
+      private int exclusionsDisplayWidth = -1;
+      private int exclusionsDisplayHeight = -1;
 
       private string searchStartPaths = string.Empty;
       private string searchFilters = string.Format("*.*{0}*.txt{0}*.java{0}*.htm, *.html{0}*.jsp, *.asp{0}*.js, *.inc{0}*.htm, *.html, *.jsp, *.asp{0}*.sql{0}*.bas, *.cls, *.vb{0}*.cs{0}*.cpp, *.c, *.h{0}*.asm", Constants.SEARCH_ENTRIES_SEPARATOR);
@@ -112,7 +129,8 @@ namespace AstroGrep.Core
 
       private bool resultsWordWrap = false;
 
-      private string filePanelFont = string.Format("Microsoft Sans Serif{0}8.25{0}Regular", Constants.FONT_SEPARATOR);
+      private string filePanelFont = string.Format("Microsoft Sans Serif{0}9{0}Regular", Constants.FONT_SEPARATOR);
+      private string filePanelFontDefault = string.Format("Microsoft Sans Serif{0}9{0}Regular", Constants.FONT_SEPARATOR);
 
       private bool removeLeadingWhiteSpace = false;
 
@@ -122,6 +140,8 @@ namespace AstroGrep.Core
       private bool useEncodingCache = true;
 
       private bool showEntireFile = false;
+
+      private bool useAstroGrepAccentColor = true;
       #endregion
       
       /// <summary>
@@ -437,6 +457,96 @@ namespace AstroGrep.Core
       }
 
       /// <summary>
+      /// Gets/Sets the exclusions display form's enabled column width value.
+      /// </summary>
+      static public int ExclusionsDisplayColumnEnabledWidth
+      {
+         get { return MySettings.columnExclusionsDisplayEnabled; }
+         set { MySettings.columnExclusionsDisplayEnabled = value; }
+      }
+
+      /// <summary>
+      /// Gets/Sets the exclusions display form's category column width value.
+      /// </summary>
+      static public int ExclusionsDisplayColumnCategoryWidth
+      {
+         get { return MySettings.columnExclusionsDisplayCategory; }
+         set { MySettings.columnExclusionsDisplayCategory = value; }
+      }
+
+      /// <summary>
+      /// Gets/Sets the exclusions display form's type column width value.
+      /// </summary>
+      static public int ExclusionsDisplayColumnTypeWidth
+      {
+         get { return MySettings.columnExclusionsDisplayType; }
+         set { MySettings.columnExclusionsDisplayType = value; }
+      }
+
+      /// <summary>
+      /// Gets/Sets the exclusions display form's value column width value.
+      /// </summary>
+      static public int ExclusionsDisplayColumnValueWidth
+      {
+         get { return MySettings.columnExclusionsDisplayValue; }
+         set { MySettings.columnExclusionsDisplayValue = value; }
+      }
+
+      /// <summary>
+      /// Gets/Sets the exclusions display form's option column width value.
+      /// </summary>
+      static public int ExclusionsDisplayColumnOptionWidth
+      {
+         get { return MySettings.columnExclusionsDisplayOption; }
+         set { MySettings.columnExclusionsDisplayOption = value; }
+      }
+
+      /// <summary>
+      /// Gets/Sets the exclusions display form's top value.
+      /// </summary>
+      static public int ExclusionsDisplayTop
+      {
+         get { return MySettings.exclusionsDisplayTop; }
+         set { MySettings.exclusionsDisplayTop = value; }
+      }
+
+      /// <summary>
+      /// Gets/Sets the exclusions display form's left value.
+      /// </summary>
+      static public int ExclusionsDisplayLeft
+      {
+         get { return MySettings.exclusionsDisplayLeft; }
+         set { MySettings.exclusionsDisplayLeft = value; }
+      }
+
+      /// <summary>
+      /// Gets/Sets the exclusions display form's width value.
+      /// </summary>
+      static public int ExclusionsDisplayWidth
+      {
+         get { return MySettings.exclusionsDisplayWidth; }
+         set { MySettings.exclusionsDisplayWidth = value; }
+      }
+
+      /// <summary>
+      /// Gets/Sets the exclusions display form's height value.
+      /// </summary>
+      static public int ExclusionsDisplayHeight
+      {
+         get { return MySettings.exclusionsDisplayHeight; }
+         set { MySettings.exclusionsDisplayHeight = value; }
+      }
+
+      /// <summary>
+      /// Gets/Sets whether to save the exclusions display form's window position.
+      /// </summary>
+      static public bool ExclusionsDisplaySavePosition
+      {
+         get { return MySettings.exclusionsDisplaySaveWindowPosition; }
+         set { MySettings.exclusionsDisplaySaveWindowPosition = value; }
+      }
+
+      /// <summary>
       /// Gets/Sets the search starting paths.
       /// </summary>
       static public string SearchStarts
@@ -482,6 +592,14 @@ namespace AstroGrep.Core
       }
 
       /// <summary>
+      /// Gets default results font.
+      /// </summary>
+      static public string ResultsFontDefault
+      {
+         get { return MySettings.resultsFontDefault; }
+      }
+
+      /// <summary>
       /// Gets/sets whether to show the exclusion/error message.
       /// </summary>
       static public bool ShowExclusionErrorMessage
@@ -515,6 +633,14 @@ namespace AstroGrep.Core
       {
          get { return MySettings.filePanelFont; }
          set { MySettings.filePanelFont = value; }
+      }
+
+      /// <summary>
+      /// Gets the default file panel font.
+      /// </summary>
+      static public string FilePanelFontDefault
+      {
+         get { return MySettings.filePanelFontDefault; }
       }
 
       /// <summary>
@@ -569,6 +695,33 @@ namespace AstroGrep.Core
       {
          get { return MySettings.useEncodingCache; }
          set { MySettings.useEncodingCache = value; }
+      }
+
+      /// <summary>
+      /// Gets/Sets Windows DPI percent scale setting.
+      /// </summary>
+      static public int WindowsDPIPerCentSetting
+      {
+         get { return MySettings.windowsDPIPerCentSetting; }
+         set { MySettings.windowsDPIPerCentSetting = value; }
+      }
+
+      /// <summary>
+      /// Gets/sets whether to set the default fonts.
+      /// </summary>
+      static public bool SetDefaultFonts
+      {
+         get { return MySettings.setDefaultFonts; }
+         set { MySettings.setDefaultFonts = value; }
+      }
+
+      /// <summary>
+      /// Gets/sets whether to use the AstroGrep accent color.
+      /// </summary>
+      static public bool UseAstroGrepAccentColor
+      {
+         get { return MySettings.useAstroGrepAccentColor; }
+         set { MySettings.useAstroGrepAccentColor = value; }
       }
    }
 }

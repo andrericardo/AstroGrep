@@ -14,7 +14,7 @@
       <control name="chkWholeWordOnly" value="&amp;Whole Word" tooltip="Only match entire words (not parts of words)" />
       <control name="chkCaseSensitive" value="&amp;Case Sensitive" tooltip="Match upper and lower case letters exactly" />
       <control name="chkRegularExpressions" value="Regular E&amp;xpressions" tooltip="Use &quot;regular expression&quot; matching" />
-      <control name="chkAllResultsAfterSearch" value="Show &amp;all results after search" tooltip="Shows all the results together in the preview after a search." />
+      <control name="chkAllResultsAfterSearch" value="Show &amp;all results after search" tooltip="Shows all the results together in the preview after a search" />
       <control name="chkSearchInResults" value="Search &amp;in results" tooltip="Perform search within currently displayed results file list" />
       <control name="lblSearchOptions" value="Search Options" />
       <control name="picBrowse" tooltip="Browse..." />
@@ -89,14 +89,15 @@
          <menuitem index="3" value="-" />
          <menuitem index="4" value="&amp;Check for Updates..." />
          <menuitem index="5" value="-" />
-         <menuitem index="6" value="&amp;About AstroGrep" />
+         <menuitem index="6" value="&amp;Donate" />
+         <menuitem index="7" value="&amp;About AstroGrep" />
       </menu>
       
       <!-- status bar items default state-->
       <control name="sbTotalCountPanel" value="Total: 0"/>
       <control name="sbFileCountPanel" value="File: 0"/>
-      <control name="sbFilterCountPanel" value="Exclusions: 0" tooltip="Double click to display exclusions."/>
-      <control name="sbErrorCountPanel" value="Error: 0" tooltip="Double click to display errors."/>
+      <control name="sbFilterCountPanel" value="Exclusions: 0" tooltip="Double click to display exclusions"/>
+      <control name="sbErrorCountPanel" value="Error: 0" tooltip="Double click to display errors"/>
    </screen>
    
    <screen name="frmAbout" value="About {0}">
@@ -109,7 +110,7 @@
    
    <screen name="frmAddEditTextEditor" value="Text Editors">
       <control name="lblAllTypesMessage" value="A Text Editor can be used for all unknown types by using a * for the file type." />
-      <control name="lblCmdOptions" value="Command Line Optons:&#xD;&#xA;  %1 - File&#xD;&#xA;  %2 - Line Number&#xD;&#xA;  %3 - Column" />
+      <control name="lblCmdOptions" value="Command Line Optons:&#xD;&#xA;  %1 - File&#xD;&#xA;  %2 - Line Number&#xD;&#xA;  %3 - Column&#xD;&#xA;  %4 - Searched Text" />
       <control name="lblCmdOptionsView" value="Preview: {0} {1}" />
       <control name="btnBrowse" tooltip="Browse..." />
       <control name="lblCmdLineArgs" value="Command Line" />
@@ -117,9 +118,9 @@
       <control name="lblFileType" value="File Type" />
       <control name="btnCancel" value="&amp;Cancel" />
       <control name="btnOK" value="&amp;OK" />
-      <control name="lblMultiTypes" value="Separate types with | character."/>
+      <control name="lblMultiTypes" value="Separate types with | character"/>
       <control name="lblTabSize" value="Tab Size" />
-      <control name="chkUseQuotesAroundFileName" value="&amp;Use quotes around file."/>
+      <control name="chkUseQuotesAroundFileName" value="&amp;Use quotes around file"/>
    </screen>
    
    <screen name="frmOptions" value="Options">
@@ -151,19 +152,21 @@
       <control name="lblPluginDetailVersion" value="Version:"/>
       <control name="lblPluginDetailAuthor" value="Author:"/>
       <control name="btnFindFont" value="&amp;Find Font..."/>
-      <control name="chkShowExclusionErrorMessage" value="Show a &amp;prompt when a search yields items being excluded or an error occurs."/>
-      <control name="chkSaveSearchOptions" value="Save search options on &amp;exit."/>
+      <control name="chkShowExclusionErrorMessage" value="Show a &amp;prompt when a search yields items being excluded or an error occurs"/>
+      <control name="chkSaveSearchOptions" value="Save search options on &amp;exit"/>
       <control name="grpFileList" value="File List" />
       <control name="btnFileFindFont" value="Find Font..."/>
-      <control name="chkDetectFileEncoding" value="Detect &amp;file encoding."/>
-      <control name="chkSaveMessagesPosition" value="Save messages &amp;window position."/>
+      <control name="chkDetectFileEncoding" value="Detect &amp;file encoding"/>
+      <control name="chkSaveMessagesPosition" value="Save messages &amp;window position"/>
+      <control name="chkSaveExclusionsPosition" value="Save e&amp;xclusions window position"/>
+      <control name="chkLabelColor" value="Use accent color on &amp;headings"/>
 
       <control name="tabFileEncoding" value="File Encoding" />
       <control name="btnFileEncodingAdd" value="&amp;Add..."/>
       <control name="btnFileEncodingEdit" value="&amp;Edit..."/>
       <control name="btnFileEncodingDelete" value="&amp;Delete"/>
       <control name="lblPerformance" value="Performance"/>
-      <control name="chkUseEncodingCache" value="Enable cache for detected encodings."/>
+      <control name="chkUseEncodingCache" value="Enable cache for detected encodings"/>
       <control name="btnCacheClear" value="Clear Cache"/>
    </screen>
    

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<language displayName="Danish" culture="da-dk" version="1.0">
+<language displayName="Dansk" culture="da-dk" version="1.0">
    <screen name="frmMain" value="AstroGrep">
       <control name="lblSearchHeading" value=" AstroGrep Søgning" />
       <control name="lblSearchText" value="Søge Tekst" />
@@ -14,7 +14,7 @@
       <control name="chkWholeWordOnly" value="&amp;Hele Ord" tooltip="Match kun hele ord" />
       <control name="chkCaseSensitive" value="&amp;Case sensitiv" tooltip="Match store og små bogstave præcist" />
       <control name="chkRegularExpressions" value="Regular &amp;Expressions" tooltip="Anvend regular expression matching" />
-      <control name="chkAllResultsAfterSearch" value="&amp;Vis alle resultater efter søgning" tooltip="Viser alle resultaterne sammen i preview efter en søgning." />
+      <control name="chkAllResultsAfterSearch" value="&amp;Vis alle resultater efter søgning" tooltip="Viser alle resultaterne sammen i preview efter en søgning" />
       <control name="chkSearchInResults" value="Søg i resultater" tooltip="Udfør søg inden aktuelt viste resultater filliste" />
       <control name="lblSearchOptions" value="Søgeparametre" />
       <control name="picBrowse" tooltip="Gennemse..." />
@@ -89,14 +89,15 @@
          <menuitem index="3" value="-" />
          <menuitem index="4" value="&amp;Tjek for opdateringer..." />
          <menuitem index="5" value="-" />
-         <menuitem index="6" value="&amp;Om AstroGrep" />
+         <menuitem index="6" value="&amp;Schenken" />
+         <menuitem index="7" value="&amp;Om AstroGrep" />
       </menu>
 
       <!-- status bar items default state-->
       <control name="sbTotalCountPanel" value="Total: 0"/>
       <control name="sbFileCountPanel" value="Fil: 0"/>
-      <control name="sbFilterCountPanel" value="Udelukkelser: 0" tooltip="Dobbeltklik for at vise undtagelser."/>
-      <control name="sbErrorCountPanel" value="Fejl: 0" tooltip="Dobbeltklik for at vise fejl."/>
+      <control name="sbFilterCountPanel" value="Udelukkelser: 0" tooltip="Dobbeltklik for at vise undtagelser"/>
+      <control name="sbErrorCountPanel" value="Fejl: 0" tooltip="Dobbeltklik for at vise fejl"/>
    </screen>
    
    <screen name="frmAbout" value="Om {0}">
@@ -109,7 +110,7 @@
    
    <screen name="frmAddEditTextEditor" value="Tekst Editorer">
       <control name="lblAllTypesMessage" value="En teksteditor kan vælges for alle ukendte filtyper ved at bruge * for filtypen." />
-      <control name="lblCmdOptions" value="Kommandolinie Indstillinger:&#xD;&#xA;  %1 - Filer&#xD;&#xA;  %2 - Linie Nummer&#xD;&#xA;  %3 - Kollonne" />
+      <control name="lblCmdOptions" value="Kommandolinie Indstillinger:&#xD;&#xA;  %1 - Filer&#xD;&#xA;  %2 - Linie Nummer&#xD;&#xA;  %3 - Kollonne&#xD;&#xA;  %4 - søgeteksten" />
       <control name="lblCmdOptionsView" value="Preview: {0} {1}" />
       <control name="btnBrowse" tooltip="Gennemse..." />
       <control name="lblCmdLineArgs" value="Kommandolinie" />
@@ -117,13 +118,13 @@
       <control name="lblFileType" value="Fil Type" />
       <control name="btnCancel" value="&amp;Annuller" />
       <control name="btnOK" value="&amp;OK" />
-      <control name="lblMultiTypes" value="Separate typer med | karakter."/>
+      <control name="lblMultiTypes" value="Separate typer med | karakter"/>
       <control name="lblTabSize" value="fanen størrelse" />
-      <control name="chkUseQuotesAroundFileName" value="&amp;Brug anførselstegn omkring fil."/>
+      <control name="chkUseQuotesAroundFileName" value="&amp;Brug anførselstegn omkring fil"/>
    </screen>
    
    <screen name="frmOptions" value="Indstillinger">
-      <control name="chkRightClickOption" value="&amp;Anvend søgning ved højreklik på mapper" />
+      <control name="chkRightClickOption" value="Anvend søgning ved &amp;højreklik på mapper" />
       <control name="lblStoredPaths" value="Antal senest anvendte søgestier der gemmes" />
       <control name="btnEdit" value="&amp;Rediger..." />
       <control name="btnRemove" value="&amp;Slet" />
@@ -143,7 +144,7 @@
       <control name="tabTextEditors" value="Tekst Editorer" />
       <control name="LanguageGroup" value="Sprog" />
       <control name="tabPlugins" value="Udvidelser" />
-      <control name="chkDesktopShortcut" value="&amp;Skrivebords Genvej" />
+      <control name="chkDesktopShortcut" value="Skrivebords &amp;Genvej" />
       <control name="chkStartMenuShortcut" value="Start &amp;Menu Genvej" />
       <control name="ShortcutGroup" value="Genvej" />
       <control name="PluginDetailsGroup" value="Udvidelsesdetaljer" />
@@ -151,19 +152,21 @@
       <control name="lblPluginDetailVersion" value="Version:" />
       <control name="lblPluginDetailAuthor" value="Forfatter:" />
       <control name="btnFindFont" value="&amp;Find skrift..."/>
-      <control name="chkShowExclusionErrorMessage" value="&amp;Vis en meddelelse, når en søgning udbytter poster bliver udelukket eller der opstår en fejl."/>
-      <control name="chkSaveSearchOptions" value="Gem søgeindstillinger på exit."/>
+      <control name="chkShowExclusionErrorMessage" value="&amp;Vis en meddelelse, når en søgning udbytter poster bliver udelukket eller der opstår en fejl"/>
+      <control name="chkSaveSearchOptions" value="Gem &amp;søgeindstillinger på exit"/>
       <control name="grpFileList" value="Filliste" />
       <control name="btnFileFindFont" value="Find skrift..."/>
-      <control name="chkDetectFileEncoding" value="Detect filkodningen."/>
-      <control name="chkSaveMessagesPosition" value="&amp;Gem meddelelser vindue position."/>
+      <control name="chkDetectFileEncoding" value="Detect filkodningen"/>
+      <control name="chkSaveMessagesPosition" value="Gem &amp;meddelelser vindue position"/>
+      <control name="chkSaveExclusionsPosition" value="Gem &amp;eksklusioner vindue position"/>
+      <control name="chkLabelColor" value="Gebruik accentkleur op &amp;rubrieken"/>
 
       <control name="tabFileEncoding" value="Filkodning" />
       <control name="btnFileEncodingAdd" value="&amp;Tilføj..."/>
       <control name="btnFileEncodingEdit" value="&amp;Rediger..."/>
       <control name="btnFileEncodingDelete" value="&amp;Slet"/>
       <control name="lblPerformance" value="ydeevne"/>
-      <control name="chkUseEncodingCache" value="Aktiver cache for fundne kodninger."/>
+      <control name="chkUseEncodingCache" value="Aktiver cache for fundne kodninger"/>
       <control name="btnCacheClear" value="Ryd cache"/>
    </screen>
    

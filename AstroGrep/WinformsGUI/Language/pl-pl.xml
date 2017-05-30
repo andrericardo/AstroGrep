@@ -14,7 +14,7 @@
       <control name="chkWholeWordOnly" value="&amp;Całe słowo" tooltip="Znajduj tylko całe słowa (a nie ich części)" />
       <control name="chkCaseSensitive" value="Wielkość &amp;liter" tooltip="Znajduj litery odpowiednio dużej lub małej wielkości" />
       <control name="chkRegularExpressions" value="Wyrażenia &amp;regularne" tooltip="Używaj &quot;wyrażeń regularnych&quot; do sprawdzania" />
-      <control name="chkAllResultsAfterSearch" value="Pokaż wszystkie wyniki &amp;wyszukiwania" tooltip="Wyświetla wszystkie wyniki wyszukiwania w jednym wspólnym poglądzie." />
+      <control name="chkAllResultsAfterSearch" value="Pokaż wszystkie wyniki &amp;wyszukiwania" tooltip="Wyświetla wszystkie wyniki wyszukiwania w jednym wspólnym poglądzie" />
       <control name="chkSearchInResults" value="Szukaj w wynikach" tooltip="Wykonaj wyszukiwanie w obrębie aktualnie wyświetlanej listy plików Wyniki" />
       <control name="lblSearchOptions" value="Opcje wyszukiwania" />
       <control name="picBrowse" tooltip="Przeglądaj..." />
@@ -89,14 +89,15 @@
          <menuitem index="3" value="-" />
          <menuitem index="4" value="Sprawdź dostępność &amp;aktualizacji..." />
          <menuitem index="5" value="-" />
-         <menuitem index="6" value="&amp;Informacje o AstroGrep" />
+         <menuitem index="6" value="&amp;Podarować" />
+         <menuitem index="7" value="&amp;Informacje o AstroGrep" />
       </menu>
       
       <!-- status bar items default state-->
       <control name="sbTotalCountPanel" value="Łącznie: 0"/>
       <control name="sbFileCountPanel" value="Pliki: 0"/>
-      <control name="sbFilterCountPanel" value="Wyjątki: 0" tooltip="Naciśnij podwójnie, aby wyświetlić wyjątki."/>
-      <control name="sbErrorCountPanel" value="Błędy: 0" tooltip="Naciśnij podwójnie, aby wyświetlić błędy."/>
+      <control name="sbFilterCountPanel" value="Wyjątki: 0" tooltip="Naciśnij podwójnie, aby wyświetlić wyjątki"/>
+      <control name="sbErrorCountPanel" value="Błędy: 0" tooltip="Naciśnij podwójnie, aby wyświetlić błędy"/>
    </screen>
    
    <screen name="frmAbout" value="Informacje o {0}">
@@ -108,8 +109,8 @@
    </screen>
    
    <screen name="frmAddEditTextEditor" value="Edytory tekstu">
-      <control name="lblAllTypesMessage" value="Edytor tekstu może zostać wybrany dla wszystkich nieustalonych rozszerzeń poprzez zdefiniowanie * dla rozszerzeń plików." />
-      <control name="lblCmdOptions" value="Opcje wiersza poleceń:&#xD;&#xA;  %1 - Plik&#xD;&#xA;  %2 - Numer linii&#xD;&#xA;  %3 - Kolumna" />
+      <control name="lblAllTypesMessage" value="Edytor tekstu może zostać wybrany dla wszystkich nieustalonych rozszerzeń poprzez zdefiniowanie * dla rozszerzeń plików" />
+      <control name="lblCmdOptions" value="Opcje wiersza poleceń:&#xD;&#xA;  %1 - Plik&#xD;&#xA;  %2 - Numer linii&#xD;&#xA;  %3 - Kolumna&#xD;&#xA;  %4 - wyszukiwanie tekstowe" />
       <control name="lblCmdOptionsView" value="Podgląd: {0} {1}" />
       <control name="btnBrowse" tooltip="Przeglądaj..." />
       <control name="lblCmdLineArgs" value="Wiersz poleceń" />
@@ -117,9 +118,9 @@
       <control name="lblFileType" value="Rozszerzenia plików" />
       <control name="btnCancel" value="&amp;Anuluj" />
       <control name="btnOK" value="&amp;OK" />
-      <control name="lblMultiTypes" value="Rozdziel rozszerzenia za pomocą znaku | ."/>
+      <control name="lblMultiTypes" value="Rozdziel rozszerzenia za pomocą znaku |"/>
       <control name="lblTabSize" value="Rozmiar tabulatora" />
-      <control name="chkUseQuotesAroundFileName" value="Używaj &amp;cudzysłowia wokół nazwy pliku."/>
+      <control name="chkUseQuotesAroundFileName" value="Używaj &amp;cudzysłowia wokół nazwy pliku"/>
    </screen>
    
    <screen name="frmOptions" value="Ustawienia">
@@ -157,7 +158,9 @@
       <control name="btnFileFindFont" value="Ustaw czcionkę..."/>
       <control name="chkDetectFileEncoding" value="Wykrywaj &amp;kodowanie plików"/>
       <control name="chkSaveMessagesPosition" value="Zapisz pozycję &amp;okna wiadomości"/>
-
+      <control name="chkSaveExclusionsPosition" value="Zapisz pozycję okna &amp;wykluczenia"/>
+      <control name="chkLabelColor" value="Użyj koloru akcentu w &amp;nagłówkach"/>
+      
       <control name="tabFileEncoding" value="Kodowanie plików" />
       <control name="btnFileEncodingAdd" value="&amp;Dodaj..."/>
       <control name="btnFileEncodingEdit" value="&amp;Edytuj..."/>

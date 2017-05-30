@@ -36,7 +36,7 @@ namespace AstroGrep.Windows.Forms
    /// [Andrew_Radford]    17/08/2008	CHG: Moved Winforms designer stuff to a .designer file
    /// [Curtis_Beard]      09/28/2012  CHG: 3553474, support multiple file types per editor (display message)
    /// </history>
-   public partial class frmAddEditTextEditor : Form
+   public partial class frmAddEditTextEditor : BaseForm
    {
       #region Declarations
       private bool __Add = true;
@@ -146,7 +146,8 @@ namespace AstroGrep.Windows.Forms
          lblCmdOptions.Text = "Command Line Optons:\r\n" +
                               "  %1 - File\r\n" +
                               "  %2 - Line Number\r\n" +
-                              "  %3 - Column";
+                              "  %3 - Column\r\n" +
+                              "  %4 - Searched Text";
 
          //Language.GenerateXml(this, Application.StartupPath + "\\" + this.Name + ".xml");
          Language.ProcessForm(this, HoverTips);
@@ -386,6 +387,7 @@ namespace AstroGrep.Windows.Forms
       /// [Justin_Dearing]    11/01/2007	ADD: Preview will show editor name.
       /// [Curtis_Beard]		03/06/2015	FIX: 65, add support for using quotes around file name, rename function
       /// [Curtis_Beard]		06/15/2015	CHG: use language value for preview text instead of hard coded.
+      /// [Curtis_Beard]	   08/16/2016	CHG: 108, add search text
       /// </history>
       private void UpdateCmdLinePreview()
       {
@@ -414,6 +416,7 @@ namespace AstroGrep.Windows.Forms
          args = args.Replace("%1", path);
          args = args.Replace("%2", "450");
          args = args.Replace("%3", "11");
+         args = args.Replace("%4", "searched text");
 
          lblCmdOptionsView.Text = string.Format(previewText, editor, args);
       }

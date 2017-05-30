@@ -1,6 +1,6 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
-VisualStudioVersion = 12.0.31101.0
+VisualStudioVersion = 12.0.40629.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AstroGrep", "WinformsGUI\AstroGrep.csproj", "{583FF22B-9586-4543-B4B4-747E06C963ED}"
 EndProject
@@ -9,6 +9,12 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AdminProcess", "AdminProcess\AdminProcess.csproj", "{E2E4F8BE-6181-46B2-B79C-1ED7EBF2BDC1}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AstroGrep.Common", "AstroGrep.Common\AstroGrep.Common.csproj", "{9A78B1C9-9260-412D-BB93-143289831B38}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Common Assembly", "Common Assembly", "{BCF177E7-F3B5-4404-8480-F54C5F68D1CE}"
+	ProjectSection(SolutionItems) = preProject
+		AssemblyInfoCommon.cs = AssemblyInfoCommon.cs
+		AssemblyVersionCommon.cs = AssemblyVersionCommon.cs
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -40,7 +40,7 @@ namespace AstroGrep.Windows.Forms
    /// <history>
    /// [Curtis_Beard]      02/09/2015	CHG: 92, support for specific file encodings
    /// </history>
-   public partial class frmAddEditFileEncoding : Form
+   public partial class frmAddEditFileEncoding : BaseForm
    {
       /// <summary>
       /// The currently selected FileEncoding.
@@ -82,7 +82,7 @@ namespace AstroGrep.Windows.Forms
          if (SelectedFileEncoding != null)
          {
             txtFile.Text = SelectedFileEncoding.FilePath;
-            cboEncodings.SelectedValue = SelectedFileEncoding.Encoding.CodePage;
+            cboEncodings.SelectedValue = SelectedFileEncoding.CodePage;
          }
       }
 
@@ -172,7 +172,7 @@ namespace AstroGrep.Windows.Forms
          FileEncoding file = new FileEncoding();
          file.Enabled = true;
          file.FilePath = txtFile.Text;
-         file.Encoding = Encoding.GetEncoding((int)cboEncodings.SelectedValue);
+         file.CodePage = (int)cboEncodings.SelectedValue;
 
          return file;
       }

@@ -41,7 +41,7 @@ namespace AstroGrep.Windows.Forms
    /// [Curtis_Beard]	   03/07/2012	ADD: 3131609, exclusions
    /// [Curtis_Beard]	   11/11/2014	CHG: use FilterItem
    /// </history>
-   public partial class frmAddEditExclusions : Form
+   public partial class frmAddEditExclusions : BaseForm
    {
       private List<FilterType> defaultFilterTypes = null;
       private FilterItem _item = null;
@@ -55,7 +55,7 @@ namespace AstroGrep.Windows.Forms
       /// <summary>
       /// Create an instance of this form.
       /// </summary>
-      /// <param name="items"></param>
+      /// <param name="items">All the current filter items</param>
       /// <param name="item">FilterItem object to edit, null if adding a new one.</param>
       /// <history>
       /// [Curtis_Beard]	   03/07/2012	ADD: 3131609, exclusions
@@ -83,6 +83,9 @@ namespace AstroGrep.Windows.Forms
       /// </history>
       private void frmExclusions_Load(object sender, EventArgs e)
       {
+         // reset the controls here since the BaseForm could change the font and thus the size of the controls
+         fvtValue.ResetControls();
+
          Language.ProcessForm(this);
 
          cboCategories.DisplayMember = "DisplayName";

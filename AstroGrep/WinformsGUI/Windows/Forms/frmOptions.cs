@@ -40,13 +40,13 @@ namespace AstroGrep.Windows.Forms
    /// [Curtis_Beard]		07/13/2007	ADD: system tray options
    /// [Curtis_Beard]	   03/07/2012	ADD: 3131609, exclusions, remove file extension exclusion list
    /// </history>
-   public partial class frmOptions : System.Windows.Forms.Form
+   public partial class frmOptions : BaseForm
    {
       private bool __LanguageChange = false;
       private bool __RightClickEnabled = false;
       private bool __RightClickUpdate = false;
       private bool __IsAdmin = API.UACHelper.HasAdminPrivileges();
-      private Font __FileFont = Convertors.ConvertStringToFont(Core.GeneralSettings.FilePanelFont);
+      private Font __FileFont = Convertors.ConvertStringToFont(GeneralSettings.FilePanelFont);
       private bool inhibitFileEncodingAutoCheck;
 
       /// <summary>
@@ -121,10 +121,12 @@ namespace AstroGrep.Windows.Forms
       /// [Curtis_Beard]	   04/15/2015	CHG: add content forecolor
       /// [Curtis_Beard]	   05/26/2015	FIX: 69, add performance setting for file detection
       /// [Curtis_Beard]		06/15/2015	CHG: 57, support external language files
+      /// [LinkNet]				04/29/2017  ADD: column widths scaled in accordance with windows DPI% setting
+      /// [Curtis_Beard]	   05/19/2017	CHG: 120, add option to use accent color
       /// </history>
       private void frmOptions_Load(object sender, System.EventArgs e)
       {
-         cboPathMRUCount.SelectedIndex = Core.GeneralSettings.MaximumMRUPaths - 1;
+         cboPathMRUCount.SelectedIndex = GeneralSettings.MaximumMRUPaths - 1;
          chkRightClickOption.Checked = Shortcuts.IsSearchOption();
          if (Registry.IsInstaller())
          {
@@ -136,21 +138,23 @@ namespace AstroGrep.Windows.Forms
             chkDesktopShortcut.Checked = Shortcuts.IsDesktopShortcut();
             chkStartMenuShortcut.Checked = Shortcuts.IsStartMenuShortcut();
          }
-         chkShowExclusionErrorMessage.Checked = Core.GeneralSettings.ShowExclusionErrorMessage;
-         chkSaveSearchOptions.Checked = Core.GeneralSettings.SaveSearchOptionsOnExit;
-         chkDetectFileEncoding.Checked = Core.GeneralSettings.DetectFileEncoding;
-         chkUseEncodingCache.Checked = Core.GeneralSettings.UseEncodingCache;
-         chkSaveMessagesPosition.Checked = Core.GeneralSettings.LogDisplaySavePosition;
+         chkShowExclusionErrorMessage.Checked = GeneralSettings.ShowExclusionErrorMessage;
+         chkSaveSearchOptions.Checked = GeneralSettings.SaveSearchOptionsOnExit;
+         chkDetectFileEncoding.Checked = GeneralSettings.DetectFileEncoding;
+         chkUseEncodingCache.Checked = GeneralSettings.UseEncodingCache;
+         chkSaveMessagesPosition.Checked = GeneralSettings.LogDisplaySavePosition;
+         chkSaveExclusionsPosition.Checked = GeneralSettings.ExclusionsDisplaySavePosition;
+         chkLabelColor.Checked = GeneralSettings.UseAstroGrepAccentColor;
 
          // ColorButton init
-         ForeColorButton.SelectedColor = Convertors.ConvertStringToColor(Core.GeneralSettings.HighlightForeColor);
-         BackColorButton.SelectedColor = Convertors.ConvertStringToColor(Core.GeneralSettings.HighlightBackColor);
-         btnResultsWindowForeColor.SelectedColor = Convertors.ConvertStringToColor(Core.GeneralSettings.ResultsForeColor);
-         btnResultsWindowBackColor.SelectedColor = Convertors.ConvertStringToColor(Core.GeneralSettings.ResultsBackColor);
-         btnResultsContextForeColor.SelectedColor = Convertors.ConvertStringToColor(Core.GeneralSettings.ResultsContextForeColor);
+         ForeColorButton.SelectedColor = Convertors.ConvertStringToColor(GeneralSettings.HighlightForeColor);
+         BackColorButton.SelectedColor = Convertors.ConvertStringToColor(GeneralSettings.HighlightBackColor);
+         btnResultsWindowForeColor.SelectedColor = Convertors.ConvertStringToColor(GeneralSettings.ResultsForeColor);
+         btnResultsWindowBackColor.SelectedColor = Convertors.ConvertStringToColor(GeneralSettings.ResultsBackColor);
+         btnResultsContextForeColor.SelectedColor = Convertors.ConvertStringToColor(GeneralSettings.ResultsContextForeColor);
 
          // results font
-         rtxtResultsPreview.Font = Convertors.ConvertStringToFont(Core.GeneralSettings.ResultsFont);
+         rtxtResultsPreview.Font = Convertors.ConvertStringToFont(GeneralSettings.ResultsFont);
          DisplayFont(rtxtResultsPreview.Font, lblCurrentFont);
 
          // file list font
@@ -172,7 +176,7 @@ namespace AstroGrep.Windows.Forms
             foreach (object oItem in cboLanguage.Items)
             {
                LanguageItem item = (LanguageItem)oItem;
-               if (item.Culture.Equals(Core.GeneralSettings.Language, StringComparison.OrdinalIgnoreCase))
+               if (item.Culture.Equals(GeneralSettings.Language, StringComparison.OrdinalIgnoreCase))
                {
                   cboLanguage.SelectedItem = item;
                   break;
@@ -204,6 +208,18 @@ namespace AstroGrep.Windows.Forms
          lstFiles.Columns[0].Text = Language.GetGenericText("FileEncoding.Enabled", "Enabled");
          lstFiles.Columns[1].Text = Language.GetGenericText("FileEncoding.FilePath", "File Path");
          lstFiles.Columns[2].Text = Language.GetGenericText("FileEncoding.Encoding", "Encoding");
+
+         // set column widths
+         TextEditorsList.Columns[0].Width = Constants.OPTIONS_TEXT_EDITOR_COLUMN_0_WIDTH * GeneralSettings.WindowsDPIPerCentSetting / 100;
+         TextEditorsList.Columns[1].Width = Constants.OPTIONS_TEXT_EDITOR_COLUMN_1_WIDTH * GeneralSettings.WindowsDPIPerCentSetting / 100;
+         TextEditorsList.Columns[2].Width = Constants.OPTIONS_TEXT_EDITOR_COLUMN_2_WIDTH * GeneralSettings.WindowsDPIPerCentSetting / 100;
+         TextEditorsList.Columns[3].Width = Constants.OPTIONS_TEXT_EDITOR_COLUMN_3_WIDTH * GeneralSettings.WindowsDPIPerCentSetting / 100;
+         PluginsList.Columns[0].Width = Constants.OPTIONS_PLUGINS_COLUMN_0_WIDTH * GeneralSettings.WindowsDPIPerCentSetting / 100;
+         PluginsList.Columns[1].Width = Constants.OPTIONS_PLUGINS_COLUMN_1_WIDTH * GeneralSettings.WindowsDPIPerCentSetting / 100;
+         PluginsList.Columns[2].Width = Constants.OPTIONS_PLUGINS_COLUMN_2_WIDTH * GeneralSettings.WindowsDPIPerCentSetting / 100;
+         lstFiles.Columns[0].Width = Constants.OPTIONS_FILES_COLUMN_0_WIDTH * GeneralSettings.WindowsDPIPerCentSetting / 100;
+         lstFiles.Columns[1].Width = Constants.OPTIONS_FILES_COLUMN_1_WIDTH * GeneralSettings.WindowsDPIPerCentSetting / 100;
+         lstFiles.Columns[2].Width = Constants.OPTIONS_FILES_COLUMN_2_WIDTH * GeneralSettings.WindowsDPIPerCentSetting / 100;
       }
 
       #region Private Methods
@@ -484,31 +500,48 @@ namespace AstroGrep.Windows.Forms
       /// [Curtis_Beard]	   04/08/2015	CHG: 81, remove old word wrap and white space options. now in frmMain.
       /// [Curtis_Beard]	   04/15/2015	CHG: add content forecolor
       /// [Curtis_Beard]	   05/26/2015	FIX: 69, add performance setting for file detection
+      /// [Curtis_Beard]	   05/19/2017	CHG: 120, add option to use accent color
       /// </history>
       private void btnOK_Click(object sender, System.EventArgs e)
       {
          // Store the values in the globals
-         Core.GeneralSettings.MaximumMRUPaths = cboPathMRUCount.SelectedIndex + 1;
-         Core.GeneralSettings.HighlightForeColor = Convertors.ConvertColorToString(ForeColorButton.SelectedColor);
-         Core.GeneralSettings.HighlightBackColor = Convertors.ConvertColorToString(BackColorButton.SelectedColor);
-         Core.GeneralSettings.ResultsForeColor = Convertors.ConvertColorToString(btnResultsWindowForeColor.SelectedColor);
-         Core.GeneralSettings.ResultsBackColor = Convertors.ConvertColorToString(btnResultsWindowBackColor.SelectedColor);
-         Core.GeneralSettings.ResultsContextForeColor = Convertors.ConvertColorToString(btnResultsContextForeColor.SelectedColor);
-         Core.GeneralSettings.ResultsFont = Convertors.ConvertFontToString(rtxtResultsPreview.Font);
-         Core.GeneralSettings.ShowExclusionErrorMessage = chkShowExclusionErrorMessage.Checked;
-         Core.GeneralSettings.SaveSearchOptionsOnExit = chkSaveSearchOptions.Checked;
-         Core.GeneralSettings.FilePanelFont = Convertors.ConvertFontToString(__FileFont);
-         Core.GeneralSettings.DetectFileEncoding = chkDetectFileEncoding.Checked;
-         Core.GeneralSettings.EncodingPerformance = (int)cboPerformance.SelectedValue;
-         Core.GeneralSettings.UseEncodingCache = chkUseEncodingCache.Checked;
-         Core.GeneralSettings.LogDisplaySavePosition = chkSaveMessagesPosition.Checked;
+         GeneralSettings.MaximumMRUPaths = cboPathMRUCount.SelectedIndex + 1;
+         GeneralSettings.HighlightForeColor = Convertors.ConvertColorToString(ForeColorButton.SelectedColor);
+         GeneralSettings.HighlightBackColor = Convertors.ConvertColorToString(BackColorButton.SelectedColor);
+         GeneralSettings.ResultsForeColor = Convertors.ConvertColorToString(btnResultsWindowForeColor.SelectedColor);
+         GeneralSettings.ResultsBackColor = Convertors.ConvertColorToString(btnResultsWindowBackColor.SelectedColor);
+         GeneralSettings.ResultsContextForeColor = Convertors.ConvertColorToString(btnResultsContextForeColor.SelectedColor);
+         GeneralSettings.ResultsFont = Convertors.ConvertFontToString(rtxtResultsPreview.Font);
+         GeneralSettings.ShowExclusionErrorMessage = chkShowExclusionErrorMessage.Checked;
+         GeneralSettings.SaveSearchOptionsOnExit = chkSaveSearchOptions.Checked;
+         GeneralSettings.FilePanelFont = Convertors.ConvertFontToString(__FileFont);
+         GeneralSettings.DetectFileEncoding = chkDetectFileEncoding.Checked;
+         GeneralSettings.EncodingPerformance = (int)cboPerformance.SelectedValue;
+         GeneralSettings.UseEncodingCache = chkUseEncodingCache.Checked;
+         GeneralSettings.LogDisplaySavePosition = chkSaveMessagesPosition.Checked;
+         GeneralSettings.ExclusionsDisplaySavePosition = chkSaveExclusionsPosition.Checked;
+         GeneralSettings.UseAstroGrepAccentColor = chkLabelColor.Checked;
+
+         // set default log display positions if save position is disabled
+         if (!GeneralSettings.LogDisplaySavePosition)
+         {
+            // set log display window and column positions to default values
+            GeneralSettingsReset.LogDisplaySetDefaultPositions();
+         }
+
+         // set default exclusions display positions if save position is disabled
+         if (!GeneralSettings.ExclusionsDisplaySavePosition)
+         {
+            // set exclusions display window and column positions to default values
+            GeneralSettingsReset.ExclusionsDisplaySetDefaultPositions();
+         }
 
          // Only load new language on a change
          LanguageItem item = (LanguageItem)cboLanguage.SelectedItem;
-         if (!Core.GeneralSettings.Language.Equals(item.Culture))
+         if (!GeneralSettings.Language.Equals(item.Culture))
          {
-            Core.GeneralSettings.Language = item.Culture;
-            Language.Load(Core.GeneralSettings.Language);
+            GeneralSettings.Language = item.Culture;
+            Language.Load(GeneralSettings.Language);
             __LanguageChange = true;
          }
 
@@ -811,16 +844,23 @@ namespace AstroGrep.Windows.Forms
          UpdateResultsPreview();
       }
 
+      private void btnGeneralFindFont_Click(object sender, EventArgs e)
+      {
+         
+      }
+
       #endregion
 
       #region Plugin Methods
       /// <summary>
       /// Load the plugins from the manager to the listview.
       /// </summary>
+      /// <param name="selectedIndex">Set to index to show selected</param>
       /// <history>
       /// [Curtis_Beard]		07/28/2006	Created
+      /// [Curtis_Beard]		05/10/2017	Allow selectedIndex parameter to be specified
       /// </history>
-      private void LoadPlugins()
+      private void LoadPlugins(int selectedIndex = -1)
       {
          PluginsList.Items.Clear();
          ListViewItem item;
@@ -831,6 +871,10 @@ namespace AstroGrep.Windows.Forms
             item.Checked = Core.PluginManager.Items[i].Enabled;
             item.SubItems.Add(Core.PluginManager.Items[i].Plugin.Name);
             item.SubItems.Add(Core.PluginManager.Items[i].Plugin.Extensions);
+            if (selectedIndex > -1 && selectedIndex == i)
+            {
+               item.Selected = true;
+            }
             PluginsList.Items.Add(item);
          }
       }
@@ -900,23 +944,39 @@ namespace AstroGrep.Windows.Forms
          lblPluginDescription.Text = plugin.Description;
       }
 
+      /// <summary>
+      /// Moves the selected plugin up in the list.
+      /// </summary>
+      /// <param name="sender">system parameter</param>
+      /// <param name="e">system parameter</param>
+      /// <history>
+      /// [Curtis_Beard]		05/10/2017	Pass new index to LoadPlugins
+      /// </history>
       private void btnUp_Click(object sender, EventArgs e)
       {
          // move selected plugin up in list
          if (PluginsList.SelectedItems.Count > 0 && PluginsList.SelectedItems[0].Index != 0)
          {
             Core.PluginManager.Items.Reverse(PluginsList.SelectedItems[0].Index - 1, 2);
-            LoadPlugins();
+            LoadPlugins(PluginsList.SelectedItems[0].Index - 1);
          }
       }
 
+      /// <summary>
+      /// Moves the selected plugin down in the list.
+      /// </summary>
+      /// <param name="sender">system parameter</param>
+      /// <param name="e">system parameter</param>
+      /// <history>
+      /// [Curtis_Beard]		05/10/2017	Pass new index to LoadPlugins
+      /// </history>
       private void btnDown_Click(object sender, EventArgs e)
       {
          // move selected plugin down in list
          if (PluginsList.SelectedItems.Count > 0 && PluginsList.SelectedItems[0].Index != (PluginsList.Items.Count - 1))
          {
             Core.PluginManager.Items.Reverse(PluginsList.SelectedItems[0].Index, 2);
-            LoadPlugins();
+            LoadPlugins(PluginsList.SelectedItems[0].Index + 1);
          }
       }
       #endregion
@@ -1051,7 +1111,7 @@ namespace AstroGrep.Windows.Forms
          listItem.Tag = item;
          listItem.Checked = item.Enabled;
          listItem.SubItems.Add(item.FilePath);
-         listItem.SubItems.Add(item.Encoding.EncodingName);
+         listItem.SubItems.Add(System.Text.Encoding.GetEncoding(item.CodePage).EncodingName);
 
          return listItem;
       }

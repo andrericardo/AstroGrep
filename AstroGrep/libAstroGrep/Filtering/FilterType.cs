@@ -129,6 +129,14 @@ namespace libAstroGrep
       public bool SupportsMulitpleItems { get { return supportsMulitpleItems; } }
 
       /// <summary>
+      /// DON'T USE: created to allow serialization
+      /// </summary>
+      public FilterType()
+      {
+
+      }
+
+      /// <summary>
       /// Creates an instance of this class with the required category and sub category.
       /// </summary>
       /// <param name="category">Selected category</param>

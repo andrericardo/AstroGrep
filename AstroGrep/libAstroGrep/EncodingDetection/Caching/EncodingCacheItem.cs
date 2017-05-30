@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Serialization;
 using System.Text;
 
 namespace libAstroGrep.EncodingDetection.Caching
@@ -31,14 +32,19 @@ namespace libAstroGrep.EncodingDetection.Caching
    /// </remarks>
    /// <history>
    /// [Curtis_Beard]		05/28/2015	FIX: 69, Created for speed improvements for encoding detection
+   /// [Curtis_Beard]		05/26/2017	FIX: 97, detect file size change to read encoding again
    /// </history>
    [Serializable]
    public class EncodingCacheItem
    {
       /// <summary>Defined Encoding code page value</summary>
-      public int CodePage { get; set; }
+      public int CodePage;
 
       /// <summary>Name of detector used</summary>
-      public string DetectorName { get; set; }
+      public string DetectorName;
+
+      /// <summary>The file size</summary>
+      [OptionalField(VersionAdded = 2)]
+      public long FileSize;
    }
 }

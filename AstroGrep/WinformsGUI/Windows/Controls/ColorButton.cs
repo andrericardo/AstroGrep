@@ -3,6 +3,8 @@ using System.ComponentModel;
 using System.Drawing;
 using System.Windows.Forms;
 
+using AstroGrep.Windows.Forms;
+
 namespace AstroGrep.Windows.Controls
 {
    /// <summary>
@@ -207,7 +209,7 @@ namespace AstroGrep.Windows.Controls
       /// <history>
       /// 	[Curtis_Beard]	   11/18/2005	Created
       /// </history>
-      private class ColorPaletteDialog : System.Windows.Forms.Form
+      private class ColorPaletteDialog : BaseForm
       {
          public delegate void ColorChosenHandler(Color chosen);
          public event ColorChosenHandler ColorChosen;

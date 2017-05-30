@@ -48,9 +48,9 @@ namespace libAstroGrep.EncodingDetection
       public string FilePath { get; set; }
       
       /// <summary>
-      /// File Encoding object.
+      /// File encoding code page.
       /// </summary>
-      public Encoding Encoding { get; set; }
+      public int CodePage { get; set; }
 
       /// <summary>
       /// Outputs this object to a string using the delimeter.
@@ -61,7 +61,7 @@ namespace libAstroGrep.EncodingDetection
       /// </history>
       public override string ToString()
       {
-         return string.Format("{1}{0}{2}{0}{3}", DELIMETER, Enabled, FilePath, Encoding.CodePage);
+         return string.Format("{1}{0}{2}{0}{3}", DELIMETER, Enabled, FilePath, CodePage);
       }
 
       #region Public Static Methods
@@ -81,7 +81,7 @@ namespace libAstroGrep.EncodingDetection
          var item = new FileEncoding();
          item.Enabled = Convert.ToBoolean(values[0]);
          item.FilePath = values[1];
-         item.Encoding = Encoding.GetEncoding(Convert.ToInt32(values[2]));
+         item.CodePage = Convert.ToInt32(values[2]);
 
          return item;
       }

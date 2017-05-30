@@ -70,55 +70,28 @@ namespace AstroGrep.Windows
          StrFormatByteSize(filesize, sb, sb.Capacity);
          return sb.ToString();
       }
-      
-      /// <summary>
-      /// DPI Font scaling sizes.
-      /// </summary>
-      public enum DPIFontScalingSizes
-      {
-         /// <summary>Normal 100% font scaling</summary>
-         Normal = 0,
-         /// <summary>Medium 125% font scaling</summary>
-         Medium = 1,
-         /// <summary>Large 150% font scaling</summary>
-         Large = 2,
-         /// <summary>Other font scaling values</summary>
-         Other
-      }
 
       /// <summary>
-      /// Gets the current Window's DPI setting.
+      /// Gets Windows DPI percent scale setting.
       /// </summary>
       /// <param name="g">Current graphics context</param>
-      /// <returns>DPIFontScalingSize value</returns>
+      /// <returns>Windows DPI percent scale setting</returns>
       /// <remarks>We don't close the Graphics parameter here and rely on calling method to handle it since it could be used later.</remarks>
       /// <history>
-      /// [Curtis_Beard]	   03/02/2015	FIX: 49, graphical glitch when using 125% dpi setting
+      /// [LinkNet]			   04/27/2017  CHG: return all intermediate and standard DPI percent values
       /// </history>
-      public static DPIFontScalingSizes GetCurrentDPIFontScalingSize(Graphics g)
+      public static int GetCurrentDPISettingPerCent(Graphics g)
       {
-         DPIFontScalingSizes size = DPIFontScalingSizes.Normal;
+         float dpix_percent = (g.DpiX / 96) * 100;
 
-         float dpiX = g.DpiX;
+         int dpi_percent = (int)dpix_percent;
 
-         if (dpiX == 96.0)
+         // set Windows normal 100 percent DPI setting as minimum value
+         if (dpi_percent < 100)
          {
-            size = DPIFontScalingSizes.Normal;
+            dpi_percent = 100;
          }
-         if (dpiX == 120.0)
-         {
-            size = DPIFontScalingSizes.Medium;
-         }
-         else if (dpiX == 144.0)
-         {
-            size = DPIFontScalingSizes.Large;
-         }
-         else 
-         {
-            size = DPIFontScalingSizes.Other;
-         }
-
-         return size;
+         return dpi_percent;
       }
 
       #endregion
@@ -1875,7 +1848,7 @@ namespace AstroGrep.Windows
          // --------------------------------------------------------------------------------
          [MethodImpl(MethodImplOptions.InternalCall, MethodCodeType = MethodCodeType.Runtime),
          PreserveSig]
-         int Show([In] IntPtr parent);
+         new int Show([In] IntPtr parent);
 
          // IFileDialog-Specific interface members
          // --------------------------------------------------------------------------------
@@ -2026,78 +1999,78 @@ namespace AstroGrep.Windows
          // --------------------------------------------------------------------------------
          [MethodImpl(MethodImplOptions.InternalCall, MethodCodeType = MethodCodeType.Runtime),
          PreserveSig]
-         int Show([In] IntPtr parent);
+         new int Show([In] IntPtr parent);
 
          // Defined on IFileDialog - repeated here due to requirements of COM interop layer
          [MethodImpl(MethodImplOptions.InternalCall, MethodCodeType = MethodCodeType.Runtime)]
          void SetFileTypes([In] uint cFileTypes, [In] ref COMDLG_FILTERSPEC rgFilterSpec);
 
          [MethodImpl(MethodImplOptions.InternalCall, MethodCodeType = MethodCodeType.Runtime)]
-         void SetFileTypeIndex([In] uint iFileType);
+         new void SetFileTypeIndex([In] uint iFileType);
 
          [MethodImpl(MethodImplOptions.InternalCall, MethodCodeType = MethodCodeType.Runtime)]
-         void GetFileTypeIndex(out uint piFileType);
+         new void GetFileTypeIndex(out uint piFileType);
 
          [MethodImpl(MethodImplOptions.InternalCall, MethodCodeType = MethodCodeType.Runtime)]
-         void Advise([In, MarshalAs(UnmanagedType.Interface)] IFileDialogEvents pfde, out uint pdwCookie);
+         new void Advise([In, MarshalAs(UnmanagedType.Interface)] IFileDialogEvents pfde, out uint pdwCookie);
 
          [MethodImpl(MethodImplOptions.InternalCall, MethodCodeType = MethodCodeType.Runtime)]
-         void Unadvise([In] uint dwCookie);
+         new void Unadvise([In] uint dwCookie);
 
          [MethodImpl(MethodImplOptions.InternalCall, MethodCodeType = MethodCodeType.Runtime)]
-         void SetOptions([In] FOS fos);
+         new void SetOptions([In] FOS fos);
 
          [MethodImpl(MethodImplOptions.InternalCall, MethodCodeType = MethodCodeType.Runtime)]
-         void GetOptions(out FOS pfos);
+         new void GetOptions(out FOS pfos);
 
          [MethodImpl(MethodImplOptions.InternalCall, MethodCodeType = MethodCodeType.Runtime)]
-         void SetDefaultFolder([In, MarshalAs(UnmanagedType.Interface)] IShellItem psi);
+         new void SetDefaultFolder([In, MarshalAs(UnmanagedType.Interface)] IShellItem psi);
 
          [MethodImpl(MethodImplOptions.InternalCall, MethodCodeType = MethodCodeType.Runtime)]
-         void SetFolder([In, MarshalAs(UnmanagedType.Interface)] IShellItem psi);
+         new void SetFolder([In, MarshalAs(UnmanagedType.Interface)] IShellItem psi);
 
          [MethodImpl(MethodImplOptions.InternalCall, MethodCodeType = MethodCodeType.Runtime)]
-         void GetFolder([MarshalAs(UnmanagedType.Interface)] out IShellItem ppsi);
+         new void GetFolder([MarshalAs(UnmanagedType.Interface)] out IShellItem ppsi);
 
          [MethodImpl(MethodImplOptions.InternalCall, MethodCodeType = MethodCodeType.Runtime)]
-         void GetCurrentSelection([MarshalAs(UnmanagedType.Interface)] out IShellItem ppsi);
+         new void GetCurrentSelection([MarshalAs(UnmanagedType.Interface)] out IShellItem ppsi);
 
          [MethodImpl(MethodImplOptions.InternalCall, MethodCodeType = MethodCodeType.Runtime)]
-         void SetFileName([In, MarshalAs(UnmanagedType.LPWStr)] string pszName);
+         new void SetFileName([In, MarshalAs(UnmanagedType.LPWStr)] string pszName);
 
          [MethodImpl(MethodImplOptions.InternalCall, MethodCodeType = MethodCodeType.Runtime)]
-         void GetFileName([MarshalAs(UnmanagedType.LPWStr)] out string pszName);
+         new void GetFileName([MarshalAs(UnmanagedType.LPWStr)] out string pszName);
 
          [MethodImpl(MethodImplOptions.InternalCall, MethodCodeType = MethodCodeType.Runtime)]
-         void SetTitle([In, MarshalAs(UnmanagedType.LPWStr)] string pszTitle);
+         new void SetTitle([In, MarshalAs(UnmanagedType.LPWStr)] string pszTitle);
 
          [MethodImpl(MethodImplOptions.InternalCall, MethodCodeType = MethodCodeType.Runtime)]
-         void SetOkButtonLabel([In, MarshalAs(UnmanagedType.LPWStr)] string pszText);
+         new void SetOkButtonLabel([In, MarshalAs(UnmanagedType.LPWStr)] string pszText);
 
          [MethodImpl(MethodImplOptions.InternalCall, MethodCodeType = MethodCodeType.Runtime)]
-         void SetFileNameLabel([In, MarshalAs(UnmanagedType.LPWStr)] string pszLabel);
+         new void SetFileNameLabel([In, MarshalAs(UnmanagedType.LPWStr)] string pszLabel);
 
          [MethodImpl(MethodImplOptions.InternalCall, MethodCodeType = MethodCodeType.Runtime)]
-         void GetResult([MarshalAs(UnmanagedType.Interface)] out IShellItem ppsi);
+         new void GetResult([MarshalAs(UnmanagedType.Interface)] out IShellItem ppsi);
 
          [MethodImpl(MethodImplOptions.InternalCall, MethodCodeType = MethodCodeType.Runtime)]
-         void AddPlace([In, MarshalAs(UnmanagedType.Interface)] IShellItem psi, FDAP fdap);
+         new void AddPlace([In, MarshalAs(UnmanagedType.Interface)] IShellItem psi, FDAP fdap);
 
          [MethodImpl(MethodImplOptions.InternalCall, MethodCodeType = MethodCodeType.Runtime)]
-         void SetDefaultExtension([In, MarshalAs(UnmanagedType.LPWStr)] string pszDefaultExtension);
+         new void SetDefaultExtension([In, MarshalAs(UnmanagedType.LPWStr)] string pszDefaultExtension);
 
          [MethodImpl(MethodImplOptions.InternalCall, MethodCodeType = MethodCodeType.Runtime)]
-         void Close([MarshalAs(UnmanagedType.Error)] int hr);
+         new void Close([MarshalAs(UnmanagedType.Error)] int hr);
 
          [MethodImpl(MethodImplOptions.InternalCall, MethodCodeType = MethodCodeType.Runtime)]
-         void SetClientGuid([In] ref Guid guid);
+         new void SetClientGuid([In] ref Guid guid);
 
          [MethodImpl(MethodImplOptions.InternalCall, MethodCodeType = MethodCodeType.Runtime)]
-         void ClearClientData();
+         new void ClearClientData();
 
          // Not supported:  IShellItemFilter is not defined, converting to IntPtr
          [MethodImpl(MethodImplOptions.InternalCall, MethodCodeType = MethodCodeType.Runtime)]
-         void SetFilter([MarshalAs(UnmanagedType.Interface)] IntPtr pFilter);
+         new void SetFilter([MarshalAs(UnmanagedType.Interface)] IntPtr pFilter);
 
          // Defined by IFileOpenDialog
          // ---------------------------------------------------------------------------------

@@ -46,9 +46,10 @@
          // 
          this.btnOK.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
          this.btnOK.FlatStyle = System.Windows.Forms.FlatStyle.System;
-         this.btnOK.Location = new System.Drawing.Point(526, 413);
+         this.btnOK.Location = new System.Drawing.Point(473, 399);
+         this.btnOK.Margin = new System.Windows.Forms.Padding(4);
          this.btnOK.Name = "btnOK";
-         this.btnOK.Size = new System.Drawing.Size(75, 23);
+         this.btnOK.Size = new System.Drawing.Size(100, 25);
          this.btnOK.TabIndex = 0;
          this.btnOK.Text = "&OK";
          this.btnOK.UseVisualStyleBackColor = true;
@@ -59,9 +60,10 @@
          this.btnCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
          this.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
          this.btnCancel.FlatStyle = System.Windows.Forms.FlatStyle.System;
-         this.btnCancel.Location = new System.Drawing.Point(607, 413);
+         this.btnCancel.Location = new System.Drawing.Point(581, 399);
+         this.btnCancel.Margin = new System.Windows.Forms.Padding(4);
          this.btnCancel.Name = "btnCancel";
-         this.btnCancel.Size = new System.Drawing.Size(75, 23);
+         this.btnCancel.Size = new System.Drawing.Size(100, 25);
          this.btnCancel.TabIndex = 1;
          this.btnCancel.Text = "&Cancel";
          this.btnCancel.UseVisualStyleBackColor = true;
@@ -69,7 +71,8 @@
          // 
          // lstExclusions
          // 
-         this.lstExclusions.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+         this.lstExclusions.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
          this.lstExclusions.CheckBoxes = true;
          this.lstExclusions.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
@@ -80,9 +83,10 @@
             this.chdOption});
          this.lstExclusions.FullRowSelect = true;
          this.lstExclusions.HideSelection = false;
-         this.lstExclusions.Location = new System.Drawing.Point(12, 12);
+         this.lstExclusions.Location = new System.Drawing.Point(13, 15);
+         this.lstExclusions.Margin = new System.Windows.Forms.Padding(4);
          this.lstExclusions.Name = "lstExclusions";
-         this.lstExclusions.Size = new System.Drawing.Size(670, 395);
+         this.lstExclusions.Size = new System.Drawing.Size(668, 345);
          this.lstExclusions.TabIndex = 2;
          this.lstExclusions.UseCompatibleStateImageBehavior = false;
          this.lstExclusions.View = System.Windows.Forms.View.Details;
@@ -97,33 +101,36 @@
          // chdEnabled
          // 
          this.chdEnabled.Text = "Enabled";
+         this.chdEnabled.Width = 75;
          // 
          // chdCategory
          // 
          this.chdCategory.Text = "Category";
-         this.chdCategory.Width = 111;
+         this.chdCategory.Width = 120;
          // 
          // chdType
          // 
          this.chdType.Text = "Type";
-         this.chdType.Width = 131;
+         this.chdType.Width = 120;
          // 
          // chdValue
          // 
          this.chdValue.Text = "Value";
-         this.chdValue.Width = 228;
+         this.chdValue.Width = 160;
          // 
          // chdOption
          // 
          this.chdOption.Text = "Option";
-         this.chdOption.Width = 111;
+         this.chdOption.Width = 100;
          // 
          // btnAdd
          // 
+         this.btnAdd.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
          this.btnAdd.FlatStyle = System.Windows.Forms.FlatStyle.System;
-         this.btnAdd.Location = new System.Drawing.Point(12, 413);
+         this.btnAdd.Location = new System.Drawing.Point(13, 368);
+         this.btnAdd.Margin = new System.Windows.Forms.Padding(4);
          this.btnAdd.Name = "btnAdd";
-         this.btnAdd.Size = new System.Drawing.Size(75, 23);
+         this.btnAdd.Size = new System.Drawing.Size(100, 25);
          this.btnAdd.TabIndex = 3;
          this.btnAdd.Text = "&Add...";
          this.btnAdd.UseVisualStyleBackColor = true;
@@ -131,10 +138,12 @@
          // 
          // btnEdit
          // 
+         this.btnEdit.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
          this.btnEdit.FlatStyle = System.Windows.Forms.FlatStyle.System;
-         this.btnEdit.Location = new System.Drawing.Point(93, 413);
+         this.btnEdit.Location = new System.Drawing.Point(119, 368);
+         this.btnEdit.Margin = new System.Windows.Forms.Padding(4);
          this.btnEdit.Name = "btnEdit";
-         this.btnEdit.Size = new System.Drawing.Size(75, 23);
+         this.btnEdit.Size = new System.Drawing.Size(100, 25);
          this.btnEdit.TabIndex = 4;
          this.btnEdit.Text = "&Edit...";
          this.btnEdit.UseVisualStyleBackColor = true;
@@ -142,10 +151,12 @@
          // 
          // btnDelete
          // 
+         this.btnDelete.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
          this.btnDelete.FlatStyle = System.Windows.Forms.FlatStyle.System;
-         this.btnDelete.Location = new System.Drawing.Point(174, 413);
+         this.btnDelete.Location = new System.Drawing.Point(225, 368);
+         this.btnDelete.Margin = new System.Windows.Forms.Padding(4);
          this.btnDelete.Name = "btnDelete";
-         this.btnDelete.Size = new System.Drawing.Size(75, 23);
+         this.btnDelete.Size = new System.Drawing.Size(100, 25);
          this.btnDelete.TabIndex = 5;
          this.btnDelete.Text = "&Delete";
          this.btnDelete.UseVisualStyleBackColor = true;
@@ -153,11 +164,15 @@
          // 
          // btnRestoreDefaults
          // 
+         this.btnRestoreDefaults.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
          this.btnRestoreDefaults.AutoSize = true;
          this.btnRestoreDefaults.FlatStyle = System.Windows.Forms.FlatStyle.System;
-         this.btnRestoreDefaults.Location = new System.Drawing.Point(255, 413);
+         this.btnRestoreDefaults.Location = new System.Drawing.Point(331, 368);
+         this.btnRestoreDefaults.Margin = new System.Windows.Forms.Padding(4);
+         this.btnRestoreDefaults.MaximumSize = new System.Drawing.Size(285, 25);
+         this.btnRestoreDefaults.MinimumSize = new System.Drawing.Size(125, 25);
          this.btnRestoreDefaults.Name = "btnRestoreDefaults";
-         this.btnRestoreDefaults.Size = new System.Drawing.Size(100, 23);
+         this.btnRestoreDefaults.Size = new System.Drawing.Size(125, 25);
          this.btnRestoreDefaults.TabIndex = 6;
          this.btnRestoreDefaults.Text = "&Restore Defaults";
          this.btnRestoreDefaults.UseVisualStyleBackColor = true;
@@ -166,10 +181,10 @@
          // frmExclusions
          // 
          this.AcceptButton = this.btnOK;
-         this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
-         this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+         this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
+         this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
          this.CancelButton = this.btnCancel;
-         this.ClientSize = new System.Drawing.Size(694, 448);
+         this.ClientSize = new System.Drawing.Size(694, 437);
          this.Controls.Add(this.btnRestoreDefaults);
          this.Controls.Add(this.btnDelete);
          this.Controls.Add(this.btnEdit);
@@ -177,13 +192,17 @@
          this.Controls.Add(this.lstExclusions);
          this.Controls.Add(this.btnCancel);
          this.Controls.Add(this.btnOK);
-         this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
+         this.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+         this.Margin = new System.Windows.Forms.Padding(4);
          this.MaximizeBox = false;
          this.MinimizeBox = false;
+         this.MinimumSize = new System.Drawing.Size(710, 455);
          this.Name = "frmExclusions";
+         this.ShowIcon = false;
          this.ShowInTaskbar = false;
          this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
          this.Text = "Exclusions";
+         this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.frmExclusionsDisplay_FormClosing);
          this.Load += new System.EventHandler(this.frmExclusions_Load);
          this.ResumeLayout(false);
          this.PerformLayout();

@@ -39,16 +39,23 @@ namespace AstroGrep
    /// [Curtis_Beard]		10/27/2014	CHG: 88, add file extension column
    /// [Mark_Guerra]       11/06/2014  CHG: 91, exclude compiled java classes and compiled windows html help files (class,chm)
    /// [Curtis_Beard]	   04/08/2015	CHG: add logging
-   /// [Curtis_Beard]	   03/02/2015	FIX: 49, graphical glitch when using 125% dpi setting
    /// [Curtis_Beard]	   06/02/2015	CHG: move some values to AstroGrep.Common
+   /// [Curtis_Beard]	   08/18/2016	CHG: 109, allow up to 25 context lines
+   /// [LinkNet]           04/27/2017	CHG: increase minimum search panel width to avoid cutoff text with higher DPI sizes
    /// </history>
    public class Constants
    {
+      //Application default window size constants
+      /// <summary>Application default width</summary>
+      public const int WINDOW_WIDTH = 1024;
+      /// <summary>Application default height</summary>
+      public const int WINDOW_HEIGHT = 600;
+      
       // Maximum value constants
       /// <summary>Maximum number of mru paths allowed</summary>
       public const int MAX_STORED_PATHS = 25;
       /// <summary>Maximum number of context lines allowed</summary>
-      public const int MAX_CONTEXT_LINES = 10;
+      public const int MAX_CONTEXT_LINES = 25;
 
       /// <summary>Separator for search entries</summary>
       public static string SEARCH_ENTRIES_SEPARATOR = "|;;|";
@@ -77,6 +84,68 @@ namespace AstroGrep
       /// <summary>Grep Index Index</summary>
       public const int COLUMN_INDEX_GREP_INDEX  = 6;   //Must be last
 
+      // ListView column width constants
+      /// <summary>File Column Width</summary>
+      public const int COLUMN_WIDTH_FILE = 100;
+      /// <summary>Directory Column Width</summary>
+      public const int COLUMN_WIDTH_DIRECTORY = 200;
+      /// <summary>File Extension Column Width</summary>
+      public const int COLUMN_WIDTH_FILE_EXT = 110;
+      /// <summary>Date Column Width</summary>
+      public const int COLUMN_WIDTH_DATE = 140;
+      /// <summary>Size Column Width</summary>
+      public const int COLUMN_WIDTH_SIZE = 80;
+      /// <summary>Count Column Width</summary>
+      public const int COLUMN_WIDTH_COUNT = 60;
+
+      //Exclusions window default column width constants
+      /// <summary>Exclusions window default column enabled width</summary>
+      public const int EXCLUSIONS_DISPLAY_COLUMN_WIDTH_ENABLED = 75;
+      /// <summary>Exclusions window default column category width</summary>
+      public const int EXCLUSIONS_DISPLAY_COLUMN_WIDTH_CATEGORY = 120;
+      /// <summary>Exclusions window default column type width</summary>
+      public const int EXCLUSIONS_DISPLAY_COLUMN_WIDTH_TYPE = 120;
+      /// <summary>Exclusions window default column value width</summary>
+      public const int EXCLUSIONS_DISPLAY_COLUMN_WIDTH_VALUE = 160;
+      /// <summary>Exclusions window default column option width</summary>
+      public const int EXCLUSIONS_DISPLAY_COLUMN_WIDTH_OPTION = 100;
+      
+      //LogDisplay window default column width constants
+      /// <summary>LogDisplay window default column date width</summary>
+      public const int LOG_DISPLAY_COLUMN_WIDTH_DATE = 175;
+      /// <summary>LogDisplay window default column type width</summary>
+      public const int LOG_DISPLAY_COLUMN_WIDTH_TYPE = 85;
+      /// <summary>LogDisplay window default column value width</summary>
+      public const int LOG_DISPLAY_COLUMN_WIDTH_VALUE = 600;
+      /// <summary>LogDisplay window default column details width</summary>
+      public const int LOG_DISPLAY_COLUMN_WIDTH_DETAILS = 425;
+
+      //Options text editor window default column width constants 
+      /// <summary>Options text editor window default column 0 width</summary>
+      public const int OPTIONS_TEXT_EDITOR_COLUMN_0_WIDTH = 100;
+      /// <summary>Options text editor window default column 1 width</summary>
+      public const int OPTIONS_TEXT_EDITOR_COLUMN_1_WIDTH = 235;
+      /// <summary>Options text editor window default column 2 width</summary>
+      public const int OPTIONS_TEXT_EDITOR_COLUMN_2_WIDTH = 115;
+      /// <summary>Options text editor window default column 3 width</summary>
+      public const int OPTIONS_TEXT_EDITOR_COLUMN_3_WIDTH = 75;
+
+      //Options plugins window default column width constants 
+      /// <summary>Options plugins window default column 0 width</summary>
+      public const int OPTIONS_PLUGINS_COLUMN_0_WIDTH = 90;
+      /// <summary>Options plugins window default column 1 width</summary>
+      public const int OPTIONS_PLUGINS_COLUMN_1_WIDTH = 245;
+      /// <summary>Options plugins window default column 2 width</summary>
+      public const int OPTIONS_PLUGINS_COLUMN_2_WIDTH = 145;
+
+      //Options files window default column width constants 
+      /// <summary>Options files window default column 0 width</summary>
+      public const int OPTIONS_FILES_COLUMN_0_WIDTH = 75;
+      /// <summary>Options files window default column 1 width</summary>
+      public const int OPTIONS_FILES_COLUMN_1_WIDTH = 320;
+      /// <summary>Options files window default column 2 width</summary>
+      public const int OPTIONS_FILES_COLUMN_2_WIDTH = 130;
+      
       /// <summary>Identifier for all file types</summary>
       public const string ALL_FILE_TYPES = "*";
 
@@ -88,9 +157,6 @@ namespace AstroGrep
 
       /// <summary>Default search panel width</summary>
       public const int DEFAULT_SEARCH_PANEL_WIDTH = 290;
-
-      /// <summary>Default search panel width when under medium font size dpi setting</summary>
-      public const int DEFAULT_SEARCH_PANEL_WIDTH_MEDIUM_FONT = 345;
 
       /// <summary>
       /// Gets the default exclusions

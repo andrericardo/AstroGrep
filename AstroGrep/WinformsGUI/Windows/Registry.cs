@@ -350,9 +350,21 @@ namespace AstroGrep.Windows
          return false;
       }
 
+      /// <summary>
+      /// 
+      /// </summary>
+      /// <param name="path"></param>
+      /// <history>
+      /// [Curtis_Beard]      04/26/2076	PAT: 4, check for key before deleting
+      /// </history>
       private static void DeleteSetting(string path)
       {
-         Microsoft.Win32.Registry.CurrentUser.DeleteSubKeyTree(path);
+         Microsoft.Win32.RegistryKey regKey = Microsoft.Win32.Registry.CurrentUser.OpenSubKey(path, true);
+
+         if (regKey != null)
+         {
+            regKey.DeleteSubKeyTree(path);
+         }
       }
 
       private static void DeleteSetting(string path, string section)

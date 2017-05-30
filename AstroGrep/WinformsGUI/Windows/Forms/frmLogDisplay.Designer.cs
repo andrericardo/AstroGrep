@@ -46,6 +46,7 @@
          // toolStrip1
          // 
          this.toolStrip1.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
+         this.toolStrip1.ImageScalingSize = new System.Drawing.Size(17, 17);
          this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.sbtnStatus,
             this.toolStripSeparator1,
@@ -145,11 +146,12 @@
          // 
          // frmLogDisplay
          // 
-         this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
-         this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+         this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
+         this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
          this.ClientSize = new System.Drawing.Size(1011, 349);
          this.Controls.Add(this.lstLog);
          this.Controls.Add(this.toolStrip1);
+         this.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
          this.MaximizeBox = false;
          this.MinimizeBox = false;
          this.Name = "frmLogDisplay";

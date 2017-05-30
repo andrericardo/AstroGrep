@@ -6,7 +6,7 @@ using System.Text;
 namespace libAstroGrep
 {
    /// <summary>
-   /// 
+   /// Contains the information for a match within a given line.
    /// </summary>
    /// <remarks>
    /// AstroGrep File Searching Utility. Written by Theodore L. Ward

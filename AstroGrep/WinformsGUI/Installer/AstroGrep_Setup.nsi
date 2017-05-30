@@ -1,4 +1,4 @@
-﻿;--------------------------------
+;--------------------------------
 ; AstroGrep.nsi
 ;
 ; It will install AstroGrep files 
@@ -13,8 +13,8 @@
 
 !define MUI_COMPONENTSPAGE_SMALLDESC
 !define MUI_LANGDLL_ALLLANGUAGES
-!define INS_VERSION 4.4.5.0
-!define APP_VERSION "4.4.5"
+!define INS_VERSION 4.4.6.0
+!define APP_VERSION "4.4.6"
 
 ;--------------------------------
 ;Variables
@@ -94,6 +94,7 @@
 	!insertmacro MUI_LANGUAGE "Italian"
 	!insertmacro MUI_LANGUAGE "Spanish"
 	!insertmacro MUI_LANGUAGE "Polish"
+	!insertmacro MUI_LANGUAGE "French"
 	
 	LangString MessageDotNetRequires ${LANG_ENGLISH} "Microsoft .NET Framework v4.0 or newer is required."
 	LangString MessageDotNetRequires ${LANG_DANISH} "Microsoft NET Framework v4.0 eller nyere er påkrævet."
@@ -101,6 +102,7 @@
 	LangString MessageDotNetRequires ${LANG_ITALIAN} "È richiesto Microsoft NET Framework v4.0 o più recente."
 	LangString MessageDotNetRequires ${LANG_SPANISH} "Se requiere Microsoft NET Framework v4.0 o posterior."
 	LangString MessageDotNetRequires ${LANG_POLISH} "Wymagany Microsoft .NET Framework v4.0 lub nowszy."
+	LangString MessageDotNetRequires ${LANG_FRENCH} "Microsoft .NET Framework v4.0 ou plus récent est requis."
 	
 	LangString MessageDotNetChecking ${LANG_ENGLISH} "Checking for version 4.0 or newer..."
 	LangString MessageDotNetChecking ${LANG_DANISH} "Kontrol for version 4.0 eller nyere ..."
@@ -108,6 +110,7 @@
 	LangString MessageDotNetChecking ${LANG_ITALIAN} "Controllo versione 4.0 o più recente ..."
 	LangString MessageDotNetChecking ${LANG_SPANISH} "Comprobación de la versión 4.0 o más reciente ..."
 	LangString MessageDotNetChecking ${LANG_POLISH} "Sprawdzanie dostępności wersji 4.0 lub nowszej..."
+	LangString MessageDotNetChecking ${LANG_FRENCH} "Vérification de la version 4.0 ou plus récente ..."
 	
 	LangString MessageDotNetFound ${LANG_ENGLISH} "v4.0 or newer found."
 	LangString MessageDotNetFound ${LANG_DANISH} "v4.0 eller nyere fundet."
@@ -115,6 +118,7 @@
 	LangString MessageDotNetFound ${LANG_ITALIAN} "v4.0 o più recente trovato."
 	LangString MessageDotNetFound ${LANG_SPANISH} "v4.0 o más reciente encontrado."
 	LangString MessageDotNetFound ${LANG_POLISH} "Znaleziono wersję 4.0 lub nowszą."
+	LangString MessageDotNetFound ${LANG_FRENCH} "V4.0 ou plus récente."
 	
 	LangString MessageDotNetNotFound ${LANG_ENGLISH} "Microsoft .NET Framework is not installed. Downloading..."
 	LangString MessageDotNetNotFound ${LANG_DANISH} "Microsoft NET Framework er ikke installeret. Downloading..."
@@ -122,6 +126,7 @@
 	LangString MessageDotNetNotFound ${LANG_ITALIAN} "Microsoft NET Framework non è installato. Download..."
 	LangString MessageDotNetNotFound ${LANG_SPANISH} "Microsoft NET Framework no está instalado. Descarga..."
 	LangString MessageDotNetNotFound ${LANG_POLISH} "Microsoft .NET Framework nie jest zainstalowany. Pobieranie..."
+	LangString MessageDotNetNotFound ${LANG_FRENCH} "Microsoft .NET Framework n'est pas installé. Téléchargement..."
 	
 	LangString MessageDotNetDownloading ${LANG_ENGLISH} "Downloading from Microsoft..."
 	LangString MessageDotNetDownloading ${LANG_DANISH} "Downloading fra Microsoft ..."
@@ -129,6 +134,7 @@
 	LangString MessageDotNetDownloading ${LANG_ITALIAN} "Download da Microsoft ..."
 	LangString MessageDotNetDownloading ${LANG_SPANISH} "Descarga de Microsoft ..."
 	LangString MessageDotNetDownloading ${LANG_POLISH} "Pobieranie od Microsoft..."
+	LangString MessageDotNetDownloading ${LANG_FRENCH} "Téléchargement de Microsoft ..."
 	
 	LangString MessageDotNetInstalling ${LANG_ENGLISH} "Download successful, installing..."
 	LangString MessageDotNetInstalling ${LANG_DANISH} "Hente en succes, installation ..."
@@ -136,6 +142,7 @@
 	LangString MessageDotNetInstalling ${LANG_ITALIAN} "Scarica di successo, l'installazione ..."
 	LangString MessageDotNetInstalling ${LANG_SPANISH} "Descarga éxito, la instalación de ..."
 	LangString MessageDotNetInstalling ${LANG_POLISH} "Pobieranie zakończone, instalowanie..."
+	LangString MessageDotNetInstalling ${LANG_FRENCH} "Télécharger réussie, installer ..."
 	
 	LangString MessageDotNetSuccess ${LANG_ENGLISH} "Installation completed."
 	LangString MessageDotNetSuccess ${LANG_DANISH} "Installation afsluttet."
@@ -143,6 +150,7 @@
 	LangString MessageDotNetSuccess ${LANG_ITALIAN} "L'installazione completata."
 	LangString MessageDotNetSuccess ${LANG_SPANISH} "Completó la instalación."
 	LangString MessageDotNetSuccess ${LANG_POLISH} "Instalacja zakończona."
+	LangString MessageDotNetSuccess ${LANG_FRENCH} "Installation complétée."
 	
 	LangString MessageDotNetFailure ${LANG_ENGLISH} "Unable to download .NET Framework.  AstroGrep can be installed, but will not function without the Framework!"
 	LangString MessageDotNetFailure ${LANG_DANISH} "Kan ikke downloade .NET Framework. AstroGrep kan installeres, men vil ikke fungere uden ramme!"
@@ -150,6 +158,7 @@
 	LangString MessageDotNetFailure ${LANG_ITALIAN} "Impossibile scaricare .NET Framework. AstroGrep può essere installato, ma non funziona senza il quadro!"
 	LangString MessageDotNetFailure ${LANG_SPANISH} "No se puede descargar .NET Framework. AstroGrep se puede instalar, pero no funcionará sin el Marco!"
 	LangString MessageDotNetFailure ${LANG_POLISH} "Nie można pobrać .NET Framework. AstroGrep może zostać zainstalowany, ale nie będzie działać bez tej biblioteki!"
+	LangString MessageDotNetFailure ${LANG_FRENCH} "Impossible de télécharger .NET Framework. AstroGrep peut être installé, mais ne fonctionnera pas sans le Framework!"
 	
 	LangString TITLE_SecRequired ${LANG_ENGLISH} "AstroGrep (required)"
 	LangString TITLE_SecRequired ${LANG_DANISH} "AstroGrep (påkrævet)"
@@ -157,6 +166,7 @@
 	LangString TITLE_SecRequired ${LANG_ITALIAN} "AstroGrep (richiesto)"
 	LangString TITLE_SecRequired ${LANG_SPANISH} "AstroGrep (requerida)"
 	LangString TITLE_SecRequired ${LANG_POLISH} "AstroGrep (wymagane)"
+	LangString TITLE_SecRequired ${LANG_FRENCH} "AstroGrep (requis)"
 	
 	LangString DESC_SecRequired ${LANG_ENGLISH} "The AstroGrep program and its required files."
 	LangString DESC_SecRequired ${LANG_DANISH} "Det AstroGrep programmet og dets nødvendige filer."
@@ -164,6 +174,7 @@
 	LangString DESC_SecRequired ${LANG_ITALIAN} "Il programma AstroGrep ei file necessari."
 	LangString DESC_SecRequired ${LANG_SPANISH} "El programa AstroGrep y sus archivos requeridos."
 	LangString DESC_SecRequired ${LANG_POLISH} "Program AstroGrep oraz wymagane przez niego pliki."
+	LangString DESC_SecRequired ${LANG_FRENCH} "Le programme AstroGrep et ses fichiers requis."
 	
 	LangString TITLE_SecFolderSearch ${LANG_ENGLISH} "Explorer Context Menu"
 	LangString TITLE_SecFolderSearch ${LANG_DANISH} "Stifinder Context Menu"
@@ -171,6 +182,7 @@
 	LangString TITLE_SecFolderSearch ${LANG_ITALIAN} "Context Menu Explorer"
 	LangString TITLE_SecFolderSearch ${LANG_SPANISH} "Explorador de Menú contextual"
 	LangString TITLE_SecFolderSearch ${LANG_POLISH} "Menu kontekstowe Eksplorera"
+	LangString TITLE_SecFolderSearch ${LANG_FRENCH} "Menu contextuel de l'explorateur"
 	
 	LangString DESC_SecFolderSearch ${LANG_ENGLISH} "Creates a shortcut to search a folder when right-clicking them."
 	LangString DESC_SecFolderSearch ${LANG_DANISH} "Anvend sgning ved hjreklik p mapper."
@@ -178,6 +190,7 @@
 	LangString DESC_SecFolderSearch ${LANG_ITALIAN} "Aggiungi l&apos;opzione di ricerca al menu contestuale di Esplora Risorse."
 	LangString DESC_SecFolderSearch ${LANG_SPANISH} "Fijar la opcin del derecho-tecleo en carpetas."
 	LangString DESC_SecFolderSearch ${LANG_POLISH} "Tworzy skrót do przeszukiwania folderu po naciśnięciu na nim prawym klawiszem myszy."
+	LangString DESC_SecFolderSearch ${LANG_FRENCH} "Crée un raccourci pour rechercher un dossier lorsque vous cliquez avec le bouton droit de la souris."
 	
 	LangString TITLE_SecDesktopShortcut ${LANG_ENGLISH} "Desktop Shortcut"
 	LangString TITLE_SecDesktopShortcut ${LANG_DANISH} "Skrivebords Genvej."
@@ -185,6 +198,7 @@
 	LangString TITLE_SecDesktopShortcut ${LANG_ITALIAN} "Collegamenti sul desktop."
 	LangString TITLE_SecDesktopShortcut ${LANG_SPANISH} "Atajo de escritorio."
 	LangString TITLE_SecDesktopShortcut ${LANG_POLISH} "Skrót na pulpicie"
+	LangString TITLE_SecDesktopShortcut ${LANG_FRENCH} "Raccourci de bureau"
 	
 	LangString DESC_SecDesktopShortcut ${LANG_ENGLISH} "Creates a shortcut on the desktop for AstroGrep."
 	LangString DESC_SecDesktopShortcut ${LANG_DANISH} "Skrivebords Genvej."
@@ -192,6 +206,7 @@
 	LangString DESC_SecDesktopShortcut ${LANG_ITALIAN} "Collegamenti sul desktop."
 	LangString DESC_SecDesktopShortcut ${LANG_SPANISH} "Atajo de escritorio."
 	LangString DESC_SecDesktopShortcut ${LANG_POLISH} "Tworzy skrót do AstroGrep na pulpicie."
+	LangString DESC_SecDesktopShortcut ${LANG_FRENCH} "Crée un raccourci sur le bureau pour AstroGrep."
 	
 	LangString RemoveText ${LANG_ENGLISH} "Remove: "
 	LangString RemoveText ${LANG_DANISH} "Fjern: "
@@ -199,6 +214,7 @@
 	LangString RemoveText ${LANG_ITALIAN} "Rimuovere: "
 	LangString RemoveText ${LANG_SPANISH} "Eliminar: "
 	LangString RemoveText ${LANG_POLISH} "Usuń: "
+	LangString RemoveText ${LANG_FRENCH} "Retirer: "
 	
 	;If you are using solid compression, files that are required before
 	;the actual installation should be stored first in the data block,
@@ -243,6 +259,8 @@ Section $(TITLE_SecRequired) SecRequired
   File "..\bin\release\AstroGrep.AdminProcess.exe.config"
   File "..\bin\release\ICSharpCode.AvalonEdit.dll"
   File "..\bin\release\NLog.dll"
+  File "..\bin\release\astrogrep.VisualElementsManifest.xml"
+  File "..\bin\release\AstroGrep_256x256.png"
   File "license.txt"
   File "readme.txt"
   
@@ -338,6 +356,8 @@ Section "Uninstall"
 	Delete $INSTDIR\AstroGrep.Common.dll
 	Delete $INSTDIR\AstroGrep.exe.config
 	Delete $INSTDIR\AstroGrep.exe
+	Delete $INSTDIR\astrogrep.VisualElementsManifest.xml
+	Delete $INSTDIR\AstroGrep_256x256.png
 	Delete "$INSTDIR\Uninstall.exe"
 
 	; Remove directories used

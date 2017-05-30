@@ -69,9 +69,9 @@ namespace AstroGrep.Windows.Forms
          this.btnOK.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
          this.btnOK.DialogResult = System.Windows.Forms.DialogResult.OK;
          this.btnOK.FlatStyle = System.Windows.Forms.FlatStyle.System;
-         this.btnOK.Location = new System.Drawing.Point(299, 370);
+         this.btnOK.Location = new System.Drawing.Point(262, 423);
          this.btnOK.Name = "btnOK";
-         this.btnOK.Size = new System.Drawing.Size(75, 22);
+         this.btnOK.Size = new System.Drawing.Size(90, 25);
          this.btnOK.TabIndex = 14;
          this.btnOK.Text = "&OK";
          this.btnOK.Click += new System.EventHandler(this.btnOK_Click);
@@ -81,18 +81,18 @@ namespace AstroGrep.Windows.Forms
          this.btnCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
          this.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
          this.btnCancel.FlatStyle = System.Windows.Forms.FlatStyle.System;
-         this.btnCancel.Location = new System.Drawing.Point(379, 370);
+         this.btnCancel.Location = new System.Drawing.Point(357, 423);
          this.btnCancel.Name = "btnCancel";
-         this.btnCancel.Size = new System.Drawing.Size(75, 22);
+         this.btnCancel.Size = new System.Drawing.Size(90, 25);
          this.btnCancel.TabIndex = 15;
          this.btnCancel.Text = "&Cancel";
          this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
          // 
          // txtFileType
          // 
-         this.txtFileType.Location = new System.Drawing.Point(11, 24);
+         this.txtFileType.Location = new System.Drawing.Point(11, 29);
          this.txtFileType.Name = "txtFileType";
-         this.txtFileType.Size = new System.Drawing.Size(195, 20);
+         this.txtFileType.Size = new System.Drawing.Size(195, 21);
          this.txtFileType.TabIndex = 2;
          this.txtFileType.TextChanged += new System.EventHandler(this.txtFileType_TextChanged);
          // 
@@ -100,9 +100,9 @@ namespace AstroGrep.Windows.Forms
          // 
          this.lblFileType.AutoSize = true;
          this.lblFileType.FlatStyle = System.Windows.Forms.FlatStyle.System;
-         this.lblFileType.Location = new System.Drawing.Point(12, 8);
+         this.lblFileType.Location = new System.Drawing.Point(12, 10);
          this.lblFileType.Name = "lblFileType";
-         this.lblFileType.Size = new System.Drawing.Size(50, 13);
+         this.lblFileType.Size = new System.Drawing.Size(56, 15);
          this.lblFileType.TabIndex = 0;
          this.lblFileType.Text = "File Type";
          this.lblFileType.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -112,9 +112,9 @@ namespace AstroGrep.Windows.Forms
          this.lblAllTypesMessage.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
          this.lblAllTypesMessage.FlatStyle = System.Windows.Forms.FlatStyle.System;
-         this.lblAllTypesMessage.Location = new System.Drawing.Point(216, 8);
+         this.lblAllTypesMessage.Location = new System.Drawing.Point(216, 24);
          this.lblAllTypesMessage.Name = "lblAllTypesMessage";
-         this.lblAllTypesMessage.Size = new System.Drawing.Size(233, 48);
+         this.lblAllTypesMessage.Size = new System.Drawing.Size(231, 48);
          this.lblAllTypesMessage.TabIndex = 1;
          this.lblAllTypesMessage.Text = "A Text Editor can be used for all unknown types by using a * for the file type.";
          // 
@@ -122,9 +122,9 @@ namespace AstroGrep.Windows.Forms
          // 
          this.lblMultiTypes.AutoSize = true;
          this.lblMultiTypes.FlatStyle = System.Windows.Forms.FlatStyle.System;
-         this.lblMultiTypes.Location = new System.Drawing.Point(12, 47);
+         this.lblMultiTypes.Location = new System.Drawing.Point(12, 55);
          this.lblMultiTypes.Name = "lblMultiTypes";
-         this.lblMultiTypes.Size = new System.Drawing.Size(156, 13);
+         this.lblMultiTypes.Size = new System.Drawing.Size(176, 15);
          this.lblMultiTypes.TabIndex = 3;
          this.lblMultiTypes.Text = "Separate types with | character.";
          // 
@@ -140,18 +140,18 @@ namespace AstroGrep.Windows.Forms
          this.grpEditor.Controls.Add(this.txtCmdLineArgs);
          this.grpEditor.Controls.Add(this.txtTextEditorLocation);
          this.grpEditor.Controls.Add(this.btnBrowse);
-         this.grpEditor.Location = new System.Drawing.Point(12, 74);
+         this.grpEditor.Location = new System.Drawing.Point(12, 78);
          this.grpEditor.Name = "grpEditor";
-         this.grpEditor.Size = new System.Drawing.Size(435, 290);
+         this.grpEditor.Size = new System.Drawing.Size(435, 332);
          this.grpEditor.TabIndex = 4;
          this.grpEditor.TabStop = false;
          // 
          // chkUseQuotesAroundFileName
          // 
          this.chkUseQuotesAroundFileName.AutoSize = true;
-         this.chkUseQuotesAroundFileName.Location = new System.Drawing.Point(6, 174);
+         this.chkUseQuotesAroundFileName.Location = new System.Drawing.Point(6, 213);
          this.chkUseQuotesAroundFileName.Name = "chkUseQuotesAroundFileName";
-         this.chkUseQuotesAroundFileName.Size = new System.Drawing.Size(161, 17);
+         this.chkUseQuotesAroundFileName.Size = new System.Drawing.Size(184, 19);
          this.chkUseQuotesAroundFileName.TabIndex = 10;
          this.chkUseQuotesAroundFileName.Text = "Use quotes around file name";
          this.chkUseQuotesAroundFileName.UseVisualStyleBackColor = true;
@@ -161,23 +161,23 @@ namespace AstroGrep.Windows.Forms
          // 
          this.lblTabSize.AutoSize = true;
          this.lblTabSize.FlatStyle = System.Windows.Forms.FlatStyle.System;
-         this.lblTabSize.Location = new System.Drawing.Point(7, 204);
+         this.lblTabSize.Location = new System.Drawing.Point(7, 243);
          this.lblTabSize.Name = "lblTabSize";
-         this.lblTabSize.Size = new System.Drawing.Size(49, 13);
+         this.lblTabSize.Size = new System.Drawing.Size(55, 15);
          this.lblTabSize.TabIndex = 11;
          this.lblTabSize.Text = "Tab Size";
          this.lblTabSize.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
          // 
          // updwnTabSize
          // 
-         this.updwnTabSize.Location = new System.Drawing.Point(6, 222);
+         this.updwnTabSize.Location = new System.Drawing.Point(6, 263);
          this.updwnTabSize.Maximum = new decimal(new int[] {
             10,
             0,
             0,
             0});
          this.updwnTabSize.Name = "updwnTabSize";
-         this.updwnTabSize.Size = new System.Drawing.Size(90, 20);
+         this.updwnTabSize.Size = new System.Drawing.Size(90, 21);
          this.updwnTabSize.TabIndex = 12;
          // 
          // lblCmdOptions
@@ -185,9 +185,9 @@ namespace AstroGrep.Windows.Forms
          this.lblCmdOptions.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
          this.lblCmdOptions.FlatStyle = System.Windows.Forms.FlatStyle.System;
-         this.lblCmdOptions.Location = new System.Drawing.Point(7, 63);
+         this.lblCmdOptions.Location = new System.Drawing.Point(7, 70);
          this.lblCmdOptions.Name = "lblCmdOptions";
-         this.lblCmdOptions.Size = new System.Drawing.Size(419, 64);
+         this.lblCmdOptions.Size = new System.Drawing.Size(419, 80);
          this.lblCmdOptions.TabIndex = 7;
          this.lblCmdOptions.Text = "Command Line Options:";
          // 
@@ -195,9 +195,9 @@ namespace AstroGrep.Windows.Forms
          // 
          this.lblTextEditorLocation.AutoSize = true;
          this.lblTextEditorLocation.FlatStyle = System.Windows.Forms.FlatStyle.System;
-         this.lblTextEditorLocation.Location = new System.Drawing.Point(7, 16);
+         this.lblTextEditorLocation.Location = new System.Drawing.Point(7, 15);
          this.lblTextEditorLocation.Name = "lblTextEditorLocation";
-         this.lblTextEditorLocation.Size = new System.Drawing.Size(102, 13);
+         this.lblTextEditorLocation.Size = new System.Drawing.Size(115, 15);
          this.lblTextEditorLocation.TabIndex = 5;
          this.lblTextEditorLocation.Text = "Text Editor Location";
          this.lblTextEditorLocation.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -208,9 +208,9 @@ namespace AstroGrep.Windows.Forms
             | System.Windows.Forms.AnchorStyles.Right)));
          this.lblCmdOptionsView.AutoSize = true;
          this.lblCmdOptionsView.FlatStyle = System.Windows.Forms.FlatStyle.System;
-         this.lblCmdOptionsView.Location = new System.Drawing.Point(7, 261);
+         this.lblCmdOptionsView.Location = new System.Drawing.Point(7, 299);
          this.lblCmdOptionsView.Name = "lblCmdOptionsView";
-         this.lblCmdOptionsView.Size = new System.Drawing.Size(48, 13);
+         this.lblCmdOptionsView.Size = new System.Drawing.Size(53, 15);
          this.lblCmdOptionsView.TabIndex = 13;
          this.lblCmdOptionsView.Text = "Preview:";
          this.lblCmdOptionsView.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -219,9 +219,9 @@ namespace AstroGrep.Windows.Forms
          // 
          this.lblCmdLineArgs.AutoSize = true;
          this.lblCmdLineArgs.FlatStyle = System.Windows.Forms.FlatStyle.System;
-         this.lblCmdLineArgs.Location = new System.Drawing.Point(6, 132);
+         this.lblCmdLineArgs.Location = new System.Drawing.Point(6, 163);
          this.lblCmdLineArgs.Name = "lblCmdLineArgs";
-         this.lblCmdLineArgs.Size = new System.Drawing.Size(77, 13);
+         this.lblCmdLineArgs.Size = new System.Drawing.Size(92, 15);
          this.lblCmdLineArgs.TabIndex = 8;
          this.lblCmdLineArgs.Text = "Command Line";
          this.lblCmdLineArgs.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -230,9 +230,9 @@ namespace AstroGrep.Windows.Forms
          // 
          this.txtCmdLineArgs.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-         this.txtCmdLineArgs.Location = new System.Drawing.Point(6, 148);
+         this.txtCmdLineArgs.Location = new System.Drawing.Point(6, 183);
          this.txtCmdLineArgs.Name = "txtCmdLineArgs";
-         this.txtCmdLineArgs.Size = new System.Drawing.Size(416, 20);
+         this.txtCmdLineArgs.Size = new System.Drawing.Size(416, 21);
          this.txtCmdLineArgs.TabIndex = 9;
          this.txtCmdLineArgs.TextChanged += new System.EventHandler(this.txtCmdLineArgs_TextChanged);
          // 
@@ -242,7 +242,7 @@ namespace AstroGrep.Windows.Forms
             | System.Windows.Forms.AnchorStyles.Right)));
          this.txtTextEditorLocation.Location = new System.Drawing.Point(6, 34);
          this.txtTextEditorLocation.Name = "txtTextEditorLocation";
-         this.txtTextEditorLocation.Size = new System.Drawing.Size(387, 20);
+         this.txtTextEditorLocation.Size = new System.Drawing.Size(382, 21);
          this.txtTextEditorLocation.TabIndex = 6;
          this.txtTextEditorLocation.TextChanged += new System.EventHandler(this.txtTextEditorLocation_TextChanged);
          // 
@@ -251,9 +251,10 @@ namespace AstroGrep.Windows.Forms
          this.btnBrowse.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
          this.btnBrowse.Cursor = System.Windows.Forms.Cursors.Hand;
          this.btnBrowse.Image = ((System.Drawing.Image)(resources.GetObject("btnBrowse.Image")));
-         this.btnBrowse.Location = new System.Drawing.Point(405, 36);
+         this.btnBrowse.Location = new System.Drawing.Point(402, 35);
          this.btnBrowse.Name = "btnBrowse";
          this.btnBrowse.Size = new System.Drawing.Size(16, 16);
+         this.btnBrowse.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
          this.btnBrowse.TabIndex = 10;
          this.btnBrowse.TabStop = false;
          this.btnBrowse.Click += new System.EventHandler(this.btnBrowse_Click);
@@ -261,16 +262,18 @@ namespace AstroGrep.Windows.Forms
          // frmAddEditTextEditor
          // 
          this.AcceptButton = this.btnOK;
-         this.AutoScaleBaseSize = new System.Drawing.Size(5, 13);
+         this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
+         this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
          this.CancelButton = this.btnCancel;
-         this.ClientSize = new System.Drawing.Size(459, 399);
+         this.ClientSize = new System.Drawing.Size(459, 463);
+         this.Controls.Add(this.lblAllTypesMessage);
          this.Controls.Add(this.grpEditor);
          this.Controls.Add(this.lblMultiTypes);
-         this.Controls.Add(this.lblAllTypesMessage);
          this.Controls.Add(this.lblFileType);
          this.Controls.Add(this.txtFileType);
          this.Controls.Add(this.btnCancel);
          this.Controls.Add(this.btnOK);
+         this.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
          this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
          this.MaximizeBox = false;
          this.MinimizeBox = false;

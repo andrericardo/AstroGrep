@@ -35,7 +35,7 @@ namespace AstroGrep.Windows.Forms
    /// <history>
    /// [Curtis_Beard]	   09/26/2012	ADD: 3572487, display command line flags
    /// </history>
-   public partial class frmCommandLine : Form
+   public partial class frmCommandLine : BaseForm
    {
       /// <summary>
       /// Creates an instance of the frmCommandLine class.

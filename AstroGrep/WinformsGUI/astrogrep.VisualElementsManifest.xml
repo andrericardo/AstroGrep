@@ -1,0 +1,8 @@
+<Application xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'>
+  <VisualElements
+      ShowNameOnSquare150x150Logo='on'
+      Square150x150Logo='AstroGrep_256x256.png'
+      Square70x70Logo='AstroGrep_256x256.png'
+      ForegroundText='light'
+      BackgroundColor='#fb7f06'/>
+</Application>

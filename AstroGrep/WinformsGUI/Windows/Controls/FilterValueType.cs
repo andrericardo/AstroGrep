@@ -92,13 +92,14 @@ namespace AstroGrep.Windows.Controls
       /// </summary>
       /// <history>
       /// [Curtis_Beard]	   11/11/2014	Initial
+      /// [Curtis_Beard]	   08/16/2016	CHG: 107, allow time selection
       /// </history>
-      private void ResetControls()
+      public void ResetControls()
       {
-         dtpValue.Left = txtValue.Left = numValue.Left = pnlSize.Left = 0;
-         dtpValue.Top = txtValue.Top = numValue.Top = pnlSize.Top = 0;
-         dtpValue.Width = txtValue.Width = numValue.Width = pnlSize.Width = this.Width;
-         dtpValue.Height = txtValue.Height = numValue.Height = pnlSize.Height = this.Width;
+         pnlDateTime.Left = txtValue.Left = numValue.Left = pnlSize.Left = 0;
+         pnlDateTime.Top = txtValue.Top = numValue.Top = pnlSize.Top = 0;
+         pnlDateTime.Width = txtValue.Width = numValue.Width = pnlSize.Width = this.Width;
+         pnlDateTime.Height = txtValue.Height = numValue.Height = pnlSize.Height = this.Height;
       }
 
       /// <summary>
@@ -107,6 +108,7 @@ namespace AstroGrep.Windows.Controls
       /// <param name="viewType">The view type to be displayed</param>
       /// <history>
       /// [Curtis_Beard]	   11/11/2014	Initial
+      /// [Curtis_Beard]	   08/16/2016	CHG: 107, allow time selection 
       /// </history>
       public void SetViewType(ViewTypes viewType)
       {
@@ -115,28 +117,28 @@ namespace AstroGrep.Windows.Controls
          switch (currentViewType)
          {
             case ViewTypes.DateTime:
-               dtpValue.Visible = true;
+               pnlDateTime.Visible = true;
                txtValue.Visible = false;
                numValue.Visible = false;
                pnlSize.Visible = false;
                break;
 
             case ViewTypes.String:
-               dtpValue.Visible = false;
+               pnlDateTime.Visible = false;
                txtValue.Visible = true;
                numValue.Visible = false;
                pnlSize.Visible = false;
                break;
 
             case ViewTypes.Numeric:
-               dtpValue.Visible = false;
+               pnlDateTime.Visible = false;
                txtValue.Visible = false;
                numValue.Visible = true;
                pnlSize.Visible = false;
                break;
 
             case ViewTypes.Size:
-               dtpValue.Visible = false;
+               pnlDateTime.Visible = false;
                txtValue.Visible = false;
                numValue.Visible = false;
                pnlSize.Visible = true;
@@ -149,10 +151,13 @@ namespace AstroGrep.Windows.Controls
       /// </summary>
       /// <history>
       /// [Curtis_Beard]	   11/11/2014	Initial
+      /// [Curtis_Beard]	   08/16/2016	CHG: 107, allow time selection
       /// </history>
       public void ResetValue()
       {
-         dtpValue.Value = DateTime.Now;
+         var nowDateTime = DateTime.Now;
+         dtpValue.Value = nowDateTime;
+         dtpTimeValue.Value = nowDateTime;
          txtValue.Text = string.Empty;
          numValue.Value = 0;
          numSize.Value = 0;
@@ -188,6 +193,7 @@ namespace AstroGrep.Windows.Controls
       /// </summary>
       /// <history>
       /// [Curtis_Beard]	   11/11/2014	Initial
+      /// [Curtis_Beard]	   08/16/2016	CHG: 107, allow time selection 
       /// </history>
       public string Value
       {
@@ -196,7 +202,7 @@ namespace AstroGrep.Windows.Controls
             switch (currentViewType)
             {
                case ViewTypes.DateTime:
-                  return dtpValue.Value.ToString();
+                  return string.Format("{0} {1}", dtpValue.Value.ToShortDateString(), dtpTimeValue.Value.ToLongTimeString());
 
                case ViewTypes.Numeric:
                   return numValue.Value.ToString();
@@ -215,7 +221,9 @@ namespace AstroGrep.Windows.Controls
             switch (currentViewType)
             {
                case ViewTypes.DateTime:
-                  dtpValue.Value = DateTime.Parse(value);
+                  var valueDateTime = DateTime.Parse(value);
+                  dtpValue.Value = valueDateTime;
+                  dtpTimeValue.Value = valueDateTime;
                   break;
 
                case ViewTypes.Numeric:

@@ -60,10 +60,11 @@ namespace AstroGrep.Windows
 
             // load our internally defined languages
             internalLanguages.Add(new LanguageItem("English", "en-us"));
-            internalLanguages.Add(new LanguageItem("Español", "es-mx"));
+            internalLanguages.Add(new LanguageItem("Français", "fr-fr"));
+            internalLanguages.Add(new LanguageItem("Español", "es-es"));
             internalLanguages.Add(new LanguageItem("Deutsch", "de-de"));
             internalLanguages.Add(new LanguageItem("Italiano", "it-it"));
-            internalLanguages.Add(new LanguageItem("Danish", "da-dk"));
+            internalLanguages.Add(new LanguageItem("Dansk", "da-dk"));
             internalLanguages.Add(new LanguageItem("Polski", "pl-pl"));
          }
       }
@@ -73,11 +74,12 @@ namespace AstroGrep.Windows
       /// <summary>
       /// Loads the given language's file.
       /// </summary>
-      /// <param name="language">String containing language</param>
+      /// <param name="culture">String containing current cultrue to load</param>
       /// <history>
       /// [Curtis_Beard]		07/31/2006	Created
       /// [Curtis_Beard]		10/11/2006	CHG: Close stream
       /// [Curtis_Beard]		06/15/205	CHG: 57, support external language files
+      /// [LinkNet]				04/24/2017	CHG: Remove unused "language" parameter name
       /// </history>
       public static void Load(string culture)
       {
@@ -257,6 +259,73 @@ namespace AstroGrep.Windows
 
          return string.Empty;
       }
+
+      /// <summary>
+      /// Retrieve the control's tooltip text value in the loaded language file.
+      /// </summary>
+      /// <param name="control">Control to set</param>
+      /// <returns>value of control's tooltip text in language file</returns>
+      /// <history>
+      /// [Curtis_Beard]		08/16/2016	Created
+      /// </history>
+      public static string GetControlToolTipText(Control control)
+      {
+         if (__RootNode != null)
+         {
+            string formName = control.FindForm().Name;
+            XmlNode node = __RootNode.SelectSingleNode("screen[@name='" + formName + "']");
+            XmlNode controlNode;
+
+            if (node != null)
+            {
+               //node found, find control
+               controlNode = node.SelectSingleNode("control[@name='" + control.Name + "']");
+
+               if (controlNode != null)
+               {
+                  //text
+                  if (controlNode.Attributes["tooltip"] != null)
+                     return controlNode.Attributes["tooltip"].Value;
+               }
+            }
+         }
+
+         return string.Empty;
+      }
+
+      /// <summary>
+      /// Retrieve the control's tooltip text value in the loaded language file.
+      /// </summary>
+      /// <param name="control">Control to set</param>
+      /// <returns>value of control's tooltip text in language file</returns>
+      /// <history>
+      /// [Curtis_Beard]		08/16/2016	Created
+      /// </history>
+      public static string GetControlToolTipText(ToolStripItem control)
+      {
+         if (__RootNode != null)
+         {
+            string formName = control.Owner.FindForm().Name;
+            XmlNode node = __RootNode.SelectSingleNode("screen[@name='" + formName + "']");
+            XmlNode controlNode;
+
+            if (node != null)
+            {
+               //node found, find control
+               controlNode = node.SelectSingleNode("control[@name='" + control.Name + "']");
+
+               if (controlNode != null)
+               {
+                  //text
+                  if (controlNode.Attributes["tooltip"] != null)
+                     return controlNode.Attributes["tooltip"].Value;
+               }
+            }
+         }
+
+         return string.Empty;
+      }
+
 
       /// <summary>
       /// Sets the given context menuitem's text property.
@@ -1133,6 +1202,7 @@ namespace AstroGrep.Windows
       /// <param name="displayName">Display name</param>
       /// <param name="culture">Culture string</param>
       /// <param name="isExternal">Language is from external file</param>
+      /// <param name="filePath">File path to language file</param>
       /// <history>
       /// [Curtis_Beard]		06/15/2015	CHG: 57, support external language files
       /// </history>

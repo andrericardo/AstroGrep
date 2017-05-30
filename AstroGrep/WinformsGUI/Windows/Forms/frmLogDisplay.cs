@@ -39,7 +39,7 @@ namespace AstroGrep.Windows.Forms
    /// <history>
    /// [Curtis_Beard]	   12/06/2012	ADD: 1741735, initial dialog for filterable log items viewer.
    /// </history>
-   public partial class frmLogDisplay : Form
+   public partial class frmLogDisplay : BaseForm
    {
       /// <summary>
       /// Collection of messages to display
@@ -116,10 +116,26 @@ namespace AstroGrep.Windows.Forms
          lstLog.Columns[3].Text = Language.GetGenericText("LogDisplay.Column.Details", "Details");
 
          // set column widths from user settings
-         lstLog.Columns[0].Width = Core.GeneralSettings.LogDisplayColumnDateWidth;
-         lstLog.Columns[1].Width = Core.GeneralSettings.LogDisplayColumnTypeWidth;
-         lstLog.Columns[2].Width = Core.GeneralSettings.LogDisplayColumnValueWidth;
-         lstLog.Columns[3].Width = Core.GeneralSettings.LogDisplayColumnDetailsWidth;
+
+         if ((GeneralSettings.LogDisplayColumnDateWidth != -1) && GeneralSettings.LogDisplaySavePosition)
+            lstLog.Columns[0].Width = GeneralSettings.LogDisplayColumnDateWidth;
+         else
+            lstLog.Columns[0].Width = Constants.LOG_DISPLAY_COLUMN_WIDTH_DATE * GeneralSettings.WindowsDPIPerCentSetting / 100;
+
+         if ((GeneralSettings.LogDisplayColumnTypeWidth != -1) && GeneralSettings.LogDisplaySavePosition)
+            lstLog.Columns[1].Width = GeneralSettings.LogDisplayColumnTypeWidth;
+         else
+            lstLog.Columns[1].Width = Constants.LOG_DISPLAY_COLUMN_WIDTH_TYPE * GeneralSettings.WindowsDPIPerCentSetting / 100;
+
+         if ((GeneralSettings.LogDisplayColumnValueWidth != -1) && GeneralSettings.LogDisplaySavePosition)
+            lstLog.Columns[2].Width = GeneralSettings.LogDisplayColumnValueWidth;
+         else
+            lstLog.Columns[2].Width = Constants.LOG_DISPLAY_COLUMN_WIDTH_VALUE * GeneralSettings.WindowsDPIPerCentSetting / 100;
+
+         if ((GeneralSettings.LogDisplayColumnDetailsWidth != -1) && GeneralSettings.LogDisplaySavePosition)
+            lstLog.Columns[3].Width = GeneralSettings.LogDisplayColumnDetailsWidth;
+         else
+            lstLog.Columns[3].Width = Constants.LOG_DISPLAY_COLUMN_WIDTH_DETAILS * GeneralSettings.WindowsDPIPerCentSetting / 100;
 
          // do counts after Language.ProcessForm to get language specific text.
          sbtnStatus.Text = string.Format("{0} ({1})", sbtnStatus.Text, LogItems.FindAll(l=>l.ItemType == LogItem.LogItemTypes.Status).Count);
@@ -205,12 +221,23 @@ namespace AstroGrep.Windows.Forms
                foreach (ListViewItem lvi in lstLog.SelectedItems)
                {
                   data.Append(lvi.Text);
-                  data.Append(", ");
-                  data.Append(lvi.SubItems[1].Text);
-                  data.Append(", ");
-                  data.Append(lvi.SubItems[2].Text);
-                  data.Append(", ");
-                  data.Append(lvi.SubItems[3].Text);
+                  if (!string.IsNullOrEmpty(lvi.SubItems[1].Text))
+                  {
+                     data.Append(", ");
+                     data.Append(lvi.SubItems[1].Text);
+                  }
+
+                  if (!string.IsNullOrEmpty(lvi.SubItems[2].Text))
+                  {
+                     data.Append(", ");
+                     data.Append(lvi.SubItems[2].Text);
+                  }
+
+                  if (!string.IsNullOrEmpty(lvi.SubItems[3].Text))
+                  {
+                     data.Append(", ");
+                     data.Append(lvi.SubItems[3].Text);
+                  }
 
                   data.Append(Environment.NewLine);
                }
@@ -480,17 +507,17 @@ namespace AstroGrep.Windows.Forms
       /// </history>
       private void frmLogDisplay_FormClosing(object sender, FormClosingEventArgs e)
       {
-         Core.GeneralSettings.LogDisplayColumnDateWidth = lstLog.Columns[0].Width;
-         Core.GeneralSettings.LogDisplayColumnTypeWidth = lstLog.Columns[1].Width;
-         Core.GeneralSettings.LogDisplayColumnValueWidth = lstLog.Columns[2].Width;
-         Core.GeneralSettings.LogDisplayColumnDetailsWidth = lstLog.Columns[3].Width;
-
-         if (Core.GeneralSettings.LogDisplaySavePosition)
+         if (GeneralSettings.LogDisplaySavePosition)
          {
-            Core.GeneralSettings.LogDisplayTop = this.Top;
-            Core.GeneralSettings.LogDisplayLeft = this.Left;
-            Core.GeneralSettings.LogDisplayWidth = this.Width;
-            Core.GeneralSettings.LogDisplayHeight = this.Height;
+            GeneralSettings.LogDisplayTop = this.Top;
+            GeneralSettings.LogDisplayLeft = this.Left;
+            GeneralSettings.LogDisplayWidth = this.Width;
+            GeneralSettings.LogDisplayHeight = this.Height;
+
+            GeneralSettings.LogDisplayColumnDateWidth = lstLog.Columns[0].Width;
+            GeneralSettings.LogDisplayColumnTypeWidth = lstLog.Columns[1].Width;
+            GeneralSettings.LogDisplayColumnValueWidth = lstLog.Columns[2].Width;
+            GeneralSettings.LogDisplayColumnDetailsWidth = lstLog.Columns[3].Width;
          }
       }
    }

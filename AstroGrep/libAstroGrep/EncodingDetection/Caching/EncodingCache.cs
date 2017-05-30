@@ -107,6 +107,22 @@ namespace libAstroGrep.EncodingDetection.Caching
       }
 
       /// <summary>
+      /// Removes an EncodingCacheItem from the cache for the given key.
+      /// </summary>
+      /// <param name="key">Unique key</param>
+      /// <history>
+      /// [LinkNet]           05/25/2017	ADD: 97, Remove cache item for case when file encoding may have changed 
+      /// </history>
+      public void RemoveItem(string key)
+      {
+         if (cache.ContainsKey(key))
+         {
+            // Remove it from current position
+            lruList.Remove(key);
+         }
+      }
+
+      /// <summary>
       /// Sets an EncodingCacheItem in the cache for the given key.
       /// </summary>
       /// <param name="key">Unique key</param>

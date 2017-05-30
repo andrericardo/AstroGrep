@@ -17,7 +17,7 @@ namespace AstroGrep.Windows.Forms
    /// <summary>
    /// 
    /// </summary>
-   public partial class frmCheckForUpdate : Form
+   public partial class frmCheckForUpdate : BaseForm
    {
       private delegate void UpdateMessageCallBack(string message, string newestVersion);
       private delegate void ChangeLogCallBack(string changelog);
