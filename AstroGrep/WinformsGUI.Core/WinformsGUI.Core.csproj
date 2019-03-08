@@ -1,0 +1,33 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>netcoreapp3.0</TargetFramework>
+    <UseWindowsForms>true</UseWindowsForms>
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AvalonEdit">
+      <Version>5.0.2</Version>
+    </PackageReference>
+    <PackageReference Include="NLog">
+      <Version>4.2.3</Version>
+    </PackageReference>
+  </ItemGroup>
+  
+  <ItemGroup>
+    <Compile Include="..\WinformsGUI\**\*.cs" />
+    <EmbeddedResource Include="..\WinformsGUI\**\*.resx" />
+  </ItemGroup>
+  
+  <ItemGroup>
+    <Compile Remove="..\WinformsGUI\Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  
+  <ItemGroup>
+    <ProjectReference Include="..\AstroGrep.Common\AstroGrep.Common.csproj" />
+    <ProjectReference Include="..\libAstroGrep\libAstroGrep.csproj" />
+  </ItemGroup>
+
+</Project>
