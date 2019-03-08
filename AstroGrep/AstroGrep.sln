@@ -1,14 +1,14 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2013
-VisualStudioVersion = 12.0.40629.0
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.28705.295
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AstroGrep", "WinformsGUI\AstroGrep.csproj", "{583FF22B-9586-4543-B4B4-747E06C963ED}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AstroGrep", "WinformsGUI\AstroGrep.csproj", "{583FF22B-9586-4543-B4B4-747E06C963ED}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "libAstroGrep", "libAstroGrep\libAstroGrep.csproj", "{03EDAD50-4218-41D4-AEA8-5D072253EA17}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "libAstroGrep", "libAstroGrep\libAstroGrep.csproj", "{03EDAD50-4218-41D4-AEA8-5D072253EA17}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AdminProcess", "AdminProcess\AdminProcess.csproj", "{E2E4F8BE-6181-46B2-B79C-1ED7EBF2BDC1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AdminProcess", "AdminProcess\AdminProcess.csproj", "{E2E4F8BE-6181-46B2-B79C-1ED7EBF2BDC1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AstroGrep.Common", "AstroGrep.Common\AstroGrep.Common.csproj", "{9A78B1C9-9260-412D-BB93-143289831B38}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AstroGrep.Common", "AstroGrep.Common\AstroGrep.Common.csproj", "{9A78B1C9-9260-412D-BB93-143289831B38}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Common Assembly", "Common Assembly", "{BCF177E7-F3B5-4404-8480-F54C5F68D1CE}"
 	ProjectSection(SolutionItems) = preProject
@@ -25,30 +25,33 @@ Global
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{583FF22B-9586-4543-B4B4-747E06C963ED}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{583FF22B-9586-4543-B4B4-747E06C963ED}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{583FF22B-9586-4543-B4B4-747E06C963ED}.Portable|Any CPU.ActiveCfg = Portable|Any CPU
-		{583FF22B-9586-4543-B4B4-747E06C963ED}.Portable|Any CPU.Build.0 = Portable|Any CPU
+		{583FF22B-9586-4543-B4B4-747E06C963ED}.Portable|Any CPU.ActiveCfg = Release|Any CPU
+		{583FF22B-9586-4543-B4B4-747E06C963ED}.Portable|Any CPU.Build.0 = Release|Any CPU
 		{583FF22B-9586-4543-B4B4-747E06C963ED}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{583FF22B-9586-4543-B4B4-747E06C963ED}.Release|Any CPU.Build.0 = Release|Any CPU
 		{03EDAD50-4218-41D4-AEA8-5D072253EA17}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{03EDAD50-4218-41D4-AEA8-5D072253EA17}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{03EDAD50-4218-41D4-AEA8-5D072253EA17}.Portable|Any CPU.ActiveCfg = Portable|Any CPU
-		{03EDAD50-4218-41D4-AEA8-5D072253EA17}.Portable|Any CPU.Build.0 = Portable|Any CPU
+		{03EDAD50-4218-41D4-AEA8-5D072253EA17}.Portable|Any CPU.ActiveCfg = Release|Any CPU
+		{03EDAD50-4218-41D4-AEA8-5D072253EA17}.Portable|Any CPU.Build.0 = Release|Any CPU
 		{03EDAD50-4218-41D4-AEA8-5D072253EA17}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{03EDAD50-4218-41D4-AEA8-5D072253EA17}.Release|Any CPU.Build.0 = Release|Any CPU
 		{E2E4F8BE-6181-46B2-B79C-1ED7EBF2BDC1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{E2E4F8BE-6181-46B2-B79C-1ED7EBF2BDC1}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{E2E4F8BE-6181-46B2-B79C-1ED7EBF2BDC1}.Portable|Any CPU.ActiveCfg = Portable|Any CPU
-		{E2E4F8BE-6181-46B2-B79C-1ED7EBF2BDC1}.Portable|Any CPU.Build.0 = Portable|Any CPU
+		{E2E4F8BE-6181-46B2-B79C-1ED7EBF2BDC1}.Portable|Any CPU.ActiveCfg = Release|Any CPU
+		{E2E4F8BE-6181-46B2-B79C-1ED7EBF2BDC1}.Portable|Any CPU.Build.0 = Release|Any CPU
 		{E2E4F8BE-6181-46B2-B79C-1ED7EBF2BDC1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E2E4F8BE-6181-46B2-B79C-1ED7EBF2BDC1}.Release|Any CPU.Build.0 = Release|Any CPU
 		{9A78B1C9-9260-412D-BB93-143289831B38}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{9A78B1C9-9260-412D-BB93-143289831B38}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{9A78B1C9-9260-412D-BB93-143289831B38}.Portable|Any CPU.ActiveCfg = Portable|Any CPU
-		{9A78B1C9-9260-412D-BB93-143289831B38}.Portable|Any CPU.Build.0 = Portable|Any CPU
+		{9A78B1C9-9260-412D-BB93-143289831B38}.Portable|Any CPU.ActiveCfg = Release|Any CPU
+		{9A78B1C9-9260-412D-BB93-143289831B38}.Portable|Any CPU.Build.0 = Release|Any CPU
 		{9A78B1C9-9260-412D-BB93-143289831B38}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9A78B1C9-9260-412D-BB93-143289831B38}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {14C3097D-4DC0-44EE-97E7-A072427B398F}
 	EndGlobalSection
 EndGlobal
