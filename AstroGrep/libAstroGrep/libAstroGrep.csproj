@@ -39,4 +39,9 @@
     <Compile Remove="AssemblyInfo.cs" />
     <Compile Remove="IFileFilterSpec.cs" />
   </ItemGroup>
+  <ItemGroup Condition="'$(TargetFramework)' == 'netcoreapp3.0'">
+    <PackageReference Include="Microsoft.NETCore.App">
+      <Version>3.0.0-preview3-27503-5</Version>
+    </PackageReference>
+  </ItemGroup>
 </Project>
