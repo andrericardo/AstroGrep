@@ -12,7 +12,7 @@
       <Version>5.0.2</Version>
     </PackageReference>
     <PackageReference Include="NLog">
-      <Version>4.2.3</Version>
+      <Version>4.5.11</Version>
     </PackageReference>
   </ItemGroup>
   
