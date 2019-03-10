@@ -8,6 +8,8 @@
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
   </PropertyGroup>
 
+  <Import Sdk="Microsoft.NET.Sdk.WindowsDesktop" Project="Sdk.targets" Condition="'$(TargetFramework)'=='netcoreapp3.0'"/>
+
   <ItemGroup>
     <PackageReference Include="AvalonEdit">
       <Version>5.0.2</Version>
