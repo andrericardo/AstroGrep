@@ -1,5 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
 
+  <Import Project="Sdk.props" Sdk="Microsoft.NET.Sdk" Condition="'$(TargetFramework)' != 'netcoreapp3.0'" />
   <Import Project="Sdk.props" Sdk="Microsoft.NET.Sdk.WindowsDesktop" Condition="'$(TargetFramework)' == 'netcoreapp3.0'" />
 
   <PropertyGroup>
@@ -10,7 +11,9 @@
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
   </PropertyGroup>
 
+ <Import Project="Sdk.targets" Sdk="Microsoft.NET.Sdk" Condition="'$(TargetFramework)' != 'netcoreapp3.0'" />
  <Import Project="Sdk.targets" Sdk="Microsoft.NET.Sdk.WindowsDesktop" Condition="'$(TargetFramework)' == 'netcoreapp3.0'" />
+
   <ItemGroup>
     <PackageReference Include="AvalonEdit">
       <Version>5.0.2</Version>
