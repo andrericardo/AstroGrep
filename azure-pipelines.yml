@@ -7,7 +7,7 @@ trigger:
 - master
 
 pool:
-  vmImage: 'VS2017-Win2016'
+  vmImage: 'windows-2019'
 
 variables:
   solution: 'AstroGrep/AstroGrep.sln'
@@ -16,6 +16,10 @@ variables:
 
 steps:
 - task: NuGetToolInstaller@0
+
+- task: DotNetCoreInstaller@0
+  inputs:
+    version: '3.0.100-preview6-012264'
 
 - task: NuGetCommand@2
   inputs:

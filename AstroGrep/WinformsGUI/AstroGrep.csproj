@@ -1,31 +1,19 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <ProjectType>Local</ProjectType>
     <ProductVersion>9.0.21022</ProductVersion>
-    <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{583FF22B-9586-4543-B4B4-747E06C963ED}</ProjectGuid>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ApplicationIcon>Images\AstroGrep_Icon_256x256.ico</ApplicationIcon>
-    <AssemblyKeyContainerName>
-    </AssemblyKeyContainerName>
-    <AssemblyName>AstroGrep</AssemblyName>
-    <AssemblyOriginatorKeyFile>
-    </AssemblyOriginatorKeyFile>
+    <AssemblyKeyContainerName />
+    <AssemblyOriginatorKeyFile />
     <DefaultClientScript>JScript</DefaultClientScript>
     <DefaultHTMLPageLayout>Grid</DefaultHTMLPageLayout>
     <DefaultTargetSchema>IE50</DefaultTargetSchema>
-    <DelaySign>false</DelaySign>
     <OutputType>WinExe</OutputType>
-    <RootNamespace>AstroGrep</RootNamespace>
     <RunPostBuildEvent>OnBuildSuccess</RunPostBuildEvent>
     <StartupObject>AstroGrep.Windows.Program</StartupObject>
-    <FileUpgradeFlags>
-    </FileUpgradeFlags>
+    <FileUpgradeFlags />
     <OldToolsVersion>3.5</OldToolsVersion>
-    <UpgradeBackupLocation>
-    </UpgradeBackupLocation>
+    <UpgradeBackupLocation />
     <PublishUrl>publish\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Disk</InstallFrom>
@@ -41,268 +29,149 @@
     <IsWebBootstrapper>false</IsWebBootstrapper>
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
-    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
-    <TargetFrameworkProfile />
+    <TargetFramework>net472</TargetFramework>
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    <FileAlignment>4096</FileAlignment>
+    <BaseAddress>285212672</BaseAddress>
+    <OutputPath>bin\$(Configuration)\</OutputPath>
+    <PreBuildEvent />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <OutputPath>bin\Debug\</OutputPath>
-    <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
-    <BaseAddress>285212672</BaseAddress>
-    <CheckForOverflowUnderflow>false</CheckForOverflowUnderflow>
-    <ConfigurationOverrideFile>
-    </ConfigurationOverrideFile>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <DocumentationFile>
-    </DocumentationFile>
-    <DebugSymbols>true</DebugSymbols>
-    <FileAlignment>4096</FileAlignment>
+    <ConfigurationOverrideFile />
+    <DocumentationFile />
     <NoStdLib>false</NoStdLib>
-    <NoWarn>
-    </NoWarn>
-    <Optimize>false</Optimize>
+    <NoWarn />
     <RegisterForComInterop>false</RegisterForComInterop>
     <RemoveIntegerChecks>false</RemoveIntegerChecks>
-    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
-    <WarningLevel>4</WarningLevel>
     <DebugType>full</DebugType>
-    <ErrorReport>prompt</ErrorReport>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <OutputPath>bin\Release\</OutputPath>
-    <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
-    <BaseAddress>285212672</BaseAddress>
-    <CheckForOverflowUnderflow>false</CheckForOverflowUnderflow>
-    <ConfigurationOverrideFile>
-    </ConfigurationOverrideFile>
-    <DefineConstants>TRACE</DefineConstants>
-    <DocumentationFile>bin\Release\AstroGrep.xml</DocumentationFile>
-    <DebugSymbols>false</DebugSymbols>
-    <FileAlignment>4096</FileAlignment>
+    <ConfigurationOverrideFile />
+    <DocumentationFile>bin\$(Configuration)\AstroGrep.xml</DocumentationFile>
     <NoStdLib>false</NoStdLib>
-    <NoWarn>
-    </NoWarn>
-    <Optimize>true</Optimize>
+    <NoWarn />
     <RegisterForComInterop>false</RegisterForComInterop>
     <RemoveIntegerChecks>false</RemoveIntegerChecks>
-    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
-    <WarningLevel>4</WarningLevel>
     <DebugType>none</DebugType>
-    <ErrorReport>prompt</ErrorReport>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Portable|AnyCPU'">
-    <OutputPath>bin\Portable\</OutputPath>
     <DefineConstants>TRACE;PORTABLE</DefineConstants>
-    <BaseAddress>285212672</BaseAddress>
     <DocumentationFile>bin\Release\AstroGrep.xml</DocumentationFile>
     <Optimize>true</Optimize>
-    <FileAlignment>4096</FileAlignment>
-    <PlatformTarget>AnyCPU</PlatformTarget>
-    <ErrorReport>prompt</ErrorReport>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
+  <PropertyGroup>
+    <PreBuildEvent />
+    <PostBuildEvent>:: copy $(ProjectDir)Images\AstroGrep_256x256.png $(TargetDir) /y</PostBuildEvent>
+  </PropertyGroup>
   <ItemGroup>
-    <Reference Include="ICSharpCode.AvalonEdit, Version=5.0.1.0, Culture=neutral, PublicKeyToken=9cc39be672370310, processorArchitecture=MSIL">
-      <HintPath>..\packages\AvalonEdit.5.0.2\lib\Net40\ICSharpCode.AvalonEdit.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
-      <HintPath>..\packages\NLog.4.2.3\lib\net40\NLog.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
-    <Reference Include="System">
-      <Name>System</Name>
-    </Reference>
-    <Reference Include="System.Data">
-      <Name>System.Data</Name>
-    </Reference>
-    <Reference Include="System.Drawing">
-      <Name>System.Drawing</Name>
-    </Reference>
-    <Reference Include="System.Windows.Forms">
-      <Name>System.Windows.Forms</Name>
-    </Reference>
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xaml" />
-    <Reference Include="System.Xml">
-      <Name>System.XML</Name>
-    </Reference>
     <Reference Include="WindowsBase" />
     <Reference Include="WindowsFormsIntegration" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Core\GeneralSettingsReset.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="..\AssemblyInfoCommon.cs">
-      <Link>Properties\AssemblyInfoCommon.cs</Link>
-    </Compile>
-    <Compile Include="..\AssemblyVersionCommon.cs">
-      <Link>Properties\AssemblyVersionCommon.cs</Link>
-    </Compile>
-    <Compile Include="Core\Constants.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Core\Convertors.cs" />
-    <Compile Include="Core\GeneralSettings.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Core\LogItem.cs" />
-    <Compile Include="Core\PluginManager.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Core\PluginSettings.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Core\SearchInterfaces.cs" />
-    <Compile Include="Core\SearchSettings.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Core\SettingsIO.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Core\Shortcuts.cs" />
-    <Compile Include="Core\TextEditor.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Core\TextEditorOpener.cs" />
-    <Compile Include="Core\TextEditors.cs" />
-    <Compile Include="Output\HTMLHelper.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Output\JSONHelper.cs" />
-    <Compile Include="Output\MatchResultsExport.cs" />
-    <Compile Include="Plugin.IFilter\IFilter.Win32.cs" />
-    <Compile Include="Plugin.IFilter\IFilterPlugin.cs" />
-    <Compile Include="Plugin.MicrosoftWord\MicrosoftWordPlugin.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Properties\Resources.Designer.cs">
+    <Compile Include="..\AssemblyInfoCommon.cs" Link="Properties\AssemblyInfoCommon.cs" />
+    <Compile Include="..\AssemblyVersionCommon.cs" Link="Properties\AssemblyVersionCommon.cs" />
+    <Compile Update="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <Compile Include="Windows\CommandLineProcessing.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Windows\Controls\AvalonEdit\AllResultHighlighter.cs" />
-    <Compile Include="Windows\Controls\AvalonEdit\CustomLineNumberMargin.cs" />
-    <Compile Include="Windows\Controls\AvalonEdit\TextEditorEx.cs" />
-    <Compile Include="Windows\Controls\AvalonEdit\LineNumber.cs" />
-    <Compile Include="Windows\Controls\AvalonEdit\ResultHighlighter.cs" />
-    <Compile Include="Windows\Controls\ColorButton.cs">
+    <Compile Update="Windows\Controls\ColorButton.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Windows\Controls\FilterValueType.cs">
+    <Compile Update="Windows\Controls\FilterValueType.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Windows\Controls\FilterValueType.Designer.cs">
+    <Compile Update="Windows\Controls\FilterValueType.Designer.cs">
       <DependentUpon>FilterValueType.cs</DependentUpon>
     </Compile>
-    <Compile Include="Windows\Controls\PictureButton.cs">
+    <Compile Update="Windows\Controls\PictureButton.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Windows\Controls\SplitButton.cs">
+    <Compile Update="Windows\Controls\SplitButton.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Windows\Controls\VistaFolderBrowserDialog.cs">
+    <Compile Update="Windows\Controls\VistaFolderBrowserDialog.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Windows\Forms\BaseForm.cs">
+    <Compile Update="Windows\Forms\BaseForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Windows\Forms\frmAbout.cs">
+    <Compile Update="Windows\Forms\frmAbout.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Windows\Forms\frmAbout.Designer.cs">
+    <Compile Update="Windows\Forms\frmAbout.Designer.cs">
       <DependentUpon>frmAbout.cs</DependentUpon>
     </Compile>
-    <Compile Include="Windows\Forms\frmAddEditFileEncoding.cs">
+    <Compile Update="Windows\Forms\frmAddEditFileEncoding.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Windows\Forms\frmAddEditFileEncoding.Designer.cs">
+    <Compile Update="Windows\Forms\frmAddEditFileEncoding.Designer.cs">
       <DependentUpon>frmAddEditFileEncoding.cs</DependentUpon>
     </Compile>
-    <Compile Include="Windows\Forms\frmAddEditTextEditor.cs">
+    <Compile Update="Windows\Forms\frmAddEditTextEditor.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Windows\Forms\frmAddEditTextEditor.Designer.cs">
+    <Compile Update="Windows\Forms\frmAddEditTextEditor.Designer.cs">
       <DependentUpon>frmAddEditTextEditor.cs</DependentUpon>
     </Compile>
-    <Compile Include="Windows\Forms\frmAddEditExclusions.cs">
+    <Compile Update="Windows\Forms\frmAddEditExclusions.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Windows\Forms\frmAddEditExclusions.Designer.cs">
+    <Compile Update="Windows\Forms\frmAddEditExclusions.Designer.cs">
       <DependentUpon>frmAddEditExclusions.cs</DependentUpon>
     </Compile>
-    <Compile Include="Windows\Forms\frmCheckForUpdate.cs">
+    <Compile Update="Windows\Forms\frmCheckForUpdate.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Windows\Forms\frmCheckForUpdate.Designer.cs">
+    <Compile Update="Windows\Forms\frmCheckForUpdate.Designer.cs">
       <DependentUpon>frmCheckForUpdate.cs</DependentUpon>
     </Compile>
-    <Compile Include="Windows\Forms\frmCheckForUpdateTemp.cs">
+    <Compile Update="Windows\Forms\frmCheckForUpdateTemp.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Windows\Forms\frmCheckForUpdateTemp.Designer.cs">
+    <Compile Update="Windows\Forms\frmCheckForUpdateTemp.Designer.cs">
       <DependentUpon>frmCheckForUpdateTemp.cs</DependentUpon>
     </Compile>
-    <Compile Include="Windows\Forms\frmCommandLine.cs">
+    <Compile Update="Windows\Forms\frmCommandLine.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Windows\Forms\frmCommandLine.Designer.cs">
+    <Compile Update="Windows\Forms\frmCommandLine.Designer.cs">
       <DependentUpon>frmCommandLine.cs</DependentUpon>
     </Compile>
-    <Compile Include="Windows\Forms\frmExclusions.cs">
+    <Compile Update="Windows\Forms\frmExclusions.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Windows\Forms\frmExclusions.Designer.cs">
+    <Compile Update="Windows\Forms\frmExclusions.Designer.cs">
       <DependentUpon>frmExclusions.cs</DependentUpon>
     </Compile>
-    <Compile Include="Windows\Forms\frmLogDisplay.cs">
+    <Compile Update="Windows\Forms\frmLogDisplay.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Windows\Forms\frmLogDisplay.Designer.cs">
+    <Compile Update="Windows\Forms\frmLogDisplay.Designer.cs">
       <DependentUpon>frmLogDisplay.cs</DependentUpon>
     </Compile>
-    <Compile Include="Windows\Forms\frmMain.cs">
+    <Compile Update="Windows\Forms\frmMain.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Windows\Forms\frmMain.Designer.cs">
+    <Compile Update="Windows\Forms\frmMain.Designer.cs">
       <DependentUpon>frmMain.cs</DependentUpon>
     </Compile>
-    <Compile Include="Windows\Forms\frmOptions.cs">
+    <Compile Update="Windows\Forms\frmOptions.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Windows\Forms\frmOptions.Designer.cs">
+    <Compile Update="Windows\Forms\frmOptions.Designer.cs">
       <DependentUpon>frmOptions.cs</DependentUpon>
     </Compile>
-    <Compile Include="Windows\Forms\frmPrint.cs">
+    <Compile Update="Windows\Forms\frmPrint.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Windows\Forms\frmPrint.Designer.cs">
+    <Compile Update="Windows\Forms\frmPrint.Designer.cs">
       <DependentUpon>frmPrint.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Windows\Language.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Windows\Legacy.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Windows\ListViewImageManager.cs" />
-    <Compile Include="Windows\ListViewItemComparer.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Windows\ListViewMouseWheelMoveMessageFilter.cs" />
-    <Compile Include="Windows\Program.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Windows\Registry.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Windows\Win32.cs">
-      <SubType>Code</SubType>
     </Compile>
     <Content Include="astrogrep.VisualElementsManifest.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -323,100 +192,71 @@
     <EmbeddedResource Include="Output\Output-fileNameOnly.html" />
     <EmbeddedResource Include="Output\Output.css" />
     <EmbeddedResource Include="Output\Output.html" />
-    <EmbeddedResource Include="Properties\Resources.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Windows\Controls\ColorButton.resx">
+    <EmbeddedResource Update="Windows\Controls\ColorButton.resx">
       <DependentUpon>ColorButton.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="Windows\Controls\FilterValueType.resx">
+    <EmbeddedResource Update="Windows\Controls\FilterValueType.resx">
       <DependentUpon>FilterValueType.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Windows\Forms\frmAbout.resx">
+    <EmbeddedResource Update="Windows\Forms\frmAbout.resx">
       <DependentUpon>frmAbout.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="Windows\Forms\frmAddEditFileEncoding.resx">
+    <EmbeddedResource Update="Windows\Forms\frmAddEditFileEncoding.resx">
       <DependentUpon>frmAddEditFileEncoding.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Windows\Forms\frmAddEditTextEditor.resx">
+    <EmbeddedResource Update="Windows\Forms\frmAddEditTextEditor.resx">
       <DependentUpon>frmAddEditTextEditor.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="Windows\Forms\frmAddEditExclusions.resx">
+    <EmbeddedResource Update="Windows\Forms\frmAddEditExclusions.resx">
       <DependentUpon>frmAddEditExclusions.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="Windows\Forms\frmCheckForUpdate.resx">
+    <EmbeddedResource Update="Windows\Forms\frmCheckForUpdate.resx">
       <DependentUpon>frmCheckForUpdate.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Windows\Forms\frmCheckForUpdateTemp.resx">
+    <EmbeddedResource Update="Windows\Forms\frmCheckForUpdateTemp.resx">
       <DependentUpon>frmCheckForUpdateTemp.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Windows\Forms\frmCommandLine.resx">
+    <EmbeddedResource Update="Windows\Forms\frmCommandLine.resx">
       <DependentUpon>frmCommandLine.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="Windows\Forms\frmExclusions.resx">
+    <EmbeddedResource Update="Windows\Forms\frmExclusions.resx">
       <DependentUpon>frmExclusions.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="Windows\Forms\frmLogDisplay.resx">
+    <EmbeddedResource Update="Windows\Forms\frmLogDisplay.resx">
       <DependentUpon>frmLogDisplay.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="Windows\Forms\frmMain.resx">
+    <EmbeddedResource Update="Windows\Forms\frmMain.resx">
       <DependentUpon>frmMain.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="Windows\Forms\frmOptions.resx">
+    <EmbeddedResource Update="Windows\Forms\frmOptions.resx">
       <DependentUpon>frmOptions.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="Windows\Forms\frmPrint.resx">
+    <EmbeddedResource Update="Windows\Forms\frmPrint.resx">
       <DependentUpon>frmPrint.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\AstroGrep.Common\AstroGrep.Common.csproj">
-      <Project>{9a78b1c9-9260-412d-bb93-143289831b38}</Project>
-      <Name>AstroGrep.Common</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\libAstroGrep\libAstroGrep.csproj">
-      <Project>{03EDAD50-4218-41D4-AEA8-5D072253EA17}</Project>
-      <Name>libAstroGrep</Name>
-    </ProjectReference>
+    <ProjectReference Include="..\AstroGrep.Common\AstroGrep.Common.csproj" />
+    <ProjectReference Include="..\libAstroGrep\libAstroGrep.csproj" />
   </ItemGroup>
   <ItemGroup>
-    <BootstrapperPackage Include="Microsoft.Net.Framework.2.0">
-      <Visible>False</Visible>
-      <ProductName>.NET Framework 2.0 %28x86%29</ProductName>
-      <Install>true</Install>
-    </BootstrapperPackage>
-    <BootstrapperPackage Include="Microsoft.Net.Framework.3.0">
-      <Visible>False</Visible>
-      <ProductName>.NET Framework 3.0 %28x86%29</ProductName>
-      <Install>false</Install>
-    </BootstrapperPackage>
-    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5">
-      <Visible>False</Visible>
-      <ProductName>.NET Framework 3.5</ProductName>
-      <Install>false</Install>
-    </BootstrapperPackage>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="App.config" />
     <None Include="Mono\Bundle.bat" />
-    <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup />
-  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
-  <PropertyGroup>
-    <PreBuildEvent>
-    </PreBuildEvent>
-    <PostBuildEvent>copy $(ProjectDir)Images\AstroGrep_256x256.png $(TargetDir) /y</PostBuildEvent>
-  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="AvalonEdit" Version="5.0.2" />
+    <PackageReference Include="NLog" Version="4.5.11" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Remove="AssemblyInfo.cs" />
+  </ItemGroup>
 </Project>

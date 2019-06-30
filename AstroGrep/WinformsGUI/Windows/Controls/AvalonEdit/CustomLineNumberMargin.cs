@@ -173,6 +173,8 @@ namespace AstroGrep.Windows.Controls
       /// </history>
       private FormattedText CreateFormattedText(FrameworkElement element, string text, Typeface typeface, double? emSize, Brush foreground)
       {
+         double pixelsPerDip = VisualTreeHelper.GetDpi(this).PixelsPerDip;
+
          return new FormattedText(
             text,
             CultureInfo.CurrentCulture,
@@ -181,7 +183,8 @@ namespace AstroGrep.Windows.Controls
             emSize.Value,
             foreground,
             null,
-            TextOptions.GetTextFormattingMode(element)
+            TextOptions.GetTextFormattingMode(element),
+            pixelsPerDip
          );
       }
 
